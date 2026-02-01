@@ -2,9 +2,9 @@
 
 ## Abstract
 
-This project examines changes in urban mobility in Chicago over the last decade, with particular attention to differences across neighborhoods and demographic groups. Using public transit ridership data, rideshare data, and demographic information from the American Community Survey, we document how mobility patterns shifted before and after the COVID-19 pandemic. The analysis is descriptive and exploratory rather than causal.
+This project examines changes in urban mobility in Chicago over the last 7 years, with particular attention to differences across neighborhoods and demographic groups. Using public transit ridership data, rideshare data, and demographic information from the American Community Survey, we document how mobility patterns shifted before and after the COVID-19 pandemic. The analysis is descriptive and exploratory rather than causal.
 
-We analyze how public and private transportation usage varies geographically and over time, and whether certain neighborhoods appear consistently over- or under-represented in observed mobility. The project integrates multiple large public datasets and produces visual tools that allow users to explore trends across space and time. The long-term goal is to provide a clear, data-driven view of how urban mobility in Chicago evolved from 2016 to 2025 and how these changes align with neighborhood-level demographic characteristics.
+We analyze how public and private transportation usage varies geographically and over time, and whether certain neighborhoods appear consistently over- or under-represented in observed mobility. The project integrates multiple large public datasets and produces visual tools that allow users to explore trends across space and time. The long-term goal is to provide a clear, data-driven view of how urban mobility in Chicago evolved from 2019 to 2025 and how these changes align with neighborhood-level demographic characteristics.
 
 ## Data Sources
 
@@ -18,7 +18,7 @@ Our planned steps are:
 - Group CTA ridership data by time period.
 - Group rideshare pickup and dropoff locations into the same geographic unit.
 - Join the transportation data to ACS demographic data using matching geographic identifiers.
-- Limit all datasets to the same time range, focusing mainly on 2016–2025 where data is available.
+- Limit all datasets to the same time range, focusing mainly on 2019–2025 where data is available.
 
 The final geographic unit will be chosen based on data availability, privacy-related suppression, and how easy the results are to interpret.
 
@@ -29,14 +29,17 @@ The final geographic unit will be chosen based on data availability, privacy-rel
 - **Primary URLs:**  
   - https://www.transitchicago.com/ridership/  
   - https://data.cityofchicago.org/Transportation/CTA-Ridership-L-Station-Entries-Daily-Totals/
+  - https://data.cityofchicago.org/dataset/CTA-L-Rail-Stations-Shapefile/vmyy-m9qj/about_data
 
 #### Description
 
-This project uses two complementary CTA ridership datasets. Together, they capture both overall public transit trends and spatial variation in ridership across Chicago.
+This project uses three complementary CTA ridership datasets. Together, they capture both overall public transit trends and spatial variation in ridership across Chicago.
 
 The first dataset provides **systemwide daily ridership totals** for CTA bus and rail services. It includes daily observations with counts for bus boardings, rail boardings, and total rides. This dataset is used to analyze overall changes in public transit usage over time, particularly before and after the COVID-19 pandemic.
 
 The second dataset contains **daily ‘L’ station entry totals** for each CTA rail station. It includes station identifiers, station names, dates, day types, and daily entry counts. This dataset provides the spatial detail needed to examine how ridership varies across neighborhoods and to support geographic analysis.
+
+The third dataset contains **Point data representing location of CTA Rail Station** to build the geographic visulization of the data.
 
 #### Challenges and uncertainty
 
@@ -46,7 +49,7 @@ Systemwide ridership data does not include geographic detail beyond the transit 
 
 The systemwide dataset contains approximately 3,600 daily records across the selected analysis window, with fields for date, day type, bus boardings, rail boardings, and total rides.
 
-The station-level dataset contains approximately 1.3 million rows and five main columns: station ID, station name, date, day type, and daily rides. For analysis, the data will be filtered to the years 2016–2025 and aggregated as needed to reduce size.
+The station-level dataset contains approximately 1.3 million rows and five main columns: station ID, station name, date, day type, and daily rides. For analysis, the data will be filtered to the years 2019–2025 and aggregated as needed to reduce size.
 
 #### Exploration notes
 
@@ -57,14 +60,16 @@ The station-level dataset can be aggregated to neighborhood-level geographic uni
 
 ---
 
-### Data Source 2: Chicago Rideshare and Taxi Data
+### Data Source 2: Chicago Rideshare Data
 
-- **Source type:** Bulk data downloads  
+- **Source type:** API
 - **URL:**  
-  https://data.cityofchicago.org/Transportation/Taxi-Trips-2013-2023-/wrvz-psew/about_data
+  - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2025-/6dvr-xwnh/about_data
+  - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2023-2024-/n26f-ihde/about_data
+  - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2018-2022-/m6dm-c72p/about_data
 
 - **Description:**  
-  Trip records reported to the City of Chicago by regulated taxi and rideshare providers, including pickup and dropoff times and locations.
+  All trips, from November 2018 to December 2025, reported by Transportation Network Providers (sometimes called rideshare companies) to the City of Chicago as part of routine reporting required by ordinance.
 
 - **Challenges and uncertainty:**  
   The dataset is very large and requires filtering and aggregation. Census tract identifiers are suppressed for some records, and timestamps are rounded. Not all trips are reported, though coverage is believed to be high.
@@ -80,15 +85,17 @@ The station-level dataset can be aggregated to neighborhood-level geographic uni
 ### Data Source 3: American Community Survey (ACS)
 
 - **Source type:** API
+- **URL:**  
+  - https://www.census.gov/data/developers/data-sets/acs-5year.html
 
 - **Challenges and uncertainty:**  
   The main open questions are which geographic level to use and which ACS variables to include, given the large number of available indicators.
 
 - **Records and properties:**  
-  The number of records depends on the geographic unit chosen. Using Chicago census tracts across 2016–2024 would result in several thousand rows. The number of variables will depend on the final set of indicators selected.
+  The number of records depends on the geographic unit chosen. Using Chicago census tracts across 2019–2024 would result in several thousand rows. The number of variables will depend on the final set of indicators selected.
 
 - **Exploration notes:**  
-  We plan to use annual ACS data from 2016–2024 to match the time span and quality of the transportation data. Likely variables include age, disability status, household structure, vehicle access, and income. Final variable selection will be made after further exploration.
+  We plan to use ACS data from 2019–2024 to match the time span and quality of the transportation data. Likely variables include age, disability status, household structure, vehicle access, and income. Final variable selection will be made after further exploration.
 
 
 ---
@@ -138,7 +145,7 @@ The team meets weekly on Fridays from 12:30–1:30pm to review progress and coor
   Clean and prepare ACS data, and build GIS-based maps showing neighborhood-level mobility patterns.
 
 - **David:**  
-  Clean rideshare data and handle data reconciliation across all sources.
+  Build ERD, clean rideshare data, and handle data reconciliation across all sources.
 
  - **Ciara:**  
   Clean and prepare CTA ridership data, including both systemwide daily totals and station-level ‘L’ entry data, and produce analysis-ready datasets for time trend and spatial analysis.

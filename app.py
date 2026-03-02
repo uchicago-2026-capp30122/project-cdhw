@@ -4,8 +4,8 @@ import plotly.express as px
 
 from dash import Dash, dcc, html, Input, Output
 
-DATA_CSV = "data/processed/acs5_2024_il_tract_clean.csv"
-TRACTS_GEOJSON = "data/il_tracts_2024_cook031_dup043.geojson"
+DATA_CSV = "data/processed/tract_features.csv"
+TRACTS_GEOJSON = "data/processed/tracts_chicago.geojson"
 
 def load_data():
     df = pd.read_csv(DATA_CSV, dtype = {"GEOID": str})
@@ -25,6 +25,7 @@ geojson = load_geojson()
 
 # numeric columns to map
 DROPDOWN_VARS = [
+    "transportation_need_index_0_100",
     "median_hh_income",
     "pct_no_vehicle_hh",
     "pct_disabled",
@@ -37,14 +38,6 @@ MAP_VARS = [c for c in DROPDOWN_VARS if c in df.columns]
 
 def create_app(df, geojson):
     app = Dash(__name__)
-
-    DROPDOWN_VARS = [
-        "median_hh_income",
-        "pct_no_vehicle_hh",
-        "pct_disabled",
-        "pct_65_plus",
-        "pop_total",
-    ]
 
     MAP_VARS = [c for c in DROPDOWN_VARS if c in df.columns]
 
@@ -89,6 +82,7 @@ def create_app(df, geojson):
                 locations = "GEOID",
                 featureidkey = "properties.GEOID",
                 color = var_name,
+                color_continuous_scale="Viridis",  # or "Plasma", "Inferno"; darker = hotter/greater need
                 map_style = "open-street-map",
                 zoom = 9,
                 center = {"lat": 41.88, "lon": -87.63},

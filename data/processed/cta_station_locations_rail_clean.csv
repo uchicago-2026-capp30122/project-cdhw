@@ -1,0 +1,127 @@
+join_key,STATION_ID,LONGNAME,LINES,lat,lon
+18th,830,18th,Pink,41.85790770843142,-87.6691601248801
+35 bronzeville iit,1120,35-Bronzeville-IIT,Green Line,41.83167802166354,-87.62588147448886
+35th archer,120,35th/Archer,Orange Line,41.82956008804762,-87.68058736862578
+43rd,1270,43rd,Green Line,41.81646322287744,-87.61903578127783
+47th,1230,47th-Dan Ryan,Red Line,41.81033813281231,-87.63102579710096
+47th south elevated,1080,47th-South Elevated,Green Line,41.80920883501687,-87.61882612858349
+51st,130,51st,Green Line,41.80209158434365,-87.61850159987594
+54th,580,54th/Cermak,Pink,41.851773309963825,-87.756692014772
+63rd,910,63rd-Dan Ryan,Red Line,41.78053433456898,-87.63100044907034
+69th,990,69th,Red Line,41.768367865867056,-87.62580935004172
+79th,240,79th,Red Line,41.75041234272969,-87.62517835384935
+87th,1430,87th,Red Line,41.73537121137496,-87.62475307324942
+95th,450,95th/Dan Ryan,Red Line,41.722375984242476,-87.62441474538349
+adams wabash,680,Adams/Wabash,"Brown, Green, Orange, Pink, Purple (Express)",41.879510219372655,-87.62609789982032
+addison,1440,Addison-Ravenswood,Brown Line,41.94702865537702,-87.6747361074464
+addison north main,1420,Addison-North Main,Red Line,41.94742799746875,-87.65362593077104
+addison o'hare,1240,Addison-O'Hare,Blue Line,41.9473601024952,-87.71909930215281
+argyle,1200,Argyle,Red Line,41.97345332287952,-87.65852996352429
+armitage,660,Armitage,"Brown, Purple (Express)",41.91821656808861,-87.65264430600404
+ashland,170,Ashland-Lake,"Green (Lake), Orange Line, Pink",41.86233363718643,-87.66613129997071
+ashland 63rd,290,Ashland/63rd,Green Line (Englewood),41.778953405637694,-87.6638448484402
+austin,10,Austin-Lake,"Blue Line, Green Line (Lake)",41.879089589222716,-87.77546026238895
+belmont north main,1320,Belmont-North Main,"Brown, Purple (Express), Red",41.93975074615253,-87.65338048799256
+belmont o'hare,60,Belmont-O'Hare,Blue Line,41.93813166977896,-87.71235935057341
+berwyn,340,Berwyn,Red Line,41.97798399254404,-87.65866841969589
+bryn mawr,1380,Bryn Mawr,Red Line,41.983504225254826,-87.65884028505945
+california,440,California-Lake,"Green Line (Lake), Pink",41.869249580976756,-87.69552856582723
+california milwaukee,570,California/Milwaukee,Blue Line (O'Hare),41.92193917150245,-87.6968897987879
+central,280,Central-Lake,Green Line (Lake),41.887389014441396,-87.76564950550599
+central evanston,1250,Central-Evanston,"Evanston Express, Purple Line",42.06398654414921,-87.68561725654831
+central park,780,Central Park,Pink,41.85399195494557,-87.71488026411758
+cermak chinatown,1000,Cermak-Chinatown,Red Line,41.85320579601431,-87.63096782627767
+cermak mccormick place,1690,Cermak-McCormick Place,Green Line,41.85311508341227,-87.62640238492894
+chicago franklin,710,Chicago/Franklin,"Brown, Purple (Express)",41.89677417178117,-87.63594665706665
+chicago milwaukee,1410,Chicago/Milwaukee,Blue Line,41.89607523740354,-87.65521427917491
+chicago state,1450,Chicago/State,Red Line,41.89667121282868,-87.62817635256233
+cicero,420,Cicero-Lake,"Blue Line (Congress), Green Line (Lake), Pink",41.87001737300212,-87.7450708626563
+clark,380,Clark/Lake,"Blue, Brown, Green, Orange, Pink, Purple (Express)",41.88573698625939,-87.63088601833961
+clark division,630,Clark/Division,Red Line,41.90392031283341,-87.63141229300709
+clinton,430,Clinton-Lake,"Blue Line, Green (Lake), Pink",41.88062116433759,-87.64137776042992
+conservatory central park,1670,Conservatory-Central Park,Green Line (Lake),41.88490437974895,-87.71652283291752
+cottage grove,720,Cottage Grove,Green Line,41.78030876776892,-87.6058574174785
+cumberland,230,Cumberland,Blue Line,41.98429405782801,-87.83802598504772
+damen,90,Damen-Ravenswood,"Brown Line, Pink",41.91046291739687,-87.67730449019199
+damen milwaukee,590,Damen/Milwaukee,Blue Line,41.90974379246453,-87.67743665449984
+davis,50,Davis,"Evanston Express, Purple Line",42.04771009459835,-87.68354292586837
+dempster,690,Dempster,"Evanston Express, Purple Line",42.04165464471751,-87.68160198666094
+dempster skokie,140,Dempster-Skokie,Yellow Line,42.03895069338699,-87.75191862595247
+diversey,530,Diversey,"Brown, Purple (Express)",41.93273150100663,-87.65313085718888
+division milwaukee,320,Division/Milwaukee,Blue Line,41.90335508549131,-87.66649606690225
+forest park,390,Forest Park,Blue Line,41.87425731129019,-87.81731777906768
+foster,520,Foster,"Evanston Express, Purple Line",42.05416022489171,-87.68356032638904
+francisco,870,Francisco,Brown Line,41.966146895889715,-87.70165573251133
+fullerton,1220,Fullerton,"Brown, Purple (Express), Red",41.9250513685894,-87.6528658377562
+garfield,1170,Garfield-Dan Ryan,Red Line,41.795418262115,-87.63116917003116
+garfield south elevated,510,Garfield-South Elevated,Green Line,41.79517665377113,-87.61832410779981
+grand milwaukee,490,Grand/Milwaukee,Blue Line (O'Hare),41.89118929406765,-87.64757831015247
+grand state,330,Grand/State,Red Line,41.89166520138373,-87.62802125739587
+granville,760,Granville,Red Line,41.993664261033324,-87.65920227948938
+halsted,1130,Halsted-Midway,Orange Line,41.846901440874284,-87.64813110426746
+halsted 63rd,940,Halsted/63rd,Green Line,41.7790278681209,-87.644023127218
+harlem,20,Harlem-Congress,"Blue Line (Congress), Green Line (Lake)",41.880169177689226,-87.80506842992116
+harlem o'hare,750,Harlem-O'Hare,Blue Line (O'Hare),41.982323370406654,-87.80889493503287
+harrison,1490,Harrison,Red Line,41.874039244054394,-87.62747911770376
+howard,900,Howard,"Evanston Express, Purple, Red, Yellow",42.01906322017403,-87.6728924507902
+illinois medical district,810,Illinois Medical District,Blue Line,41.875635428768774,-87.67394587971816
+indiana,300,Indiana,Green Line,41.8218151964997,-87.62146281101369
+irving park,1460,Irving Park-Ravenswood,Brown Line,41.95452313953493,-87.67495574333226
+irving park o'hare,550,Irving Park-O'Hare,Blue Line,41.95294026172351,-87.72917726558204
+jackson dearborn,70,Jackson/Dearborn,Blue Line,41.87818251886981,-87.62929566463735
+jackson state,560,Jackson/State,Red Line,41.87815275695708,-87.62759609756428
+jarvis,1190,Jarvis,Red Line,42.01587618094787,-87.6690921120182
+jefferson park,1280,Jefferson Park,Blue Line,41.97063413812226,-87.76089227927595
+kedzie,1040,Kedzie-Lake,"Brown Line, Green Line (Lake), Orange Line, Pink",41.87722317466901,-87.70618695886071
+kedzie homan,250,Kedzie-Homan,Blue Line (Congress),41.87442550900997,-87.70597829539031
+kimball,1290,Kimball,Brown Line,41.967928151523594,-87.71314203532829
+king drive,1140,King Drive,Green Line,41.780129716720246,-87.61554588356856
+kostner,600,Kostner,Pink,41.85375068701122,-87.73326365861335
+lake state,1660,Lake/State,Red Line,41.88480886783525,-87.62781338044591
+laramie,700,Laramie,Green Line (Lake),41.887163226543876,-87.75498649428108
+lasalle,1340,LaSalle,Blue Line,41.87556762595072,-87.63172207547264
+lasalle van buren,160,LaSalle/Van Buren,"Brown, Orange, Pink, Purple (Express)",41.87685533507961,-87.63173383435944
+lawrence,770,Lawrence,Red Line,41.96913894081545,-87.65849296173627
+library,850,Library,"Brown, Orange, Pink, Purple (Express)",41.876908340423775,-87.62820914456076
+linden,1050,Linden,"Evanston Express, Purple Line",42.0731527622841,-87.69072951855928
+logan square,1020,Logan Square,Blue Line,41.92972804225144,-87.7085413860205
+loyola,1300,Loyola,Red Line,42.0010733596017,-87.6610607008597
+main,270,Main,"Evanston Express, Purple Line",42.03345571051573,-87.67953792271051
+merchandise mart,460,Merchandise Mart,"Brown, Purple (Express)",41.88896793381599,-87.63397336028807
+midway airport,930,Midway Airport,Orange Line,41.7866135510346,-87.73795637168769
+monroe dearborn,790,Monroe/Dearborn,Blue Line,41.88070346119076,-87.62937770045221
+monroe state,1090,Monroe/State,Red Line,41.880744558792216,-87.62769645951258
+montrose,1500,Montrose-Ravenswood,Brown Line,41.96175171130978,-87.67516539063618
+montrose o'hare,1330,Montrose-O'Hare,Blue Line,41.961486633040835,-87.74361697430824
+morgan,1510,Morgan,"Green (Lake), Pink",41.885576788726354,-87.65212799206752
+morse,100,Morse,Red Line,42.00836181944306,-87.6659090897442
+north clybourn,650,North/Clybourn,Red Line,41.910654580560376,-87.64917726687139
+noyes,400,Noyes,"Evanston Express, Purple Line",42.05828247066971,-87.68333688171246
+o'hare airport,890,O'Hare Airport,Blue Line,41.97887673887917,-87.90184840013661
+oak park,180,Oak Park-Lake,"Blue Line, Green Line (Lake)",41.879547747914096,-87.79269275077856
+oakton skokie,1680,Oakton-Skokie,Yellow Line,42.02624389455923,-87.74722101369109
+paulina,1310,Paulina,Brown Line,41.943709148530466,-87.67088394357924
+polk,1030,Polk,Pink,41.871563004328266,-87.66954322799872
+pulaski,30,Pulaski-Douglas,"Blue Line (Congress), Green Line (Lake), Orange Line, Pink",41.853261338941905,-87.72495126654842
+quincy wells,40,Quincy/Wells,"Brown, Orange, Pink, Purple (Express)",41.87872328348997,-87.63373997596631
+racine,470,Racine,Blue Line,41.87588563477906,-87.65945550927005
+ridgeland,610,Ridgeland,Green Line (Lake),41.88715939826551,-87.78366103293801
+rockwell,1010,Rockwell,Brown Line,41.96620994947778,-87.69411112481461
+roosevelt state,1400,Roosevelt/State,Red Line,41.86736766601225,-87.62740238294732
+roosevelt wabash,410,Roosevelt/Wabash,Orange & Green Lines,41.86740495963631,-87.62658988700281
+rosemont,820,Rosemont,Blue Line,41.98350728784708,-87.8593877016713
+sedgwick,800,Sedgwick,"Brown, Purple (Express)",41.91040918029724,-87.63930216454519
+sheridan,80,Sheridan,Red Line,41.95377494743192,-87.65492939219291
+south boulevard,840,South Boulevard,"Evanston Express, Purple Line",42.02761184862187,-87.67832941601363
+southport,360,Southport,Brown Line,41.94381225617526,-87.66360955994172
+sox 35th,190,Sox-35th-Dan Ryan,Red Line,41.831190560189036,-87.63063629512068
+state,260,State/Lake,"Brown, Green, Orange, Pink, Purple (Express)",41.885740410818926,-87.62783518066094
+thorndale,880,Thorndale,Red Line,41.990259494019185,-87.6590758588342
+uic halsted,350,UIC-Halsted,Blue Line,41.8755162091606,-87.64964223079026
+washington dearborn,370,Washington/Dearborn,Blue Line,41.88316442656523,-87.6294400596467
+washington wabash,1700,Washington/Wabash,"Brown, Green, Orange, Pink, Purple (Express)",41.88322001293653,-87.62618878473234
+washington wells,730,Washington/Wells,"Brown, Orange, Pink, Purple (Express)",41.88269501849896,-87.63385352993139
+wellington,1210,Wellington,"Brown, Purple (Express)",41.936032602681166,-87.65326645004653
+western,220,Western-Ravenswood,"Blue Line (Congress), Brown Line, Orange Line, Pink",41.87521500493779,-87.6865453311916
+western milwaukee,670,Western/Milwaukee,Blue Line (O'Hare),41.916157429131374,-87.6873643813982
+wilson,540,Wilson,"Purple, Red Line",41.96425415994733,-87.65773404557505

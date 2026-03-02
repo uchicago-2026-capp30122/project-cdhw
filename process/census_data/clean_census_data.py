@@ -43,6 +43,14 @@ def clean_acs(in_path: Path) -> pd.DataFrame:
     for col in NUMERIC_COLS:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors = "coerce")
+    
+    # Replace absurd Census sentinel values (for median income) with NaN
+    MISSING_SENTINELS = {-666666666, -999999999, 666666666, 999999999}
+
+    if "B19013_001E" in df.columns:
+        df.loc[df["B19013_001E"].isin(MISSING_SENTINELS), "B19013_001E"] = pd.NA
+        df.loc[df["B19013_001E"] <= 0, "B19013_001E"] = pd.NA  # income cannot be <= 0
+    
 
     # Calculate: age 65+ count + percent
     df["age_65_plus"] = df[AGE_65_VARS].sum(axis = 1, min_count = 1)

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@6"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@6.1.0"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@7"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-79b4d49fc0d3c0d6d2bac7445be25a93"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "community", "title": "Community Area", "type": "nominal"}, {"field": "community_area", "title": "CA #", "type": "quantitative"}, {"field": "cta_2024_total", "format": ",", "title": "Total", "type": "quantitative"}], "x": {"field": "cta_2024_total", "title": "CTA Rail Entries (2024)", "type": "quantitative"}, "y": {"field": "community", "sort": "-x", "title": "Community Area", "type": "nominal"}}, "height": 420, "title": "Top 10 Community Areas by CTA Rail Ridership (2024)", "width": 700, "$schema": "https://vega.github.io/schema/vega-lite/v6.1.0.json", "datasets": {"data-79b4d49fc0d3c0d6d2bac7445be25a93": [{"community_area": 32, "community": "LOOP", "cta_2024_total": 24506713}, {"community_area": 8, "community": "NEAR NORTH SIDE", "cta_2024_total": 10635999}, {"community_area": 6, "community": "LAKE VIEW", "cta_2024_total": 7872776}, {"community_area": 28, "community": "NEAR WEST SIDE", "cta_2024_total": 7617448}, {"community_area": 24, "community": "WEST TOWN", "cta_2024_total": 4842181}, {"community_area": 76, "community": "OHARE", "cta_2024_total": 3793669}, {"community_area": 7, "community": "LINCOLN PARK", "cta_2024_total": 3352754}, {"community_area": 22, "community": "LOGAN SQUARE", "cta_2024_total": 3320789}, {"community_area": 1, "community": "ROGERS PARK", "cta_2024_total": 3271681}, {"community_area": 33, "community": "NEAR SOUTH SIDE", "cta_2024_total": 2825789}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>

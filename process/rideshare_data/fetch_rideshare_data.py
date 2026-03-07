@@ -1,12 +1,13 @@
 from src.api_client import get_edges_grouped_by_ca, get_community_areas
 import json
 
-def compile_rideshare(start_date = "2025-01-01T00:00:00", end_date = "2025-02-01T00:00:00"):
+def compile_rideshare(start_date = "2025-01-01T00:00:00", end_date = "2025-12-31T00:00:00"):
     """
-    Docstring for compile_rideshare
+    Compile rideshare data from the City of Chicago's transportation portal with 
+    community area geographic points
     
-    :param start_date: Description
-    :param end_date: Description
+    :param start_date: Date to start logging rides
+    :param end_date: Date to stop logging rides
     """
     rideshare = get_edges_grouped_by_ca(start_date, end_date)
 
@@ -30,3 +31,5 @@ def compile_rideshare(start_date = "2025-01-01T00:00:00", end_date = "2025-02-01
 
     with open('data/processed/rideshare_community_areas.json', 'w') as f:
         json.dump(merged, f)
+
+compile_rideshare()

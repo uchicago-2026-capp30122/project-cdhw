@@ -26,28 +26,14 @@ RAW_DIR = Path("data/raw")
 PROCESSED_DIR = Path("data/processed")
 PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-
-# ----------------------------
-# Config you should edit
-# ----------------------------
-
-# 1) Your CTA rail stations shapefile (unzipped folder) OR .shp file path
-# Example: data/raw/cta_stations/CTA_RailStations.shp  (adjust to your repo)
 STATIONS_SHP_PATH = RAW_DIR / "cta_stations" / "CTA_RailStations.shp"
 
-# 2) Ridership day-type dataset
-# Option A (recommended): download once as CSV to data/raw and set path here:
+
 RIDERSHIP_RAW_CSV = RAW_DIR / "cta_L_station_entries_monthly_daytype.csv"
 
-# Option B: fetch from Socrata using view ID (you must fill VIEW_ID)
-# Example endpoint pattern:
-# https://data.cityofchicago.org/resource/<VIEW_ID>.csv?$limit=50000
-RIDERSHIP_VIEW_ID = None  # e.g., "xxxx-xxxx" if you prefer fetching
 
+RIDERSHIP_VIEW_ID = None  
 
-# ----------------------------
-# Parsing helpers
-# ----------------------------
 
 LINE_COLORS = ("Red", "Blue", "Brown", "Green", "Orange", "Pink", "Purple", "Yellow")
 
@@ -98,7 +84,7 @@ def infer_line_hint_from_ridership_name(station_name: str) -> Optional[str]:
         return None
     name = str(station_name).strip()
 
-    # Hyphen suffix indicates a branch/segment
+
     parts = [p.strip() for p in name.split("-") if p.strip()]
     if len(parts) >= 2:
         suffix = parts[-1].lower()
@@ -110,12 +96,11 @@ def infer_line_hint_from_ridership_name(station_name: str) -> Optional[str]:
         if suffix in {"dan ryan"}:
             return "Red"
         if suffix in {"cermak"}:
-            # Cermak branch is historically Pink; some names still show that.
+
             return "Pink"
         if suffix in {"midway"}:
             return "Orange"
 
-    # Non-hyphen cases: you can add targeted rules if needed.
     return None
 
 
@@ -128,18 +113,12 @@ class StationIndexRow:
     name_key: str
 
 
-# ----------------------------
-# Loaders
-# ----------------------------
-
 def load_station_shapefile_index(shp_path: Path) -> gpd.GeoDataFrame:
     """
     Reads the shapefile and builds an index table with line color sets and name keys.
     """
     gdf = gpd.read_file(shp_path)
 
-    # Expect these fields (based on your earlier candidate output)
-    # STATION_ID, LONGNAME, LINES, geometry
     for col in ["STATION_ID", "LONGNAME", "LINES"]:
         if col not in gdf.columns:
             raise ValueError(f"Shapefile missing expected column: {col}")
@@ -148,7 +127,6 @@ def load_station_shapefile_index(shp_path: Path) -> gpd.GeoDataFrame:
     gdf["line_colors"] = gdf["LINES"].apply(parse_line_colors_from_lines_field)
     gdf["name_key"] = gdf["LONGNAME"].apply(normalize_text)
 
-    # Keep only what we need for matching + mapping
     keep_cols = ["STATION_ID", "LONGNAME", "LINES", "line_colors", "name_key", "geometry"]
     return gdf[keep_cols]
 
@@ -186,10 +164,7 @@ def load_ridership_daytype() -> pd.DataFrame:
         "  - or set RIDERSHIP_VIEW_ID to fetch from Socrata."
     )
 
-
-# ----------------------------
-# Cleaning ridership
-# ----------------------------
+#CLEAN RIDERSHIP
 
 def clean_ridership_monthly_2024(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -202,8 +177,8 @@ def clean_ridership_monthly_2024(df: pd.DataFrame) -> pd.DataFrame:
 
     out = df.copy()
 
-    # month_beginning is a "floating timestamp" from Socrata.
-    # Pandas can usually parse it directly; if it comes in as numeric unix ms, handle that too.
+#PARSING
+
     mb = out["month_beginning"]
     if pd.api.types.is_numeric_dtype(mb):
         out["month_beginning_dt"] = pd.to_datetime(mb, unit="ms", errors="coerce")
@@ -215,17 +190,17 @@ def clean_ridership_monthly_2024(df: pd.DataFrame) -> pd.DataFrame:
 
     out = out[out["year"] == 2024].copy()
 
-    # Standardize names + add line hint
+    # Standardizing names with hints
     out["station_name"] = out["stationame"].astype(str)
     out["name_key"] = out["station_name"].apply(normalize_text)
     out["line_hint"] = out["station_name"].apply(infer_line_hint_from_ridership_name)
 
-    # Keep a clean schema consistent with your project
+
     out = out.rename(columns={"monthtotal": "month_total"})
     cols = ["station_id", "station_name", "name_key", "line_hint", "year", "month", "month_total"]
     out = out[cols]
 
-    # Safety: remove obvious duplicates; if duplicates exist, sum month_total
+    # DUPLICATES HANDLE
     out = (
         out.groupby(["station_id", "station_name", "name_key", "line_hint", "year", "month"], as_index=False)
         .agg({"month_total": "sum"})
@@ -233,10 +208,7 @@ def clean_ridership_monthly_2024(df: pd.DataFrame) -> pd.DataFrame:
 
     return out
 
-
-# ----------------------------
-# Matching / candidate generation
-# ----------------------------
+##MATCHING Handling all candidates
 
 def station_candidates_for_one(
     ridership_station_id: int,
@@ -254,7 +226,7 @@ def station_candidates_for_one(
     if line_hint:
         cand = cand[cand["line_colors"].apply(lambda s: line_hint in s)].copy()
 
-    # If filtering wipes everything (edge cases), fall back to full set
+    # EDGE CASE
     if cand.empty:
         cand = stations_gdf.copy()
 
@@ -301,7 +273,6 @@ def make_manual_review(cand: pd.DataFrame, top_k: int = 5) -> pd.DataFrame:
     Adds:
       - rank
       - passes_line_hint (if line_hint exists, does candidate include that line?)
-      - keep + review_notes columns for you to edit
     """
     out = cand.copy()
     out = out.sort_values(["station_id", "score"], ascending=[True, False])
@@ -316,8 +287,8 @@ def make_manual_review(cand: pd.DataFrame, top_k: int = 5) -> pd.DataFrame:
 
     out["passes_line_hint"] = out.apply(passes_line, axis=1)
 
-    out["keep"] = ""          # you fill y/n (one y per station_id)
-    out["review_notes"] = ""  # optional
+    out["keep"] = ""          
+    out["review_notes"] = "" 
 
     cols = [
         "station_id", "station_name", "line_hint",
@@ -329,12 +300,7 @@ def make_manual_review(cand: pd.DataFrame, top_k: int = 5) -> pd.DataFrame:
     return out[cols]
 
 
-# ----------------------------
-# Main
-# ----------------------------
-
 def main() -> None:
-    # 1) shapefile index
     stations_gdf = load_station_shapefile_index(STATIONS_SHP_PATH)
 
     stations_out = PROCESSED_DIR / "cta_station_index_from_shapefile.csv"

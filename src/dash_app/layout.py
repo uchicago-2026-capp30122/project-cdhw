@@ -1,4 +1,5 @@
 from dash import dcc, html
+from visuals.rideshare_network import generate_rideshare_html
 
 def make_layout(map_vars):
     return html.Div(
@@ -27,5 +28,16 @@ def make_layout(map_vars):
             ),
 
             dcc.Graph(id="choropleth", style={"height": "75vh"}),
+
+            html.Div([
+                html.H1(children = 'Rideshares to and from Chicago community areas (2025)'),
+
+                html.Div([
+                    html.Iframe(
+                        srcDoc =  generate_rideshare_html(),
+                        style={"width": "100%", "height": "700px", "border": "none"}
+                    )
+                ])
+            ])
         ],
     )

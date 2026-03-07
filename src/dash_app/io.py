@@ -1,8 +1,14 @@
+"""
+Loads datasets for Dash visualization.
+
+"""
+
+
 import json
 import pandas as pd
 
 def load_df(path: str, id_col: str):
-    df = pd.read_csv(path, dtype={id_col: str})
+    df = pd.read_csv(path, dtype = {id_col: str})
     return df
 
 def load_geojson(path: str):

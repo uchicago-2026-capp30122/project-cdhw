@@ -11,6 +11,5 @@ DROPDOWN_VARS = [
     "pct_no_vehicle_hh",
     "pct_disabled",
     "pct_65_plus",
-    "pop_total",
 ]
 

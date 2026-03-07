@@ -15,7 +15,9 @@ Output
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_VARS, NEED_LOW_VARS, add_need_component_scores
 
+<<<<<<< Updated upstream
 # Copied from make_tract_features.py (to keep this script self-contained)
 DEFAULT_WEIGHTS = {
     "median_hh_income": 1.0,     # inverted; negative relationship b/w median income & transport need
@@ -23,36 +25,80 @@ DEFAULT_WEIGHTS = {
     "pct_disabled": 1.0,
     "pct_65_plus": 1.0,
 }
+=======
+
+def add_need_component_scores(
+    df: pd.DataFrame,
+    high_vars: set = None,
+    low_vars: set = None,
+    suffix: str = "_need_0_100",
+) -> pd.DataFrame:
+    """
+    Create a percentile-based need score on 0-100 for each component variable,
+    where higher always = greater transportation need.
+    """
+    if high_vars is None:
+        high_vars = NEED_HIGH_VARS
+    if low_vars is None:
+        low_vars = NEED_LOW_VARS
+
+    dff = df.copy()
+    vars_to_score = list(high_vars | low_vars)
+
+    for col in vars_to_score:
+        if col not in dff.columns:
+            continue
+
+        dff[col] = pd.to_numeric(dff[col], errors="coerce")
+        pct = dff[col].rank(pct=True, method="average")
+
+        if col in low_vars:
+            pct = 1 - pct  # lower raw value = higher need
+
+        dff[f"{col}{suffix}"] = (pct * 100).round(2)
+
+    return dff
+>>>>>>> Stashed changes
 
 def add_need_index_percentile(df: pd.DataFrame,
                               weights: dict = None,
-                              index_col: str = "transportation_need_index_0_100") -> pd.DataFrame:
+                              index_col: str = "transportation_need_index_0_100",
+                              suffix: str = "_need_0_100",) -> pd.DataFrame:
     if weights is None:
         weights = DEFAULT_WEIGHTS
 
     dff = df.copy()
 
-    for col in weights.keys():
-        if col in dff.columns:
-            dff[col] = pd.to_numeric(dff[col], errors="coerce")
-
-    pct_feats = {}
-    for col, w in weights.items():
-        if w == 0 or col not in dff.columns:
+    need_cols = []
+    for raw_col, weight in weights.items():
+        if weight == 0:
             continue
-        pct = dff[col].rank(pct=True, method="average")
-        if col == "median_hh_income":
-            pct = 1 - pct
-        pct_feats[col] = pct
+        need_col = f"{raw_col}{suffix}"
+        if need_col in dff.columns:
+            need_cols.append(need_col)
 
-    pct_df = pd.DataFrame(pct_feats)
-    w_series = pd.Series({c: weights[c] for c in pct_df.columns}, dtype=float)
+    need_df = dff[need_cols]
 
+<<<<<<< Updated upstream
     num = pct_df.mul(w_series, axis = 1).sum(axis = 1, skipna = True)
     den = pct_df.notna().mul(w_series, axis = 1).sum(axis = 1)
     need_0_1 = num / den
+=======
+    w_series = pd.Series(
+        {
+            f"{raw_col}{suffix}": weight
+            for raw_col, weight in weights.items()
+            if weight != 0 and f"{raw_col}{suffix}" in need_df.columns
+        },
+        dtype=float,
+    )
 
-    dff[index_col] = (need_0_1 * 100).round(2)
+    # weighted average of already-aligned 0-100 need columns
+    num = need_df.mul(w_series, axis=1).sum(axis=1, skipna=True)
+    den = need_df.notna().mul(w_series, axis=1).sum(axis=1)
+    dff[index_col] = (num / den).round(2)
+>>>>>>> Stashed changes
+
     return dff
 
 
@@ -137,10 +183,18 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
     out = out.rename(columns={ca_col: "community_area"})
     out["community_area"] = pd.to_numeric(out["community_area"], errors="coerce").astype("Int64")
 
-    # Compute CA-level index (percentiles across CAs)
+    # create CA-level need-oriented component score columns
+    # so the Dash dropdown variables can map to *_need_0_100 columns.
+    out = add_need_component_scores(out)
+
+    # compute CA-level composite index from those component need scores
     out = add_need_index_percentile(out, index_col="transportation_need_index_0_100")
 
+<<<<<<< Updated upstream
     # Quintiles
+=======
+    # optional: quintiles
+>>>>>>> Stashed changes
     out["need_quintile"] = pd.qcut(
         out["transportation_need_index_0_100"],
         q = 5,

@@ -32,14 +32,6 @@ OUT_CSV = Path("data/processed/tract_to_ca_crosswalk.csv")
 AREA_CRS_EPSG = 3435  # NAD83 / Illinois East (ftUS)
 
 
-# def _fix_geometries(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-#     """Fix common invalid polygon issues (self-intersections, etc.)."""
-#     gdf = gdf.copy()
-#     # buffer(0) is a common quick fix for invalid polygons
-#     gdf["geometry"] = gdf["geometry"].buffer(0)
-#     return gdf
-
-
 def main():
     if not TRACTS_GEOJSON.exists():
         raise FileNotFoundError(f"Missing tracts GeoJSON: {TRACTS_GEOJSON}")

@@ -10,16 +10,15 @@ Input
 Output
 - data/processed/community_area_census.csv
 
-
 """
 
 from pathlib import Path
 import numpy as np
 import pandas as pd
 
-# --- Copied from make_tract_features.py (keeps this script self-contained) ---
+# Copied from make_tract_features.py (to keep this script self-contained)
 DEFAULT_WEIGHTS = {
-    "median_hh_income": 1.0,     # inverted
+    "median_hh_income": 1.0,     # inverted; negative relationship b/w median income & transport need
     "pct_no_vehicle_hh": 1.0,
     "pct_disabled": 1.0,
     "pct_65_plus": 1.0,
@@ -49,8 +48,8 @@ def add_need_index_percentile(df: pd.DataFrame,
     pct_df = pd.DataFrame(pct_feats)
     w_series = pd.Series({c: weights[c] for c in pct_df.columns}, dtype=float)
 
-    num = pct_df.mul(w_series, axis=1).sum(axis=1, skipna=True)
-    den = pct_df.notna().mul(w_series, axis=1).sum(axis=1)
+    num = pct_df.mul(w_series, axis = 1).sum(axis = 1, skipna = True)
+    den = pct_df.notna().mul(w_series, axis = 1).sum(axis = 1)
     need_0_1 = num / den
 
     dff[index_col] = (need_0_1 * 100).round(2)
@@ -72,7 +71,7 @@ def _infer_crosswalk_cols(xwalk: pd.DataFrame):
         raise ValueError("Could not infer community area id column in crosswalk.")
     ca_col = ca_candidates[0]
 
-    # Weight column (optional)
+    # Weight column
     w_candidates = [c for c in xwalk.columns if any(k in c.lower() for k in ["weight", "share", "pct", "proportion", "frac"])]
     w_col = w_candidates[0] if w_candidates else None
 
@@ -124,7 +123,7 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
             den = 1.0
         out["median_hh_income"] = (num / den).values
 
-    # Rates computed from summed numerators/denominators (best practice)
+    # Rates computed from summed numerators/denominators
     if "hh_no_vehicle_w" in merged.columns and "hh_total_w" in merged.columns:
         out["pct_no_vehicle_hh"] = (group["hh_no_vehicle_w"].sum() / group["hh_total_w"].sum()).values
 
@@ -141,12 +140,12 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
     # Compute CA-level index (percentiles across CAs)
     out = add_need_index_percentile(out, index_col="transportation_need_index_0_100")
 
-    # Optional: quintiles
+    # Quintiles
     out["need_quintile"] = pd.qcut(
         out["transportation_need_index_0_100"],
-        q=5,
-        labels=["Very Low", "Low", "Moderate", "High", "Very High"],
-        duplicates="drop",
+        q = 5,
+        labels = ["Very Low", "Low", "Moderate", "High", "Very High"],
+        duplicates = "drop",
     )
 
     return out

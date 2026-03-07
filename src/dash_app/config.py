@@ -4,7 +4,7 @@ TRACT_GEOJSON = "data/processed/tracts_chicago.geojson"
 CA_CSV = "data/processed/community_area_census.csv"
 CA_GEOJSON = "data/processed/community_areas.geojson"
 
-# Variables you want available in dropdown (works for both geographies)
+# Dropdown menu variables (for both tract & community-area level viz)
 DROPDOWN_VARS = [
     "transportation_need_index_0_100",
     "median_hh_income",

@@ -1,4 +1,6 @@
-from src.dash_app.app_factory import create_app
+
+from src.dash_app.app_creation import create_app
+
 
 def main():
     app = create_app()

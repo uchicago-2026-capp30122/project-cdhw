@@ -1,3 +1,9 @@
+"""
+Defines page layout w/ HTML.
+
+"""
+
+
 from dash import dcc, html
 
 def make_layout(map_vars):

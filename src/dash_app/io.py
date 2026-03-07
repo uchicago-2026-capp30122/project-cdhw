@@ -1,3 +1,9 @@
+"""
+Loads datasets for Dash visualization.
+
+"""
+
+
 import json
 import pandas as pd
 

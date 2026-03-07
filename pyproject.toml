@@ -14,11 +14,8 @@ dependencies = [
     "pandas>=2.3.3",
     "plotly>=6.5.2",
     "polars>=1.38.1",
-<<<<<<< HEAD
     "python-dotenv>=1.2.2",
-=======
     "pyarrow>=23.0.1",
->>>>>>> ciara/m2
     "pyvis>=0.3.2",
     "rapidfuzz>=3.14.3",
     "requests>=2.32.5",

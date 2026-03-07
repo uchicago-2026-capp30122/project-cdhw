@@ -906,11 +906,8 @@ dependencies = [
     { name = "pandas" },
     { name = "plotly" },
     { name = "polars" },
-<<<<<<< HEAD
     { name = "python-dotenv" },
-=======
     { name = "pyarrow" },
->>>>>>> ciara/m2
     { name = "pyvis" },
     { name = "rapidfuzz" },
     { name = "requests" },
@@ -935,11 +932,8 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.3.3" },
     { name = "plotly", specifier = ">=6.5.2" },
     { name = "polars", specifier = ">=1.38.1" },
-<<<<<<< HEAD
     { name = "python-dotenv", specifier = ">=1.2.2" },
-=======
     { name = "pyarrow", specifier = ">=23.0.1" },
->>>>>>> ciara/m2
     { name = "pyvis", specifier = ">=0.3.2" },
     { name = "rapidfuzz", specifier = ">=3.14.3" },
     { name = "requests", specifier = ">=2.32.5" },

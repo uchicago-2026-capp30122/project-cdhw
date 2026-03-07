@@ -1,5 +1,5 @@
 
-from src.dash_app.app_creation import create_app
+from visuals.dash_app.app_creation import create_app
 
 
 def main():

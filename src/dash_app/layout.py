@@ -1,3 +1,9 @@
+"""
+Defines page layout w/ HTML.
+
+"""
+
+
 from dash import dcc, html
 from visuals.rideshare_network import generate_rideshare_html
 

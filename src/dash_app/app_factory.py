@@ -1,9 +1,13 @@
+"""
+
+"""
+
 from dash import Dash, Input, Output
 
 from .config import TRACT_CSV, TRACT_GEOJSON, CA_CSV, CA_GEOJSON, DROPDOWN_VARS
 from .io import load_df, load_geojson
 from .layout import make_layout
-from .figures import make_choropleth
+from .figures import make_choropleth, NEED_COLOR_COLS
 
 def create_app():
     # Load both datasets once
@@ -13,11 +17,15 @@ def create_app():
     ca_df = load_df(CA_CSV, id_col="community_area")
     ca_geo = load_geojson(CA_GEOJSON)
 
-    # What variables exist in BOTH (so the dropdown works no matter the toggle)
+    # filter dropdown variables to those present in both tract & CA data (so the dropdown works no matter the toggle)
     tract_cols = set(tract_df.columns)
     ca_cols = set(ca_df.columns)
-    map_vars = [v for v in DROPDOWN_VARS if (v in tract_cols and v in ca_cols)]
-
+    map_vars = []
+    for v in DROPDOWN_VARS:
+        color_col = NEED_COLOR_COLS.get(v, v)
+        if color_col in tract_cols and color_col in ca_cols:
+            map_vars.append(v)
+            
     app = Dash(__name__)
     app.layout = make_layout(map_vars)
 
@@ -32,7 +40,7 @@ def create_app():
                 df=ca_df,
                 geojson=ca_geo,
                 id_col="community_area",
-                id_prop="community_area",   # CHANGE if your geojson uses a different property name
+                id_prop="community_area",
                 var_name=var_name,
             )
 

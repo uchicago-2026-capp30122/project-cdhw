@@ -17,7 +17,6 @@ import numpy as np
 import pandas as pd
 from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_VARS, NEED_LOW_VARS, add_need_component_scores
 
-<<<<<<< Updated upstream
 # Copied from make_tract_features.py (to keep this script self-contained)
 DEFAULT_WEIGHTS = {
     "median_hh_income": 1.0,     # inverted; negative relationship b/w median income & transport need
@@ -25,7 +24,6 @@ DEFAULT_WEIGHTS = {
     "pct_disabled": 1.0,
     "pct_65_plus": 1.0,
 }
-=======
 
 def add_need_component_scores(
     df: pd.DataFrame,
@@ -58,7 +56,6 @@ def add_need_component_scores(
         dff[f"{col}{suffix}"] = (pct * 100).round(2)
 
     return dff
->>>>>>> Stashed changes
 
 def add_need_index_percentile(df: pd.DataFrame,
                               weights: dict = None,

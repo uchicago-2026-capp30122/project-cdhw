@@ -5,11 +5,11 @@
 joining the clean datasets into:
 1. tract-level dataset (probably contains Census demographic data only)
 2. community-area level dataset, containing:
-    - aggregated Census demographic data, 
-    - CTA L & bus line data, 
+    - aggregated Census demographic data,
+    - CTA L & bus line data,
     - rideshare data,
     - walkability index
-    
+
 Input:
 - data/processed/community_area_census.csv
 - (later) data/processed/cta_ca_totals.csv
@@ -20,5 +20,5 @@ Output:
 
 
 
-    
+
 """

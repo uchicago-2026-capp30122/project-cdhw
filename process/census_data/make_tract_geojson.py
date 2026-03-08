@@ -48,11 +48,15 @@ def main():
 
     # Filter to Cook + DuPage
     gdf = gdf[gdf["COUNTYFP"].isin(COUNTYFPS)].copy()
-    
+
     # create a GEOID column in a stable way (added)
     # Some TIGER files have GEOID already; if not, build from STATEFP+COUNTYFP+TRACTCE
     if "GEOID" not in gdf.columns:
-        gdf["GEOID"] = gdf["STATEFP"].astype(str) + gdf["COUNTYFP"].astype(str) + gdf["TRACTCE"].astype(str)
+        gdf["GEOID"] = (
+            gdf["STATEFP"].astype(str)
+            + gdf["COUNTYFP"].astype(str)
+            + gdf["TRACTCE"].astype(str)
+        )
     gdf["GEOID"] = gdf["GEOID"].astype(str).str.zfill(11)
 
     # keep a Cook + DuPage copy BEFORE Chicago-only filtering
@@ -62,11 +66,11 @@ def main():
     keep_cols = ["GEOID", "COUNTYFP", "geometry"]
     gdf_cook_dup = gdf_cook_dup[keep_cols].to_crs(epsg=4326)
 
-    # write Cook + DuPage tracts output BEFORE Chicago-only filtering 
+    # write Cook + DuPage tracts output BEFORE Chicago-only filtering
     print("Writing the GeoJSON for Cook + DuPage county tracts...")
     gdf_cook_dup.to_file(OUT_COOK_DUPAGE_GEOJSON, driver="GeoJSON")
     print(f"Wrote: {OUT_COOK_DUPAGE_GEOJSON} (# tracts = {len(gdf_cook_dup)})")
-    
+
     ## Filter to Chicago-only using centroids & community areas boundary
     # Load community areas
     ca = gpd.read_file(PROCESSED_DIR / "community_areas.geojson")

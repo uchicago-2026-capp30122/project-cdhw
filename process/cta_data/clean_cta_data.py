@@ -1,126 +1,144 @@
-from pathlib import Path
+"""
+clean_cta_data.py
 
+Reads raw CTA files produced by NEW_fetch_cta_raw.py.
+Writes two clean files to data/processed/.
+
+the_geom column in geo points contains real lat long coordinates.
+point_x / point_y are state plane feet and are ignored.
+
+THE CROSSWALK BETWEEN THE DATASETS-
+station_id in geo points matches ridership station_id via:
+    ridership.station_id - 40000 == geo.station_id
+
+Inputs:
+    data/raw/cta_station_monthly_2024_raw.csv
+    data/raw/cta_station_geo_points_raw.csv
+
+Outputs:
+    data/processed/cta_station_monthly_2024_clean.csv
+    data/processed/cta_station_locations_clean.csv
+"""
+
+from pathlib import Path
+from typing import NamedTuple
+import re
 import pandas as pd
 
 
 RAW_DIR = Path("data/raw")
-OUT_DIR = Path("data/processed")
+PROCESSED_DIR = Path("data/processed")
+
+RAW_RIDERSHIP = RAW_DIR / "cta_station_monthly_2024_raw.csv"
+RAW_GEO = RAW_DIR / "cta_station_geo_points_raw.csv"
+
+OUT_RIDERSHIP = PROCESSED_DIR / "cta_station_monthly_2024_clean.csv"
+OUT_LOCATIONS = PROCESSED_DIR / "cta_station_locations_clean.csv"
 
 
-def _ensure_dirs() -> None:
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+class StationRow(NamedTuple):
+    station_id: int
+    station_name: str
+    month_beginning: str
+    year: int
+    month: int
+    month_total: int
 
 
-def load_station_monthly_raw() -> pd.DataFrame:
+class StationLocation(NamedTuple):
+    station_id: int
+    station_name: str
+    line_name: str
+    lat: float
+    lon: float
+
+
+def get_lat_lon(the_geom: str) -> tuple[float, float]:
     """
-    Load raw CTA station monthly data (2024).
+    Pull lat and lon out of a point string like 'POINT (-87.6768 41.8849)'.
+    Returns (lat, lon)
 
-    Returns:
-        DataFrame with columns:
-            station_id (int)
-            stationame (str)
-            month_beginning (datetime64)
-            monthtotal (int)
     """
-    path = RAW_DIR / "cta_station_monthly_2024_raw.csv"
-    df = pd.read_csv(path)
+    nums = re.findall(r"[-\d.]+", the_geom)
+    lon, lat = float(nums[0]), float(nums[1])
+    return lat, lon
 
-    df["station_id"] = df["station_id"].astype(int)
-    df["stationame"] = df["stationame"].astype(str)
-    df["month_beginning"] = pd.to_datetime(df["month_beginning"], errors="coerce")
-    df["monthtotal"] = (
-        pd.to_numeric(df["monthtotal"], errors="coerce").fillna(0).astype(int)
+
+def clean_ridership() -> list[StationRow]:
+    """
+    Read raw ridership CSV, keep only 2024 rows, and sum monthly totals
+    per station. Some stations have multiple entrances that show up as
+    separate rows — we collapse those into one row per station per month.
+
+    """
+    df = pd.read_csv(RAW_RIDERSHIP, parse_dates=["month_beginning"])
+    df = df[df["month_beginning"].dt.year == 2024].copy()
+    df = df.rename(columns={"stationame": "station_name", "monthtotal": "month_total"})
+    df["station_name"] = df["station_name"].str.strip()
+    df["year"] = df["month_beginning"].dt.year
+    df["month"] = df["month_beginning"].dt.month
+
+    # combining all entrances rows into a row per station, given that there are
+    # several entries to one station
+    df = df.groupby(["station_id", "month_beginning"], as_index=False).agg(
+        station_name=("station_name", "first"),
+        year=("year", "first"),
+        month=("month", "first"),
+        month_total=("month_total", "sum"),
     )
-    return df
+
+    rows = []
+    for _, row in df.iterrows():
+        rows.append(
+            StationRow(
+                station_id=int(row["station_id"]),
+                station_name=row["station_name"],
+                month_beginning=str(row["month_beginning"])[:10],
+                year=int(row["year"]),
+                month=int(row["month"]),
+                month_total=int(row["month_total"]),
+            )
+        )
+    return rows
 
 
-def build_station_monthly_clean(df: pd.DataFrame) -> pd.DataFrame:
+def clean_locations() -> list[StationLocation]:
     """
-    Add clean month fields and keep only needed columns.
-
-    Returns:
-        DataFrame with columns:
-            station_id, station_name, year, month, month_total
+    Read raw geo points, parse real WGS-84 coords from the_geom.
+    One row per station already — no collapsing needed.
     """
-    df = df.copy()
+    df = pd.read_csv(RAW_GEO)
 
-    df["year"] = df["month_beginning"].dt.year.astype(int)
-    df["month"] = df["month_beginning"].dt.month.astype(int)
-
-    out = df.rename(
-        columns={
-            "stationame": "station_name",
-            "monthtotal": "month_total",
-        }
-    )[["station_id", "station_name", "year", "month", "month_total"]]
-
-    # Safety: restrict to 2024 only
-    out = out[out["year"] == 2024].reset_index(drop=True)
-    return out
-
-
-def load_systemwide_daily_raw() -> pd.DataFrame:
-    """
-    Load raw CTA systemwide daily ridership (2024).
-
-    Returns:
-        DataFrame with columns:
-            service_date (datetime64)
-            bus (int)
-            rail_boardings (int)
-            total_rides (int)
-    """
-    path = RAW_DIR / "cta_systemwide_daily_2024_raw.csv"
-    df = pd.read_csv(path)
-
-    df["service_date"] = pd.to_datetime(df["service_date"], errors="coerce")
-    df["bus"] = pd.to_numeric(df["bus"], errors="coerce").fillna(0).astype(int)
-    df["rail_boardings"] = (
-        pd.to_numeric(df["rail_boardings"], errors="coerce").fillna(0).astype(int)
-    )
-    df["total_rides"] = (
-        pd.to_numeric(df["total_rides"], errors="coerce").fillna(0).astype(int)
-    )
-    return df
-
-
-def build_systemwide_monthly(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Aggregate systemwide daily data to monthly totals for 2024.
-
-    Returns:
-        DataFrame with columns:
-            year, month, bus, rail_boardings, total_rides
-    """
-    df = df.copy()
-
-    df["year"] = df["service_date"].dt.year.astype(int)
-    df["month"] = df["service_date"].dt.month.astype(int)
-
-    out = (
-        df[df["year"] == 2024]
-        .groupby(["year", "month"], as_index=False)[
-            ["bus", "rail_boardings", "total_rides"]
-        ]
-        .sum()
-    )
-    return out
+    locations = []
+    for _, row in df.iterrows():
+        lat, lon = get_lat_lon(str(row["the_geom"]))
+        locations.append(
+            StationLocation(
+                station_id=int(row["station_id"]),
+                station_name=str(row["longname"]).strip(),
+                line_name=str(row["lines"]).strip(),
+                lat=lat,
+                lon=lon,
+            )
+        )
+    return sorted(locations, key=lambda x: x.station_id)
 
 
 def main() -> None:
-    _ensure_dirs()
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Station monthly (already monthly in source)
-    station_raw = load_station_monthly_raw()
-    station_clean = build_station_monthly_clean(station_raw)
-    station_clean.to_csv(OUT_DIR / "cta_station_monthly_2024_clean.csv", index=False)
+    ridership = clean_ridership()
+    locations = clean_locations()
 
-    # Systemwide monthly (aggregate from daily)
-    sys_raw = load_systemwide_daily_raw()
-    sys_monthly = build_systemwide_monthly(sys_raw)
-    sys_monthly.to_csv(OUT_DIR / "cta_systemwide_monthly_2024_clean.csv", index=False)
+    pd.DataFrame(ridership).to_csv(OUT_RIDERSHIP, index=False)
+    pd.DataFrame(locations).to_csv(OUT_LOCATIONS, index=False)
 
-    print("CTA 2024 data successfully cleaned and written to data/processed/.")
+    print(
+        f"Ridership -> {OUT_RIDERSHIP}  ({len(ridership):,} rows, {len(set(r.station_id for r in ridership))} stations)"
+    )
+    print(f"Locations -> {OUT_LOCATIONS}  ({len(locations)} stations)")
+    print("\nLocations sample:")
+    print(pd.DataFrame(locations).head(3).to_string())
 
 
 if __name__ == "__main__":

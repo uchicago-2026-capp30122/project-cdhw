@@ -16,7 +16,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_VARS, NEED_LOW_VARS, add_need_component_scores
+from src.api_client import get_community_areas
 
+<<<<<<< HEAD
 # Copied from make_tract_features.py (to keep this script self-contained)
 DEFAULT_WEIGHTS = {
     "median_hh_income": 1.0,     # inverted; negative relationship b/w median income & transport need
@@ -24,6 +26,8 @@ DEFAULT_WEIGHTS = {
     "pct_disabled": 1.0,
     "pct_65_plus": 1.0,
 }
+=======
+>>>>>>> 9649d597e59c1768461c0d2549e24d73cb3ec5ae
 
 def add_need_component_scores(
     df: pd.DataFrame,
@@ -76,11 +80,6 @@ def add_need_index_percentile(df: pd.DataFrame,
 
     need_df = dff[need_cols]
 
-<<<<<<< Updated upstream
-    num = pct_df.mul(w_series, axis = 1).sum(axis = 1, skipna = True)
-    den = pct_df.notna().mul(w_series, axis = 1).sum(axis = 1)
-    need_0_1 = num / den
-=======
     w_series = pd.Series(
         {
             f"{raw_col}{suffix}": weight
@@ -94,7 +93,6 @@ def add_need_index_percentile(df: pd.DataFrame,
     num = need_df.mul(w_series, axis=1).sum(axis=1, skipna=True)
     den = need_df.notna().mul(w_series, axis=1).sum(axis=1)
     dff[index_col] = (num / den).round(2)
->>>>>>> Stashed changes
 
     return dff
 
@@ -179,6 +177,16 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
     # Rename CA id column to a consistent name for Dash
     out = out.rename(columns={ca_col: "community_area"})
     out["community_area"] = pd.to_numeric(out["community_area"], errors="coerce").astype("Int64")
+    
+    # ADDED: append centroid coordinates from David's API client lookup
+    community_areas = get_community_areas()
+
+    out["centroid_lat"] = out["community_area"].map(
+        lambda x: community_areas.get(int(x), {}).get("lat") if pd.notna(x) else None
+    )
+    out["centroid_lon"] = out["community_area"].map(
+        lambda x: community_areas.get(int(x), {}).get("lon") if pd.notna(x) else None
+    )
 
     # create CA-level need-oriented component score columns
     # so the Dash dropdown variables can map to *_need_0_100 columns.
@@ -187,11 +195,7 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
     # compute CA-level composite index from those component need scores
     out = add_need_index_percentile(out, index_col="transportation_need_index_0_100")
 
-<<<<<<< Updated upstream
-    # Quintiles
-=======
     # optional: quintiles
->>>>>>> Stashed changes
     out["need_quintile"] = pd.qcut(
         out["transportation_need_index_0_100"],
         q = 5,

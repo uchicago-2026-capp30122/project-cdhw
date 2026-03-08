@@ -2,6 +2,7 @@ import os
 import requests
 from shapely.geometry import shape as shape_geojson
 from dotenv import load_dotenv
+import pandas as pd
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,7 +23,12 @@ HEADERS = {
 COMMUNITY_AREAS = "igwz-8jzy"   # Community area boundaries (GeoJSON geometry)
 TNP_TRIPS_2025 = "6dvr-xwnh"    # Rideshare trips dataset
 ACS_CA = "t68z-cikk"            # American Community Survey data by community area
-
+CTA_STATIONS = "vmyy-m9qj"      # CTA Stations
+CTA_RIDERSHIP = "t2rn-p8d7"     # CTA Monthly L entries
+CTA_GEO_POINTS = "3tzw-cg4m"    # CTA Station Location Joinder
+CTA_STATIONS_ZIP_URL = (
+    "https://data.cityofchicago.org/download/vmyy-m9qj/application%2Fx-zip-compressed"
+)
 # ----------------------------
 # SODA3 query + row extraction
 # ----------------------------
@@ -130,3 +136,17 @@ def get_population_by_ca():
                 pass  # skip if population is not a valid number
     
     return pop_map
+
+# ----------------------------
+# CTA Information, Reading files
+# ----------------------------
+
+def fetch_csv(view_id: str, limit: int = 50000) -> pd.DataFrame:
+    url = f"https://data.cityofchicago.org/resource/{view_id}.csv?$limit={limit}"
+    return pd.read_csv(url)
+
+def download_file(url: str, timeout=(10, 120)) -> bytes:
+    resp = requests.get(url, headers=HEADERS, timeout=timeout)
+    if resp.status_code != 200:
+        raise RuntimeError(f"Download error {resp.status_code}: {resp.text[:1200]}")
+    return resp.content

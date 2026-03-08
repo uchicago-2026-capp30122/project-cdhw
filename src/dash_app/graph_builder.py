@@ -1,10 +1,5 @@
 import networkx as nx
-from visuals.network_analysis import (
-    comm_area_totals,
-    get_top_incoming,
-    get_top_outgoing,
-)
-
+from visuals.network_analysis import comm_area_totals, top_least_neighbors
 
 def build_rideshare_graph(rideshare_data):
     """
@@ -27,9 +22,9 @@ def build_rideshare_graph(rideshare_data):
 
         # Store node data in dictionary, with key as community area name
         if node not in nodes:
-            nodes[node] = {"ca_num": ride["pickup_community_area"]}
-            nodes[node]["lat"] = ride["pickup_lat"]
-            nodes[node]["lon"] = ride["pickup_lon"]
+            nodes[node] = {'ca_num': int(ride['pickup_community_area'])}
+            nodes[node]['lat'] = ride['pickup_lat']
+            nodes[node]['lon'] = ride['pickup_lon']
 
         # Add edge of ride, with pickup as 'from' and dropoff as 'to'
         ride_nx.add_edge(
@@ -44,20 +39,29 @@ def build_rideshare_graph(rideshare_data):
     for node, data in nodes.items():
         # Functions from network_analysis.py
         comm_area_trips = comm_area_totals(ride_nx, node)
-        incoming = comm_area_trips["total_incoming"]
-        outgoing = comm_area_trips["total_outgoing"]
-        top_inc = get_top_incoming(ride_nx, node, 5)
-        top_out = get_top_outgoing(ride_nx, node, 5)
+        incoming = comm_area_trips['total_incoming']
+        outgoing = comm_area_trips['total_outgoing']
+        top, least = top_least_neighbors(ride_nx, node, 5)
 
-        # Convert dictionary outputs to strings so they can be easily
-        # added to node title
-        top_inc_str = ""
-        for area, percent in top_inc:
-            top_inc_str += f"{area}: {percent:.1%}\n"
+        #Convert dictionary outputs to strings so they can be easily
+        #added to node title 
+        top_str = ""
+        for area in top:
+            top_str += f"{area['neighbor'].title()} ({area['total_rides']:,})\n"
 
-        top_out_str = ""
-        for area, percent in top_out:
-            top_out_str += f"{area}: {percent:.1%}\n"
+        least_str = ""
+        for area in least:
+            least_str += f"{area['neighbor'].title()} ({area['total_rides']:,})\n"
+
+        #Add nodes with data
+        ride_nx.add_node(node, 
+                        label = node,
+                        ca_num = data['ca_num'],
+                        x = data['lon'] * 10000,
+                        y = data['lat'] * -10000,
+                        total_trips = incoming + outgoing,
+                        top_neighbors = top_str,
+                        least_neighbors = least_str)
 
         # Add nodes with data
         ride_nx.add_node(
@@ -67,8 +71,8 @@ def build_rideshare_graph(rideshare_data):
             x=data["lon"] * 10000,
             y=data["lat"] * -10000,
             total_trips=incoming + outgoing,
-            top_incoming=top_inc_str,
-            top_outgoing=top_out_str,
+            top_incoming=top_str,
+            top_outgoing=least_str,
         )
 
     return ride_nx

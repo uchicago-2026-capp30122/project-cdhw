@@ -5,8 +5,8 @@ from visuals.graph_vis import make_pyvis
 import webbrowser
 import os
 
-def generate_html():
 
+def generate_html():
     rideshare = load_rideshare_json(RIDESHARE_COMMUNITY_JSON)
 
     ride_nx = build_rideshare_graph(rideshare)
@@ -32,10 +32,10 @@ def generate_html():
     }
                          
     """)
-    
+
     html = ride_net.generate_html()
-    
-    #center graph on coordinates of Chicago
+
+    # center graph on coordinates of Chicago
     zoom_script = """
         <script>
         setTimeout(function() {
@@ -50,6 +50,7 @@ def generate_html():
     html = html.replace("</body>", zoom_script + "</body>")
 
     return html
+
 
 def display_rideshare_network(html):
     with open("network.html", "w") as f:

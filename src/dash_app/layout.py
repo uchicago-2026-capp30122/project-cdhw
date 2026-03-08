@@ -6,13 +6,13 @@ Defines page layout w/ HTML.
 from dash import dcc, html
 from src.dash_app.generate_rideshare_html import generate_html
 
+
 def make_layout(map_vars):
     return html.Div(
         style={"maxWidth": "1100px", "margin": "0 auto", "padding": "16px"},
         
         children=[
             html.H2("Chicago-area Transportation Need Map (MVP)"),
-
             html.Label("Geography"),
             dcc.RadioItems(
                 id="geo-toggle",
@@ -43,7 +43,6 @@ def make_layout(map_vars):
                 value=map_vars[0] if map_vars else None,
                 clearable=False,
             ),
-
             dcc.Graph(id="choropleth", style={"height": "75vh"}),
 
             # block for network analysis graph

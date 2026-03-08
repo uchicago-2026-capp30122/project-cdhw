@@ -2,7 +2,6 @@
 Creates visuals (choropleth).
 """
 
-
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -19,7 +18,10 @@ NEED_COLOR_COLS = {
     "pct_65_plus": "pct_65_plus_need_0_100",
 }
 
-def make_choropleth(df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, var_name: str):
+
+def make_choropleth(
+    df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, var_name: str
+):
     if not var_name:
         return px.scatter(title="No variable selected.")
 
@@ -29,14 +31,14 @@ def make_choropleth(df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, 
     dff[id_col] = dff[id_col].astype(str)
     if id_col == "GEOID":
         dff[id_col] = dff[id_col].str.zfill(11)
-        
+
     # determining which column should drive color. For component indicators, use the need-oriented score column.
     color_col = NEED_COLOR_COLS.get(var_name, var_name)
 
     # Coerce raw display vars & color vars to numeric if present.
     if var_name in dff.columns:
-        dff[var_name] = pd.to_numeric(dff[var_name], errors = "coerce")
-    
+        dff[var_name] = pd.to_numeric(dff[var_name], errors="coerce")
+
     if color_col in dff.columns:
         dff[color_col] = pd.to_numeric(dff[color_col], errors="coerce")
 
@@ -48,9 +50,9 @@ def make_choropleth(df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, 
     # # clean impossible values in the need-color column if present as sentinels via pipeline issues.
     # if color_col in dff.columns:
     #     dff.loc[dff[color_col].isin(MISSING_SENTINELS), color_col] = pd.NA
-        
+
     dff = dff.dropna(subset=[color_col])
-    
+
     # legend title so users know this is a need-oriented scale.
     if var_name == "transportation_need_index_0_100":
         colorbar_title = "transportation_need_index_0_100"

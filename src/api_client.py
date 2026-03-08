@@ -12,7 +12,9 @@ load_dotenv()
 # ----------------------------
 SOCRATA_APP_TOKEN = os.environ.get("SOCRATA_APP_TOKEN")
 if not SOCRATA_APP_TOKEN:
-    raise RuntimeError("SOCRATA_APP_TOKEN is not set (fish: set -x SOCRATA_APP_TOKEN your_token).")
+    raise RuntimeError(
+        "SOCRATA_APP_TOKEN is not set (fish: set -x SOCRATA_APP_TOKEN your_token)."
+    )
 
 HEADERS = {
     "Accept": "application/json",
@@ -20,19 +22,27 @@ HEADERS = {
 }
 
 # SODA 3.0 view IDs
-COMMUNITY_AREAS = "igwz-8jzy"   # Community area boundaries (GeoJSON geometry)
-TNP_TRIPS_2025 = "6dvr-xwnh"    # Rideshare trips dataset
-ACS_CA = "t68z-cikk"            # American Community Survey data by community area
-CTA_STATIONS = "vmyy-m9qj"      # CTA Stations
-CTA_RIDERSHIP = "t2rn-p8d7"     # CTA Monthly L entries
-CTA_GEO_POINTS = "3tzw-cg4m"    # CTA Station Location Joinder
+COMMUNITY_AREAS = "igwz-8jzy"  # Community area boundaries (GeoJSON geometry)
+TNP_TRIPS_2025 = "6dvr-xwnh"  # Rideshare trips dataset
+ACS_CA = "t68z-cikk"  # American Community Survey data by community area
+CTA_STATIONS = "vmyy-m9qj"  # CTA Stations
+CTA_RIDERSHIP = "t2rn-p8d7"  # CTA Monthly L entries
+CTA_GEO_POINTS = "3tzw-cg4m"  # CTA Station Location Joinder
 CTA_STATIONS_ZIP_URL = (
     "https://data.cityofchicago.org/download/vmyy-m9qj/application%2Fx-zip-compressed"
 )
+
+
 # ----------------------------
 # SODA3 query + row extraction
 # ----------------------------
-def soda3_post(view_id: str, soql: str, page_number: int = 1, page_size: int = 50000, timeout=(10, 300)):
+def soda3_post(
+    view_id: str,
+    soql: str,
+    page_number: int = 1,
+    page_size: int = 50000,
+    timeout=(10, 300),
+):
     url = f"https://data.cityofchicago.org/api/v3/views/{view_id}/query.json"
     payload = {
         "query": soql,
@@ -43,6 +53,7 @@ def soda3_post(view_id: str, soql: str, page_number: int = 1, page_size: int = 5
     if resp.status_code != 200:
         raise RuntimeError(f"SODA3 error {resp.status_code}: {resp.text[:1200]}")
     return resp.json()
+
 
 # ----------------------------
 # Community Areas -> centroids (GeoJSON dict geometry)
@@ -60,7 +71,9 @@ def get_community_areas():
     areas = {}  # ca_id -> {"name": str, "lon": float, "lat": float}
     for r in rows:
         if not isinstance(r, dict):
-            raise RuntimeError(f"Unexpected row type from community areas API: {type(r)}")
+            raise RuntimeError(
+                f"Unexpected row type from community areas API: {type(r)}"
+            )
 
         ca_raw = r.get("area_numbe")
         name = (r.get("community") or "").strip()
@@ -77,8 +90,11 @@ def get_community_areas():
         areas[ca_id] = {"name": name, "lon": float(c.x), "lat": float(c.y)}
 
     if len(areas) == 0:
-        raise RuntimeError("No community areas returned; check API token / permissions / view id.")
+        raise RuntimeError(
+            "No community areas returned; check API token / permissions / view id."
+        )
     return areas
+
 
 # ----------------------------
 # Rideshare edges (grouped OD counts) via SODA3
@@ -106,6 +122,7 @@ def get_edges_grouped_by_ca(date_start=None, date_end=None):
 
     return soda3_post(TNP_TRIPS_2025, soql, page_size=10000, timeout=(10, 600))
 
+
 # ----------------------------
 # ACS Population -> dict {Area Name: Population}
 # ----------------------------
@@ -118,13 +135,11 @@ def get_population_by_ca():
     soql = "SELECT community_area, total_population"
     rows = soda3_post(ACS_CA, soql, page_size=1000)
 
-
-
     pop_map = {}
     for r in rows:
         if not isinstance(r, dict):
             continue
-        
+
         c_name = r.get("community_area")
         pop_str = r.get("total_population")
 
@@ -134,16 +149,19 @@ def get_population_by_ca():
                 pop_map[c_name.strip()] = int(float(pop_str))
             except ValueError:
                 pass  # skip if population is not a valid number
-    
+
     return pop_map
+
 
 # ----------------------------
 # CTA Information, Reading files
 # ----------------------------
 
+
 def fetch_csv(view_id: str, limit: int = 50000) -> pd.DataFrame:
     url = f"https://data.cityofchicago.org/resource/{view_id}.csv?$limit={limit}"
     return pd.read_csv(url)
+
 
 def download_file(url: str, timeout=(10, 120)) -> bytes:
     resp = requests.get(url, headers=HEADERS, timeout=timeout)

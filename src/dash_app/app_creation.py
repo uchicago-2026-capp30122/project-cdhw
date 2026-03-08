@@ -18,12 +18,13 @@ from .io import load_df, load_geojson
 from .layout import make_layout
 from .figures import make_choropleth, add_selected_overlays, NEED_COLOR_COLS
 
+
 def create_app():
     # Load both datasets once
     tract_df = load_df(TRACT_CSV, id_col="GEOID")
     tract_geo = load_geojson(TRACT_GEOJSON)
 
-    ca_df = load_df(CA_CSV, id_col = "community_area")
+    ca_df = load_df(CA_CSV, id_col="community_area")
     ca_geo = load_geojson(CA_GEOJSON)
     
     # cta_df = load_df(CTA_CSV, id_col = #tbd) # insert Ciara's CSV dataset here

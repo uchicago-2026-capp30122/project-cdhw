@@ -17,6 +17,7 @@ Columns: GEOID, community_area, weight
 For most GEOIDs: sum(weight) ≈ 1.0
 
 """
+
 # import warnings
 from pathlib import Path
 import geopandas as gpd
@@ -54,9 +55,13 @@ def main():
     cas = gpd.read_file(CA_GEOJSON)
 
     if "community_area" not in cas.columns:
-        raise KeyError("Community Areas GeoJSON must contain a community_area column in properties.")
+        raise KeyError(
+            "Community Areas GeoJSON must contain a community_area column in properties."
+        )
 
-    cas["community_area"] = pd.to_numeric(cas["community_area"], errors="coerce").astype("Int64")
+    cas["community_area"] = pd.to_numeric(
+        cas["community_area"], errors="coerce"
+    ).astype("Int64")
     cas = cas.dropna(subset=["community_area"]).copy()
     cas["community_area"] = cas["community_area"].astype(int)
     cas = cas[["community_area", "geometry"]].copy()
@@ -78,10 +83,14 @@ def main():
 
     print("Computing intersections (this can take a bit)...")
     # Intersection overlay: one row per (tract, community_area) overlap
-    inter = gpd.overlay(tracts[["GEOID", "geometry"]], cas, how="intersection", keep_geom_type=True)
+    inter = gpd.overlay(
+        tracts[["GEOID", "geometry"]], cas, how="intersection", keep_geom_type=True
+    )
 
     if inter.empty:
-        raise RuntimeError("Intersection result is empty. Check that both layers overlap and CRS is correct.")
+        raise RuntimeError(
+            "Intersection result is empty. Check that both layers overlap and CRS is correct."
+        )
 
     inter["inter_area"] = inter.geometry.area
 
@@ -108,7 +117,9 @@ def main():
     # Sanity checks
     sums = out.groupby("GEOID")["weight"].sum()
     print(f"Tracts: {sums.shape[0]:,}")
-    print(f"Weight sums (min/mean/max): {sums.min():.6f} / {sums.mean():.6f} / {sums.max():.6f}")
+    print(
+        f"Weight sums (min/mean/max): {sums.min():.6f} / {sums.mean():.6f} / {sums.max():.6f}"
+    )
 
     split = (out.groupby("GEOID").size() > 1).sum()
     print(f"Tracts split across >1 community area: {split:,}")

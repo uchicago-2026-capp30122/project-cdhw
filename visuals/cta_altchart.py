@@ -17,8 +17,12 @@ def load_commarea_annual() -> pd.DataFrame:
     path = PROCESSED_DIR / "cta_commarea_annual_2024.csv"
     df = pd.read_csv(path)
 
-    df["community_area"] = pd.to_numeric(df["community_area"], errors="coerce").astype("Int64")
-    df["cta_2024_total"] = pd.to_numeric(df["cta_2024_total"], errors="coerce").fillna(0).astype(int)
+    df["community_area"] = pd.to_numeric(df["community_area"], errors="coerce").astype(
+        "Int64"
+    )
+    df["cta_2024_total"] = (
+        pd.to_numeric(df["cta_2024_total"], errors="coerce").fillna(0).astype(int)
+    )
     df["community"] = df["community"].astype(str)
 
     return df

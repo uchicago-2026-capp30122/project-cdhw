@@ -1,9 +1,3 @@
-from pathlib import Path
-
-
-RIDESHARE_COMMUNITY_JSON = Path(__file__).parent.parent/'data/processed/rideshare_community_areas.json'
-
-
 def comm_area_totals(graph, comm_area):
     """
     This function will return a dictionary with the number of incoming and outgoing rides 

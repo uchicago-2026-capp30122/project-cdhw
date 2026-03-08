@@ -3,7 +3,6 @@ Defines page layout w/ HTML.
 
 """
 
-
 from dash import dcc, html
 from src.dash_app.generate_rideshare_html import generate_html
 

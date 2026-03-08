@@ -64,14 +64,14 @@ def make_choropleth(df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, 
     if color_col != var_name and color_col in dff.columns:
         hover_cols.append(color_col)
 
-    fig = px.choropleth_map(
+    fig = px.choropleth_mapbox(
         dff,
         geojson = geojson,
         locations = id_col,
         featureidkey = f"properties.{id_prop}",
         color = color_col,
         color_continuous_scale = "Viridis_r",
-        map_style = "open-street-map",
+        mapbox_style = "open-street-map",
         zoom = 9,
         center = {"lat": 41.88, "lon": -87.63},
         opacity = 0.65,
@@ -140,7 +140,7 @@ def add_point_overlay(
     hovertemplate = "<br>".join(hovertemplate_parts) + "<extra></extra>"
 
     fig.add_trace(
-        go.Scattermap(
+        go.Scattermapbox(
             lat = dff[lat_col],
             lon = dff[lon_col],
             mode = "markers",

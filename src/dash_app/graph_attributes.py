@@ -35,6 +35,7 @@ def update_ca_data_colors_size(ride_nx, ca_csv):
 
     pop_lookup = dict(zip(ca_csv['community_area'],ca_csv['pop_total']))
 
-    ca_csv.to_csv('data/processed/community_area_census.csv', index = False)
+    # # commented out, b/c it was overwriting the community_area_census.csv and erasing the values under total_trips
+    # ca_csv.to_csv('data/processed/community_area_census.csv', index = False)
 
     return color_lookup, pop_lookup

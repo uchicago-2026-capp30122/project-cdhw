@@ -13,11 +13,10 @@ Design:
 """
 
 from dash import Dash, Input, Output
-
-from .config import TRACT_CSV, TRACT_GEOJSON, CA_CSV, CA_GEOJSON, DROPDOWN_VARS
+from .config import TRACT_CSV, TRACT_GEOJSON, CA_CSV, CA_GEOJSON, CTA_CSV, DROPDOWN_VARS
 from .io import load_df, load_geojson
 from .layout import make_layout
-from .figures import make_choropleth
+from .figures import make_choropleth, add_selected_overlays, NEED_COLOR_COLS
 
 def create_app():
     # Load both datasets once
@@ -27,13 +26,17 @@ def create_app():
     ca_df = load_df(CA_CSV, id_col = "community_area")
     ca_geo = load_geojson(CA_GEOJSON)
     
-    #stations_points_df = # insert Ciara's CSV dataset here
+    # cta_df = load_df(CTA_CSV, id_col = #tbd) # insert Ciara's CSV dataset here
 
     # What variables exist in both (so the dropdown works no matter the toggle)
     tract_cols = set(tract_df.columns)
     ca_cols = set(ca_df.columns)
-    map_vars = [v for v in DROPDOWN_VARS if (v in tract_cols and v in ca_cols)]
-
+    map_vars = []
+    for v in DROPDOWN_VARS:
+        color_col = NEED_COLOR_COLS.get(v, v)
+        if color_col in tract_cols and color_col in ca_cols:
+            map_vars.append(v)
+            
     app = Dash(__name__)
     app.layout = make_layout(map_vars)
 
@@ -41,24 +44,32 @@ def create_app():
         Output("choropleth", "figure"),
         Input("geo-toggle", "value"),
         Input("var-dropdown", "value"),
+        Input("overlay-toggle", "value"),
     )
-    def update(geo_level, var_name):
+    def update(geo_level, var_name, overlays):
         if geo_level == "ca":
-            return make_choropleth(
-                df = ca_df,
-                geojson = ca_geo,
-                id_col = "community_area",
-                id_prop = "community_area",
-                var_name = var_name,
+            fig = make_choropleth(
+                df=ca_df,
+                geojson=ca_geo,
+                id_col="community_area",
+                id_prop="community_area",
+                var_name=var_name,
+            )
+        else:
+            fig = make_choropleth(
+                df=tract_df,
+                geojson=tract_geo,
+                id_col="GEOID",
+                id_prop="GEOID",
+                var_name=var_name,
             )
 
-        # default: tract
-        return make_choropleth(
-            df = tract_df,
-            geojson = tract_geo,
-            id_col = "GEOID",
-            id_prop = "GEOID",
-            var_name = var_name,
+        fig = add_selected_overlays(
+            fig,
+            overlays,
+            # cta_df=cta_df, # uncomment, once aggregated CSV dataset is complete.
+            rideshare_df=ca_df,
         )
-
+        return fig
+    
     return app

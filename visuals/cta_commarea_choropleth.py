@@ -38,7 +38,7 @@ def choropleth_cta_annual(ca_geojson: dict, ca_annual: pl.DataFrame) -> alt.Char
     data_rows = ca_annual.to_pandas()
 
     # source = alt.Data(values=data_rows.to_dict(orient="records"))
-    
+
     chart = (
         alt.Chart(alt.Data(values=ca_geojson["features"]))
         .mark_geoshape()
@@ -54,7 +54,11 @@ def choropleth_cta_annual(ca_geojson: dict, ca_annual: pl.DataFrame) -> alt.Char
             lookup="properties.community_area",
             from_=alt.LookupData(source, "community_area", ["cta_2024_total"]),
         )
-        .properties(width=700, height=500, title="CTA 'L' station entries by community area (2024)")
+        .properties(
+            width=700,
+            height=500,
+            title="CTA 'L' station entries by community area (2024)",
+        )
     )
 
     return chart

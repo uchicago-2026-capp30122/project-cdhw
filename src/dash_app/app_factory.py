@@ -1,6 +1,4 @@
-"""
-
-"""
+""" """
 
 from dash import Dash, Input, Output
 
@@ -8,6 +6,7 @@ from .config import TRACT_CSV, TRACT_GEOJSON, CA_CSV, CA_GEOJSON, DROPDOWN_VARS
 from .io import load_df, load_geojson
 from .layout import make_layout
 from .figures import make_choropleth, NEED_COLOR_COLS
+
 
 def create_app():
     # Load both datasets once
@@ -25,7 +24,7 @@ def create_app():
         color_col = NEED_COLOR_COLS.get(v, v)
         if color_col in tract_cols and color_col in ca_cols:
             map_vars.append(v)
-            
+
     app = Dash(__name__)
     app.layout = make_layout(map_vars)
 

@@ -14,4 +14,3 @@ DROPDOWN_VARS = [
     "pct_disabled",
     "pct_65_plus",
 ]
-

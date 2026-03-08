@@ -30,10 +30,7 @@ def download_geojson() -> dict:
         "?method=export&format=GeoJSON"
     )
 
-    headers = {
-        "Accept": "application/json",
-        "User-Agent": "project-cdhw (httpx)"
-    }
+    headers = {"Accept": "application/json", "User-Agent": "project-cdhw (httpx)"}
 
     with httpx.Client(timeout=120.0, follow_redirects=True) as client:
         resp = client.get(url, headers=headers)

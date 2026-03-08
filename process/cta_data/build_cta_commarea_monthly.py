@@ -48,7 +48,9 @@ def main() -> None:
     out = build_commarea_monthly(base)
 
     out.write_csv(OUT_PATH)
-    print(f"Wrote {OUT_PATH} ({out.height} rows, {out['community_area'].n_unique()} community areas)")
+    print(
+        f"Wrote {OUT_PATH} ({out.height} rows, {out['community_area'].n_unique()} community areas)"
+    )
 
 
 if __name__ == "__main__":

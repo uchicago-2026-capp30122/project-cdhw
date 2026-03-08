@@ -22,11 +22,11 @@ import json
 import pandas as pd
 
 
-RID_PATH    = Path("data/processed/cta_station_monthly_2024_clean.csv")
-LOC_PATH    = Path("data/processed/cta_station_locations_clean.csv")
+RID_PATH = Path("data/processed/cta_station_monthly_2024_clean.csv")
+LOC_PATH = Path("data/processed/cta_station_locations_clean.csv")
 CA_GEO_PATH = Path("data/processed/community_areas.pretty.geojson")
 CA_CEN_PATH = Path("data/processed/community_area_census.csv")
-OUT_PATH    = Path("data/processed/cta_station_monthly_2024_geo_commarea.csv")
+OUT_PATH = Path("data/processed/cta_station_monthly_2024_geo_commarea.csv")
 
 
 class RidershipRow(NamedTuple):
@@ -68,14 +68,16 @@ def load_ridership(path: Path) -> list[RidershipRow]:
     df = pd.read_csv(path)
     rows = []
     for _, row in df.iterrows():
-        rows.append(RidershipRow(
-            station_id      = int(row["station_id"]),
-            station_name    = str(row["station_name"]),
-            month_beginning = str(row["month_beginning"]),
-            year            = int(row["year"]),
-            month           = int(row["month"]),
-            month_total     = int(row["month_total"]),
-        ))
+        rows.append(
+            RidershipRow(
+                station_id=int(row["station_id"]),
+                station_name=str(row["station_name"]),
+                month_beginning=str(row["month_beginning"]),
+                year=int(row["year"]),
+                month=int(row["month"]),
+                month_total=int(row["month_total"]),
+            )
+        )
     return rows
 
 
@@ -89,11 +91,11 @@ def load_locations(path: Path) -> dict[int, StationLocation]:
     for _, row in df.iterrows():
         sid = int(row["station_id"])
         locations[sid] = StationLocation(
-            station_id   = sid,
-            station_name = str(row["station_name"]),
-            line_name    = str(row["line_name"]),
-            lat          = float(row["lat"]),
-            lon          = float(row["lon"]),
+            station_id=sid,
+            station_name=str(row["station_name"]),
+            line_name=str(row["line_name"]),
+            lat=float(row["lat"]),
+            lon=float(row["lon"]),
         )
     return locations
 
@@ -106,11 +108,13 @@ def load_community_areas(path: Path) -> list[CommunityArea]:
     areas = []
     for feature in geojson["features"]:
         props = feature["properties"]
-        areas.append(CommunityArea(
-            community_area = int(props["community_area"]),
-            community      = str(props["community"]),
-            polygon        = shape(feature["geometry"]),
-        ))
+        areas.append(
+            CommunityArea(
+                community_area=int(props["community_area"]),
+                community=str(props["community"]),
+                polygon=shape(feature["geometry"]),
+            )
+        )
     return areas
 
 
@@ -121,14 +125,14 @@ def load_census(path: Path) -> dict[int, CensusRow]:
     for _, row in df.iterrows():
         ca = int(row["community_area"])
         census[ca] = CensusRow(
-            community_area                  = ca,
-            pop_total                       = row["pop_total"],
-            median_hh_income                = row["median_hh_income"],
-            pct_no_vehicle_hh               = row["pct_no_vehicle_hh"],
-            pct_disabled                    = row["pct_disabled"],
-            pct_65_plus                     = row["pct_65_plus"],
-            transportation_need_index_0_100 = row["transportation_need_index_0_100"],
-            need_quintile                   = row["need_quintile"],
+            community_area=ca,
+            pop_total=row["pop_total"],
+            median_hh_income=row["median_hh_income"],
+            pct_no_vehicle_hh=row["pct_no_vehicle_hh"],
+            pct_disabled=row["pct_disabled"],
+            pct_65_plus=row["pct_65_plus"],
+            transportation_need_index_0_100=row["transportation_need_index_0_100"],
+            need_quintile=row["need_quintile"],
         )
     return census
 
@@ -146,13 +150,13 @@ def find_community_area(point: Point, community_areas: list[CommunityArea]):
 def main() -> None:
     OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-    ridership_rows  = load_ridership(RID_PATH)
-    locations       = load_locations(LOC_PATH)
+    ridership_rows = load_ridership(RID_PATH)
+    locations = load_locations(LOC_PATH)
     community_areas = load_community_areas(CA_GEO_PATH)
-    census          = load_census(CA_CEN_PATH)
+    census = load_census(CA_CEN_PATH)
 
     out_rows = []
-    dropped  = 0
+    dropped = 0
 
     for rid in ridership_rows:
         # bridge: ridership station_id - 40000 == location station_id
@@ -160,7 +164,9 @@ def main() -> None:
         loc = locations.get(geo_station_id)
 
         if loc is None:
-            print(f"  No location found for station_id {rid.station_id} ({rid.station_name})")
+            print(
+                f"  No location found for station_id {rid.station_id} ({rid.station_name})"
+            )
             continue
 
         point = Point(loc.lon, loc.lat)
@@ -174,25 +180,27 @@ def main() -> None:
         cen = census.get(ca.community_area)
 
         row = {
-            "station_id":                    rid.station_id,
-            "station_name":                  rid.station_name,
-            "month_beginning":               rid.month_beginning,
-            "year":                          rid.year,
-            "month":                         rid.month,
-            "month_total":                   rid.month_total,
-            "geo_station_id":                geo_station_id,
-            "line_name":                     loc.line_name,
-            "lat":                           loc.lat,
-            "lon":                           loc.lon,
-            "community_area":                ca.community_area,
-            "community":                     ca.community,
-            "pop_total":                     cen.pop_total if cen else None,
-            "median_hh_income":              cen.median_hh_income if cen else None,
-            "pct_no_vehicle_hh":             cen.pct_no_vehicle_hh if cen else None,
-            "pct_disabled":                  cen.pct_disabled if cen else None,
-            "pct_65_plus":                   cen.pct_65_plus if cen else None,
-            "transportation_need_index_0_100": cen.transportation_need_index_0_100 if cen else None,
-            "need_quintile":                 cen.need_quintile if cen else None,
+            "station_id": rid.station_id,
+            "station_name": rid.station_name,
+            "month_beginning": rid.month_beginning,
+            "year": rid.year,
+            "month": rid.month,
+            "month_total": rid.month_total,
+            "geo_station_id": geo_station_id,
+            "line_name": loc.line_name,
+            "lat": loc.lat,
+            "lon": loc.lon,
+            "community_area": ca.community_area,
+            "community": ca.community,
+            "pop_total": cen.pop_total if cen else None,
+            "median_hh_income": cen.median_hh_income if cen else None,
+            "pct_no_vehicle_hh": cen.pct_no_vehicle_hh if cen else None,
+            "pct_disabled": cen.pct_disabled if cen else None,
+            "pct_65_plus": cen.pct_65_plus if cen else None,
+            "transportation_need_index_0_100": cen.transportation_need_index_0_100
+            if cen
+            else None,
+            "need_quintile": cen.need_quintile if cen else None,
         }
         out_rows.append(row)
 
@@ -205,7 +213,11 @@ def main() -> None:
     print(f"Stations:        {final['station_id'].nunique()}")
     print(f"Community areas: {final['community_area'].nunique()}")
 
+    annual = (final.groupby("station_id")["month_total"]
+        .sum()
+        .rename("annual_total"))
+    final = final.merge(annual, on="station_id")
+
 
 if __name__ == "__main__":
     main()
-    

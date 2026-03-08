@@ -24,7 +24,7 @@ from src.api_client import (
 
 RAW_DIR = Path("data/raw")
 
-RIDERSHIP_OUT  = RAW_DIR / "cta_station_monthly_2024_raw.csv"
+RIDERSHIP_OUT = RAW_DIR / "cta_station_monthly_2024_raw.csv"
 GEO_POINTS_OUT = RAW_DIR / "cta_station_geo_points_raw.csv"
 
 

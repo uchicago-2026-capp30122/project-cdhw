@@ -7,7 +7,7 @@ Writes two clean files to data/processed/.
 the_geom column in geo points contains real lat long coordinates.
 point_x / point_y are state plane feet and are ignored.
 
-THE CROSSWALK BETWEEN THE DATASETS- 
+THE CROSSWALK BETWEEN THE DATASETS-
 station_id in geo points matches ridership station_id via:
     ridership.station_id - 40000 == geo.station_id
 

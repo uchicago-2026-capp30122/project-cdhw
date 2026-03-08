@@ -1,6 +1,5 @@
 import json
 from src.api_client import get_edges_grouped_by_ca, get_community_areas
-from src.dash_app.config import CA_CSV, RIDESHARE_COMMUNITY_JSON
 
 def compile_rideshare(start_date = "2025-01-01T00:00:00", end_date = "2025-12-31T00:00:00"):
     """

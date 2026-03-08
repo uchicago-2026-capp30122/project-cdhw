@@ -5,7 +5,7 @@ Defines page layout w/ HTML.
 
 
 from dash import dcc, html
-from visuals.rideshare_network import generate_rideshare_html
+from src.dash_app.generate_rideshare_html import generate_html
 
 def make_layout(map_vars):
     return html.Div(
@@ -40,7 +40,7 @@ def make_layout(map_vars):
 
                 html.Div([
                     html.Iframe(
-                        srcDoc =  generate_rideshare_html(),
+                        srcDoc =  generate_html(),
                         style={"width": "100%", "height": "700px", "border": "none"}
                     )
                 ])

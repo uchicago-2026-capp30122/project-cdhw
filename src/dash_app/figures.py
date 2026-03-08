@@ -1,9 +1,5 @@
 """
 Creates visuals (choropleth).
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 """
 
 
@@ -36,17 +32,12 @@ def make_choropleth(df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, 
     # determining which column should drive color. For component indicators, use the need-oriented score column.
     color_col = NEED_COLOR_COLS.get(var_name, var_name)
 
-<<<<<<< Updated upstream
-    # Ensure variables are numeric
-    dff[var_name] = pd.to_numeric(dff[var_name], errors = "coerce")
-=======
     # Coerce raw display vars & color vars to numeric if present.
     if var_name in dff.columns:
         dff[var_name] = pd.to_numeric(dff[var_name], errors = "coerce")
     
     if color_col in dff.columns:
         dff[color_col] = pd.to_numeric(dff[color_col], errors="coerce")
->>>>>>> Stashed changes
 
     # Fix known sentinel (placeholder) income values
     if var_name == "median_hh_income":
@@ -77,24 +68,14 @@ def make_choropleth(df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, 
         geojson = geojson,
         locations = id_col,
         featureidkey = f"properties.{id_prop}",
-<<<<<<< Updated upstream
-        color = var_name,
-        color_continuous_scale = "Viridis",
-=======
         color = color_col,
         color_continuous_scale = "Viridis_r",
->>>>>>> Stashed changes
         map_style = "open-street-map",
         zoom = 9,
         center = {"lat": 41.88, "lon": -87.63},
         opacity = 0.65,
-<<<<<<< Updated upstream
-        hover_data = [id_col, var_name],
-    )
-=======
         hover_data = hover_cols,
     )
     fig.update_coloraxes(colorbar_title=colorbar_title)
->>>>>>> Stashed changes
     fig.update_layout(margin = {"r": 0, "t": 40, "l": 0, "b": 0})
     return fig

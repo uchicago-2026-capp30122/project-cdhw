@@ -1,5 +1,5 @@
-from src.api_client import get_edges_grouped_by_ca, get_community_areas
 import json
+from src.api_client import get_edges_grouped_by_ca, get_community_areas
 
 def compile_rideshare(start_date = "2025-01-01T00:00:00", end_date = "2025-12-31T00:00:00"):
     """
@@ -28,6 +28,7 @@ def compile_rideshare(start_date = "2025-01-01T00:00:00", end_date = "2025-12-31
             "dropoff_lat": dropoff_info["lat"] if dropoff_info else None,
             "dropoff_lon": dropoff_info["lon"] if dropoff_info else None,
         })
+
 
     with open('data/processed/rideshare_community_areas.json', 'w') as f:
         json.dump(merged, f)

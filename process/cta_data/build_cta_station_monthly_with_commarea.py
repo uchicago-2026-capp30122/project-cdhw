@@ -213,6 +213,11 @@ def main() -> None:
     print(f"Stations:        {final['station_id'].nunique()}")
     print(f"Community areas: {final['community_area'].nunique()}")
 
+    annual = (final.groupby("station_id")["month_total"]
+        .sum()
+        .rename("annual_total"))
+    final = final.merge(annual, on="station_id")
+
 
 if __name__ == "__main__":
     main()

@@ -26,7 +26,7 @@ RID_PATH = Path("data/processed/cta_station_monthly_2024_clean.csv")
 LOC_PATH = Path("data/processed/cta_station_locations_clean.csv")
 CA_GEO_PATH = Path("data/processed/community_areas.pretty.geojson")
 CA_CEN_PATH = Path("data/processed/community_area_census.csv")
-OUT_PATH = Path("data/processed/cta_station_monthly_2024_geo_commarea.csv")
+OUT_PATH = Path("data/processed/cta_station_monthly_yearly_2024_geo_commarea.csv")
 
 
 class RidershipRow(NamedTuple):

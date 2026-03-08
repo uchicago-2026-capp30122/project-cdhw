@@ -3,14 +3,14 @@
 
 ## Abstract
 
-Transportation and urban mobility shape how residents move through and access the city. This project examines mobility patterns in Chicago for the year 2024, focusing on how public transit usage, rideshare activity, area walkability and neighborhood-level characteristics vary across the city.
+This project examines mobility patterns in Chicago for 2024, exploring how public transit usage, rideshare activity, and neighborhood-level characteristics vary across the city. The analysis integrates CTA rail ridership, rideshare trip data, American Community Survey demographics, and walkability measures, all aligned to Chicago community areas. The project produces a geospatial dashboard built in Dash for exploring neighborhood-level mobility patterns and a network visualization built with PyVis showing movement between community areas.
 
 The analysis integrates:
 
-- CTA ridership data bus and rail
+- CTA ridership rail data
 - Rideshare trip data
 - American Community Survey ACS data
-- Walkability index measures
+
 
 All data are aligned to census tracts and community areas for spatial comparison. The project produces:
 
@@ -81,5 +81,4 @@ uv sync
 python main.py
 python app.py
 
-Citations
-CTA Ridership Data
+

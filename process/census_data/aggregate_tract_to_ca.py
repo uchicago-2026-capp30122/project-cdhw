@@ -18,6 +18,16 @@ import pandas as pd
 from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_VARS, NEED_LOW_VARS, add_need_component_scores
 from src.api_client import get_community_areas
 
+<<<<<<< HEAD
+# Copied from make_tract_features.py (to keep this script self-contained)
+DEFAULT_WEIGHTS = {
+    "median_hh_income": 1.0,     # inverted; negative relationship b/w median income & transport need
+    "pct_no_vehicle_hh": 1.0,
+    "pct_disabled": 1.0,
+    "pct_65_plus": 1.0,
+}
+=======
+>>>>>>> 9649d597e59c1768461c0d2549e24d73cb3ec5ae
 
 def add_need_component_scores(
     df: pd.DataFrame,

@@ -205,6 +205,11 @@ def main() -> None:
         out_rows.append(row)
 
     final = pd.DataFrame(out_rows)
+    annual = (final.groupby("station_id")["month_total"]
+        .sum()
+        .rename("annual_total"))
+    final = final.merge(annual, on="station_id")
+
     final.to_csv(OUT_PATH, index=False)
 
     print(f"Dropped {dropped} rows outside Chicago city limits")
@@ -212,11 +217,6 @@ def main() -> None:
     print(f"Rows:            {len(final)}")
     print(f"Stations:        {final['station_id'].nunique()}")
     print(f"Community areas: {final['community_area'].nunique()}")
-
-    annual = (final.groupby("station_id")["month_total"]
-        .sum()
-        .rename("annual_total"))
-    final = final.merge(annual, on="station_id")
 
 
 if __name__ == "__main__":

@@ -1,40 +1,51 @@
-from __future__ import annotations
 
 from pathlib import Path
-
 import pandas as pd
 import pytest
 
 
-BASE = Path("data/processed")
-COMM_MONTHLY = BASE / "cta_commarea_monthly_2024.csv"
-COMM_ANNUAL = BASE / "cta_commarea_annual_2024.csv"
+PROCESSED = Path("data/processed")
+
+RIDERSHIP = PROCESSED / "cta_station_monthly_2024_clean.csv"
+LOCATIONS = PROCESSED / "cta_station_locations_clean.csv"
+GEO_CA    = PROCESSED / "cta_station_monthly_2024_geo_commarea.csv"
 
 
-@pytest.mark.skipif(not COMM_MONTHLY.exists(), reason="CTA commarea monthly table not built yet")
-def test_commarea_monthly_no_missing() -> None:
-    df = pd.read_csv(COMM_MONTHLY)
+@pytest.mark.skipif(not RIDERSHIP.exists(), reason="ridership file not built yet")
+def test_ridership_no_missing_totals():
+    df = pd.read_csv(RIDERSHIP)
+    assert df["month_total"].isna().sum() == 0
+
+
+@pytest.mark.skipif(not RIDERSHIP.exists(), reason="ridership file not built yet")
+def test_ridership_unique_station_month():
+    df = pd.read_csv(RIDERSHIP)
+    assert df.duplicated(subset=["station_id", "month"]).sum() == 0
+
+
+@pytest.mark.skipif(not LOCATIONS.exists(), reason="locations file not built yet")
+def test_locations_no_missing_coords():
+    df = pd.read_csv(LOCATIONS)
+    assert df["lat"].isna().sum() == 0
+    assert df["lon"].isna().sum() == 0
+
+
+@pytest.mark.skipif(not LOCATIONS.exists(), reason="locations file not built yet")
+def test_locations_chicago_lat_range():
+    df = pd.read_csv(LOCATIONS)
+    assert df["lat"].between(41.6, 42.1).all()
+
+
+@pytest.mark.skipif(not GEO_CA.exists(), reason="geom community area file not built yet")
+def test_geo_commarea_no_missing_community():
+    df = pd.read_csv(GEO_CA)
     assert df["community_area"].isna().sum() == 0
-    assert df["cta_month_total"].isna().sum() == 0
+    assert df["community"].isna().sum() == 0
 
 
-@pytest.mark.skipif(not COMM_MONTHLY.exists(), reason="CTA commarea monthly table not built yet")
-def test_commarea_monthly_unique_key() -> None:
-    df = pd.read_csv(COMM_MONTHLY)
-    assert df.duplicated(subset=["community_area", "year", "month"]).sum() == 0
+@pytest.mark.skipif(not GEO_CA.exists(), reason="geom community area file not built yet")
+def test_geo_commarea_id_bridge():
+    df = pd.read_csv(GEO_CA)
+    assert ((df["station_id"] - 40000) == df["geo_station_id"]).all()
 
-
-@pytest.mark.skipif(not COMM_MONTHLY.exists(), reason="CTA commarea monthly table not built yet")
-def test_commarea_monthly_has_12_months_2024() -> None:
-    df = pd.read_csv(COMM_MONTHLY)
-    df_2024 = df[df["year"] == 2024]
-    assert sorted(df_2024["month"].unique().tolist()) == list(range(1, 13))
-
-
-@pytest.mark.skipif(not (COMM_MONTHLY.exists() and COMM_ANNUAL.exists()), reason="CTA commarea tables not built yet")
-def test_commarea_annual_total_matches_monthly_sum() -> None:
-    m = pd.read_csv(COMM_MONTHLY)
-    a = pd.read_csv(COMM_ANNUAL)
-    m_sum = int(m[m["year"] == 2024]["cta_month_total"].sum())
-    a_sum = int(a["cta_2024_total"].sum())
-    assert m_sum == a_sum
+    

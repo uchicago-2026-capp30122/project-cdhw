@@ -86,3 +86,25 @@ def get_top_outgoing(graph, comm_area, n: int) -> list[tuple[str, float]]:
     top_incoming = sorted(outgoing, key=lambda x: x[1], reverse=True)
 
     return top_incoming[:n]
+
+def top_least_neighbors(graph, comm_area, n):
+    """
+    Find the community areas that the given community goes to or from the most
+    and the least
+    """
+    neighbors = []
+
+    for node in graph[comm_area]:
+        if node in graph.pred[comm_area] and node in graph.succ[comm_area]:
+            neighbor = {'neighbor':node}
+            incoming = graph.pred[comm_area][node]['trips']
+            outgoing = graph.succ[comm_area][node]['trips']
+            neighbor['total_rides'] = incoming + outgoing
+            neighbors.append(neighbor)
+    
+    #Sort community areas by total rides
+    top_n = sorted(neighbors, key = lambda x: x['total_rides'], reverse=True)
+    least_n = sorted(neighbors, key = lambda x: x['total_rides'])
+
+    return (top_n[:n], least_n[:n])
+

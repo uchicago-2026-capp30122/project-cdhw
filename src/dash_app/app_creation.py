@@ -27,7 +27,13 @@ def create_app():
     ca_df = load_df(CA_CSV, id_col="community_area")
     ca_geo = load_geojson(CA_GEOJSON)
     
-    # cta_df = load_df(CTA_CSV, id_col = #tbd) # insert Ciara's CSV dataset here
+    cta_df = load_df(CTA_CSV, id_col="station_id")
+
+    # de-duplicating rows in CTA data, to use only 1 row (total annual rides) per station, instead of 12 monthly rows.
+    cta_df = (
+        cta_df.sort_values(["station_id", "year", "month"])
+            .drop_duplicates(subset=["station_id"], keep="last")
+    )
 
     # What variables exist in both (so the dropdown works no matter the toggle)
     tract_cols = set(tract_df.columns)
@@ -68,8 +74,12 @@ def create_app():
         fig = add_selected_overlays(
             fig,
             overlays,
-            # cta_df=cta_df, # uncomment, once aggregated CSV dataset is complete.
+            cta_df=cta_df,
             rideshare_df=ca_df,
+            cta_lat_col="lat",
+            cta_lon_col="lon",
+            cta_size_col="annual_total",
+            cta_name_col="station_name",
         )
         return fig
     

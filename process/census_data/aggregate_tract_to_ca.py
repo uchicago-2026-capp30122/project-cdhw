@@ -19,6 +19,22 @@ from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_V
 from src.api_client import get_community_areas
 
 
+def add_total_trips(out: pd.DataFrame, trips_path: Path) -> pd.DataFrame:
+    if not trips_path.exists():
+        out["total_trips"] = 0
+        return out
+
+    trips_df = pd.read_csv(trips_path)
+    trips_df["community_area"] = pd.to_numeric(trips_df["community_area"], errors="coerce").astype("Int64")
+
+    out = out.merge(
+        trips_df[["community_area", "total_trips"]],
+        on="community_area",
+        how="left",
+    )
+    out["total_trips"] = out["total_trips"].fillna(0)
+    return out
+
 def add_need_component_scores(
     df: pd.DataFrame,
     high_vars: set = None,
@@ -198,14 +214,17 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
 
 def main():
     ROOT = Path(__file__).resolve().parents[2]
+    trips_path = ROOT / "data" / "processed" / "ca_trip_totals.csv"
     tract_path = ROOT / "data" / "processed" / "tract_features.csv"
     xwalk_path = ROOT / "data" / "processed" / "tract_to_ca_crosswalk.csv"
     out_path = ROOT / "data" / "processed" / "community_area_census.csv"
 
     tract_df = pd.read_csv(tract_path, dtype={"GEOID": str})
     xwalk = pd.read_csv(xwalk_path)
-
+    
     ca_df = aggregate_to_ca(tract_df, xwalk)
+    ca_df = add_total_trips(ca_df, trips_path)
+        
     ca_df.to_csv(out_path, index=False)
     print(f"Wrote community area dataset: {len(ca_df):,} rows -> {out_path}")
 

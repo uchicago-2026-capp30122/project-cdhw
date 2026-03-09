@@ -1,0 +1,50 @@
+digraph ChicagoMobilityArchitecture {
+    rankdir = TB;
+    node [shape = box; fontname = "Helvetica";];
+    edge [fontname = "Helvetica";];
+    
+    "American Community Survey" [shape = cylinder;style = filled;fillcolor = lightblue;];
+    "Chicago Transit Authority" [shape = cylinder;style = filled;fillcolor = lightblue;];
+    "Transportation Urban Network Providers" [shape = cylinder;style = filled;fillcolor = lightblue;];
+    "Unified Community Area Dataset (CSV)" [shape = cylinder;style = filled;fillcolor = lightyellow;];
+    "Dash Web UI" [shape = ellipse;style = filled;fillcolor = lightgreen;];
+    "Pyvis HTML Graph Output" [shape = ellipse;style = filled;fillcolor = lightgreen;];
+    
+    subgraph cluster_processing {
+        label = "Data Processing and Aggregation";
+        fontname = "Helvetica";
+        "Data Extraction";
+        "Data Cleaning";
+        "Geographic Aggregation";
+    }
+    
+    subgraph cluster_dash {
+        label = "Interactive Web Application";
+        fontname = "Helvetica";
+        "Dash Data Load";
+        "Choropleth Map Rendering";
+    }
+    
+    subgraph cluster_viz {
+        label = "Visualizations and Network Maps";
+        fontname = "Helvetica";
+        "Network Construction";
+    }
+    
+    // Processing Flow
+    "American Community Survey" -> "Data Extraction";
+    "Chicago Transit Authority" -> "Data Extraction";
+    "Transportation Urban Network Providers" -> "Data Extraction";
+    "Data Extraction" -> "Data Cleaning";
+    "Data Cleaning" -> "Geographic Aggregation";
+    "Geographic Aggregation" -> "Unified Community Area Dataset (CSV)";
+    
+    // Dashboard Flow
+    "Unified Community Area Dataset (CSV)" -> "Dash Data Load";
+    "Dash Data Load" -> "Choropleth Map Rendering";
+    "Choropleth Map Rendering" -> "Dash Web UI";
+    
+    // Visualization Flow
+    "Unified Community Area Dataset (CSV)" -> "Network Construction";
+    "Network Construction" -> "Pyvis HTML Graph Output";
+}

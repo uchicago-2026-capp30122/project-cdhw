@@ -1,0 +1,37 @@
+digraph CoreDataFlow {
+    rankdir = TB;
+    node [shape = box; fontname = "Helvetica";];
+    
+    "External API\n(Socrata)" [shape = ellipse;style = filled;fillcolor = lightblue;];
+    "Processed Datasets\n(CSV / JSON)" [shape = cylinder;style = filled;fillcolor = lightyellow;];
+    "Dash Web UI" [shape = ellipse;style = filled;fillcolor = lightgreen;];
+    
+    "api_client.py" [label = "src.api_client";];
+    "fetch_census" [label = "process.census_data.fetch";];
+    "agg_census" [label = "process.census_data.aggregate";];
+    "fetch_cta" [label = "process.cta_data.fetch";];
+    "clean_cta" [label = "process.cta_data.clean_and_build";];
+    "fetch_rideshare" [label = "process.rideshare_data.fetch";];
+    "dash_io" [label = "src.dash_app.io";];
+    "dash_creation" [label = "src.dash_app.app_creation";];
+    "dash_figures" [label = "src.dash_app.figures";];
+    
+    "External API\n(Socrata)" -> "api_client.py";
+    
+    "api_client.py" -> "fetch_census";
+    "api_client.py" -> "fetch_cta";
+    "api_client.py" -> "fetch_rideshare";
+    
+    "fetch_census" -> "agg_census" [label = "   tract stats   ";];
+    "fetch_cta" -> "clean_cta" [label = "   raw timeseries   ";];
+    
+    "agg_census" -> "Processed Datasets\n(CSV / JSON)";
+    "clean_cta" -> "Processed Datasets\n(CSV / JSON)";
+    "fetch_rideshare" -> "Processed Datasets\n(CSV / JSON)";
+    
+    "Processed Datasets\n(CSV / JSON)" -> "dash_io" [label = "   reads   ";];
+    
+    "dash_io" -> "dash_creation" [label = "   loads dataframe   ";];
+    "dash_creation" -> "dash_figures" [label = "   generates maps   ";];
+    "dash_figures" -> "Dash Web UI" [label = "   renders layout/overlays   ";];
+}

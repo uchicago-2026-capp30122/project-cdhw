@@ -302,7 +302,7 @@ def make_layout(map_vars):
                         "displaylogo": False,
                         "scrollZoom": True,
                         }
-                    )s
+                    )
                 ],
             ),
 

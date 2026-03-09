@@ -112,9 +112,10 @@ graph TB
     dash_creation -->|"generates maps"| dash_figures
     dash_figures -->|"renders layout/overlays"| DashUI
 
-    classDef lightblue fill:lightblue,stroke:#333,stroke-width:1px
-    classDef lightyellow fill:lightyellow,stroke:#333,stroke-width:1px
-    classDef lightgreen fill:lightgreen,stroke:#333,stroke-width:1px
+    classDef default fill:#ffffff,color:#000000,stroke:#333333,stroke-width:1px
+    classDef lightblue fill:lightblue,color:#000000,stroke:#333,stroke-width:1px
+    classDef lightyellow fill:lightyellow,color:#000000,stroke:#333,stroke-width:1px
+    classDef lightgreen fill:lightgreen,color:#000000,stroke:#333,stroke-width:1px
 ```
 
 <br><br>
@@ -168,20 +169,20 @@ graph TB
         DataClean["Data Cleaning"]
         GeoAgg["Geographic Aggregation"]
     end
-    style cluster_processing fill:lightgray
+    style cluster_processing fill:lightgray,color:#000000,stroke:#333333
     
     subgraph cluster_dash ["Interactive Web Application"]
         direction TB
         DashLoad["Dash Data Load"]
         Choropleth["Choropleth Map Rendering"]
     end
-    style cluster_dash fill:lightgray
+    style cluster_dash fill:lightgray,color:#000000,stroke:#333333
     
     subgraph cluster_viz ["Visualizations and Network Maps"]
         direction TB
         NetConst["Network Construction"]
     end
-    style cluster_viz fill:lightgray
+    style cluster_viz fill:lightgray,color:#000000,stroke:#333333
     
     %% Processing Flow
     ACS --> DataExt
@@ -200,9 +201,10 @@ graph TB
     Dataset --> NetConst
     NetConst --> PyvisUI
 
-    classDef lightblue fill:lightblue,stroke:#333,stroke-width:1px
-    classDef lightyellow fill:lightyellow,stroke:#333,stroke-width:1px
-    classDef lightgreen fill:lightgreen,stroke:#333,stroke-width:1px
+    classDef default fill:#ffffff,color:#000000,stroke:#333333,stroke-width:1px
+    classDef lightblue fill:lightblue,color:#000000,stroke:#333,stroke-width:1px
+    classDef lightyellow fill:lightyellow,color:#000000,stroke:#333,stroke-width:1px
+    classDef lightgreen fill:lightgreen,color:#000000,stroke:#333,stroke-width:1px
 ```
 
 <br><br>

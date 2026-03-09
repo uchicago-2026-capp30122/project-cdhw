@@ -152,7 +152,7 @@ def add_point_overlay(
         hovertemplate_parts.append("<b>%{text}</b>")
     LABELS = {
         "total_trips": "Rideshare trips",
-        "annual_ridership": "Annual ridership",
+        "annual_total": "CTA rides",
     }
 
     label = LABELS.get(size_col, size_col)
@@ -191,7 +191,7 @@ def add_selected_overlays(
     rideshare_df = None,
     cta_lat_col = "lat",
     cta_lon_col = "lon",
-    cta_size_col = "annual_ridership",
+    cta_size_col = "annual_total",
     cta_name_col = "station_name",
     rideshare_lat_col = "centroid_lat",
     rideshare_lon_col = "centroid_lon",

@@ -11,7 +11,7 @@ RIDESHARE_COMMUNITY_JSON = "data/processed/rideshare_community_areas.json"
 # for CTA station points, located by lat/lon, sized by annual ridership.
 # if there's a single joined CSV w/ station locations & ridership later, point the overlay loaders to that.
 # expected columns for point overlays: lat, lon, annual_ridership, station_name
-CTA_CSV = None # revise once aggregated CTA dataset is ready.
+CTA_CSV = "data/processed/cta_station_monthly_yearly_2024_geo_commarea.csv"
 
 # sizing Points (CTA stations, rideshare)
 CTA_MAX_MARKER_PX = 26

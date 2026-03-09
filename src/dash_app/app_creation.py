@@ -11,13 +11,15 @@ Design:
 - Keep this file focused on wiring (app creation + callbacks).
 - Keep layout generation in `layout.py`, plotting in `figures.py`, and data loading in `io.py`.
 """
-
+from pathlib import Path
 from dash import Dash, Input, Output
 from .config import TRACT_CSV, TRACT_GEOJSON, CA_CSV, CA_GEOJSON, CTA_CSV, DROPDOWN_VARS
 from .io import load_df, load_geojson
 from .layout import make_layout
 from .figures import make_choropleth, add_selected_overlays, NEED_COLOR_COLS
 
+ROOT_DIR = Path(__file__).resolve().parents[2]
+ASSETS_DIR = ROOT_DIR / "assets"
 
 def create_app():
     # Load both datasets once
@@ -44,7 +46,10 @@ def create_app():
         if color_col in tract_cols and color_col in ca_cols:
             map_vars.append(v)
             
-    app = Dash(__name__)
+    app = Dash(
+        __name__,
+        assets_folder=str(ASSETS_DIR),
+    )
     app.layout = make_layout(map_vars)
 
     @app.callback(

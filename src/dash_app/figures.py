@@ -19,11 +19,11 @@ NEED_COLOR_COLS = {
 }
 
 DISPLAY_NAMES = {
-    "transportation_need_index_0_100": "Transportation Need Index (0-100)",
-    "median_hh_income": "Low-Income Need Score (percentile, 0-100)",
-    "pct_no_vehicle_hh": "No-Vehicle Household Need Score (percentile, 0-100)",
-    "pct_disabled": "Disability Need Score (percentile, 0-100)",
-    "pct_65_plus": "Older Adult Need Score (percentile, 0-100)",
+    "transportation_need_index_0_100": "Transportation Need Index",
+    "median_hh_income": "Low-Income Need Score",
+    "pct_no_vehicle_hh": "No-Vehicle Household Need Score",
+    "pct_disabled": "Disability Need Score",
+    "pct_65_plus": "Older Adult Need Score",
 }
 
 def make_choropleth(
@@ -95,8 +95,31 @@ def make_choropleth(
         )
     )
     
-    fig.update_coloraxes(colorbar_title = colorbar_title)
-    fig.update_layout(margin = {"r": 0, "t": 40, "l": 0, "b": 0})
+    fig.update_coloraxes(
+        colorbar_title=colorbar_title,
+        colorbar=dict(
+            x=1.02,
+            y=0.5,
+            len=0.80,
+            thickness=16,
+            yanchor="middle",
+        ),
+    )
+
+    fig.update_layout(
+        margin={"r": 80, "t": 40, "l": 0, "b": 0},
+        legend=dict(
+            title=None,
+            x=0.01,
+            y=0.99,
+            xanchor="left",
+            yanchor="top",
+            bgcolor="rgba(255,255,255,0.85)",
+            bordercolor="lightgray",
+            borderwidth=1,
+            font=dict(size=11),
+        ),
+    )
     return fig
 
 def _prep_point_df(df, lat_col, lon_col, size_col):

@@ -17,7 +17,21 @@ import numpy as np
 import pandas as pd
 from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_VARS, NEED_LOW_VARS, add_need_component_scores
 from src.api_client import get_community_areas
+import json
 
+def add_community_area_names(ca_df: pd.DataFrame, names_path: Path) -> pd.DataFrame:
+    with open(names_path, "r") as f:
+        ca_lookup = json.load(f)
+
+    name_df = pd.DataFrame([
+        {
+            "community_area": int(k),
+            "community_area_name": v["name"].title(),
+        }
+        for k, v in ca_lookup.items()
+    ])
+
+    return ca_df.merge(name_df, on="community_area", how="left")
 
 def add_total_trips(out: pd.DataFrame, trips_path: Path) -> pd.DataFrame:
     if not trips_path.exists():
@@ -218,13 +232,21 @@ def main():
     tract_path = ROOT / "data" / "processed" / "tract_features.csv"
     xwalk_path = ROOT / "data" / "processed" / "tract_to_ca_crosswalk.csv"
     out_path = ROOT / "data" / "processed" / "community_area_census.csv"
+    names_path = ROOT / "data" / "processed" / "community_areas.json"
+
 
     tract_df = pd.read_csv(tract_path, dtype={"GEOID": str})
     xwalk = pd.read_csv(xwalk_path)
     
     ca_df = aggregate_to_ca(tract_df, xwalk)
     ca_df = add_total_trips(ca_df, trips_path)
-        
+    ca_df = add_community_area_names(ca_df, names_path)
+    
+    # reorder columns
+    cols = ca_df.columns.tolist()
+    cols.insert(1, cols.pop(cols.index("community_area_name")))
+    ca_df = ca_df[cols]
+
     ca_df.to_csv(out_path, index=False)
     print(f"Wrote community area dataset: {len(ca_df):,} rows -> {out_path}")
 

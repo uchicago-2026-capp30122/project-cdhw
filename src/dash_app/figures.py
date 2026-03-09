@@ -18,6 +18,13 @@ NEED_COLOR_COLS = {
     "pct_65_plus": "pct_65_plus_need_0_100",
 }
 
+DISPLAY_NAMES = {
+    "transportation_need_index_0_100": "Transportation Need Index (0-100)",
+    "median_hh_income": "Low-Income Need Score (percentile, 0-100)",
+    "pct_no_vehicle_hh": "No-Vehicle Household Need Score (percentile, 0-100)",
+    "pct_disabled": "Disability Need Score (percentile, 0-100)",
+    "pct_65_plus": "Older Adult Need Score (percentile, 0-100)",
+}
 
 def make_choropleth(
     df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, var_name: str
@@ -47,25 +54,22 @@ def make_choropleth(
         dff.loc[dff[var_name].isin(MISSING_SENTINELS), var_name] = pd.NA
         dff.loc[dff[var_name] <= 0, var_name] = pd.NA
 
-    # # clean impossible values in the need-color column if present as sentinels via pipeline issues.
-    # if color_col in dff.columns:
-    #     dff.loc[dff[color_col].isin(MISSING_SENTINELS), color_col] = pd.NA
-
     dff = dff.dropna(subset=[color_col])
 
     # legend title so users know this is a need-oriented scale.
-    if var_name == "transportation_need_index_0_100":
-        colorbar_title = "transportation_need_index_0_100"
+    colorbar_title = DISPLAY_NAMES.get(var_name, var_name)
+
+    # user-friendly label for the selected variable in hover
+    display_name = DISPLAY_NAMES.get(var_name, var_name)
+
+    # create a single hover-name column that works for both community areas and tracts.
+    # For community areas, use community_area_name if present.
+    # Otherwise, fall back to the ID value so hover still works cleanly.
+    if "community_area_name" in dff.columns:
+        dff["_hover_name"] = dff["community_area_name"].astype(str)
     else:
-        colorbar_title = f"{var_name}_need_0_100"
-
-    # hover data
-    hover_cols = [id_col]
-    if var_name in dff.columns:
-        hover_cols.append(var_name)
-    if color_col != var_name and color_col in dff.columns:
-        hover_cols.append(color_col)
-
+        dff["_hover_name"] = dff[id_col].astype(str)
+    
     fig = px.choropleth_mapbox(
         dff,
         geojson = geojson,
@@ -77,9 +81,21 @@ def make_choropleth(
         zoom = 9,
         center = {"lat": 41.88, "lon": -87.63},
         opacity = 0.65,
-        hover_data = hover_cols,
+        custom_data=["_hover_name"],
+        labels = DISPLAY_NAMES,
     )
-    fig.update_coloraxes(colorbar_title=colorbar_title)
+
+    fig.update_traces(
+        hovertemplate=(
+            "<b>%{customdata[0]}</b><br>"
+            + f"{display_name}: "
+            + "%{z:.1f}<br>"
+            + "<i>Higher = greater relative transportation need in Chicago</i>"
+            + "<extra></extra>"
+        )
+    )
+    
+    fig.update_coloraxes(colorbar_title = colorbar_title)
     fig.update_layout(margin = {"r": 0, "t": 40, "l": 0, "b": 0})
     return fig
 
@@ -134,10 +150,14 @@ def add_point_overlay(
     hovertemplate_parts = []
     if hover_name_col and hover_name_col in dff.columns:
         hovertemplate_parts.append("<b>%{text}</b>")
-    hovertemplate_parts.append(f"{size_col}: %{{marker.size}}")
+    LABELS = {
+        "total_trips": "Rideshare trips",
+        "annual_ridership": "Annual ridership",
+    }
 
-    for i, col in enumerate(customdata_cols):
-        hovertemplate_parts.append(f"{col}: %{{customdata[{i}]}}")
+    label = LABELS.get(size_col, size_col)
+
+    hovertemplate_parts.append(f"{label}: %{{marker.size:,}}")
 
     hovertemplate = "<br>".join(hovertemplate_parts) + "<extra></extra>"
 
@@ -176,7 +196,7 @@ def add_selected_overlays(
     rideshare_lat_col = "centroid_lat",
     rideshare_lon_col = "centroid_lon",
     rideshare_size_col = "total_trips",
-    rideshare_name_col = "community_area",
+    rideshare_name_col = "community_area_name",
     cta_max_marker_px = 26,
     rideshare_max_marker_px = 34,
 ):

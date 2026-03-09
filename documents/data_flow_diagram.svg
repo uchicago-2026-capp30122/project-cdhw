@@ -1,0 +1,176 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="697pt" height="792pt" viewBox="0.00 0.00 697.19 791.63">
+<g id="graph0" class="graph" transform="translate(20.93218424008019,726.9448018708059) scale(0.8705505632961241)" data-name="CoreDataFlow">
+
+<polygon fill="white" stroke="none" points="-4,4 -4,-787.63 693.19,-787.63 693.19,4 -4,4"/>
+<!-- External API\n(Socrata) -->
+<g id="node1" class="node" pointer-events="visible" data-name="External API\n(Socrata)">
+
+<ellipse fill="lightblue" stroke="black" cx="307.24" cy="-754.22" rx="66.17" ry="29.33"/>
+<text text-anchor="middle" x="307.24" y="-758.42" font-family="Helvetica,sans-Serif" font-size="14.00">External API</text>
+<text text-anchor="middle" x="307.24" y="-741.62" font-family="Helvetica,sans-Serif" font-size="14.00">(Socrata)</text>
+</g>
+<!-- api_client.py -->
+<g id="node5" class="node" pointer-events="visible" data-name="api_client.py">
+
+<polygon fill="none" stroke="black" points="360.47,-687.6 254.02,-687.6 254.02,-646.4 360.47,-646.4 360.47,-687.6"/>
+<text text-anchor="middle" x="307.24" y="-671.2" font-family="Helvetica,sans-Serif" font-size="14.00">src.api_client</text>
+<text text-anchor="middle" x="307.24" y="-654.4" font-family="Helvetica,sans-Serif" font-size="14.00" style="">(Utility Library)</text>
+</g>
+<!-- External API\n(Socrata)&#45;&gt;api_client.py -->
+<g id="edge1" class="edge" data-name="External API\n(Socrata)-&gt;api_client.py">
+
+<path fill="none" stroke="black" d="M307.24,-724.84C307.24,-716.61 307.24,-707.59 307.24,-699.2"/>
+<polygon fill="black" stroke="black" points="310.74,-699.42 307.24,-689.42 303.74,-699.42 310.74,-699.42"/>
+</g>
+<!-- Processed Datasets\n(CSV / JSON) -->
+<g id="node3" class="node" pointer-events="visible" data-name="Processed Datasets\n(CSV / JSON)">
+
+<path fill="lightyellow" stroke="black" d="M376.03,-407.28C376.03,-410.16 344.3,-412.5 305.24,-412.5 266.19,-412.5 234.46,-410.16 234.46,-407.28 234.46,-407.28 234.46,-360.32 234.46,-360.32 234.46,-357.44 266.19,-355.1 305.24,-355.1 344.3,-355.1 376.03,-357.44 376.03,-360.32 376.03,-360.32 376.03,-407.28 376.03,-407.28"/>
+<path fill="none" stroke="black" d="M376.03,-407.28C376.03,-404.4 344.3,-402.06 305.24,-402.06 266.19,-402.06 234.46,-404.4 234.46,-407.28"/>
+<text text-anchor="middle" x="305.24" y="-388" font-family="Helvetica,sans-Serif" font-size="14.00">Processed Datasets</text>
+<text text-anchor="middle" x="305.24" y="-371.2" font-family="Helvetica,sans-Serif" font-size="14.00">(CSV / JSON)</text>
+</g><g id="node2" class="node" pointer-events="visible" data-name="US Census Bureau API" data-comment="Processed Datasets\n(CSV / JSON)">
+
+<ellipse fill="lightblue" stroke="black" cx="577.24" cy="-667" rx="111.9" ry="18" style=""/>
+<text text-anchor="middle" x="577.24" y="-662.8" font-family="Helvetica,sans-Serif" font-size="14.00" style="">US Census Bureau API</text>
+</g>
+<!-- dash_io -->
+<g id="node11" class="node" pointer-events="visible" data-name="dash_io">
+
+<polygon fill="none" stroke="black" points="362.59,-302.4 247.9,-302.4 247.9,-266.4 362.59,-266.4 362.59,-302.4"/>
+<text text-anchor="middle" x="305.24" y="-280.2" font-family="Helvetica,sans-Serif" font-size="14.00">src.dash_app.io</text>
+</g>
+<!-- Processed Datasets\n(CSV / JSON)&#45;&gt;dash_io -->
+<g id="edge10" class="edge" data-name="Processed Datasets\n(CSV / JSON)-&gt;dash_io">
+
+<path fill="none" stroke="black" d="M305.24,-354.63C305.24,-341.94 305.24,-326.98 305.24,-314.21"/>
+<polygon fill="black" stroke="black" points="308.74,-314.31 305.24,-304.31 301.74,-314.31 308.74,-314.31"/>
+<text text-anchor="middle" x="330.51" y="-324.6" font-family="Times,serif" font-size="14.00">   reads   </text>
+</g><g id="edge2" class="edge" data-name="US Census Bureau API-&gt;fetch_census" data-comment="Processed Datasets\n(CSV / JSON)-&gt;dash_io">
+
+<path fill="none" stroke="black" d="M577.24,-648.72C577.24,-636.33 577.24,-619.34 577.24,-604.95" style=""/>
+<polygon fill="black" stroke="black" points="580.74,-605.14 577.24,-595.14 573.74,-605.14 580.74,-605.14" style=""/>
+</g>
+<!-- Dash Web UI -->
+<g id="node4" class="node" pointer-events="visible" data-name="Dash Web UI">
+
+<ellipse fill="lightgreen" stroke="black" cx="305.24" cy="-18" rx="68.42" ry="18"/>
+<text text-anchor="middle" x="305.24" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00">Dash Web UI</text>
+</g>
+<!-- fetch_census -->
+<g id="node6" class="node" pointer-events="visible" data-name="fetch_census">
+
+<polygon fill="none" stroke="black" points="668.29,-593.4 486.2,-593.4 486.2,-557.4 668.29,-557.4 668.29,-593.4"/>
+<text text-anchor="middle" x="577.24" y="-571.2" font-family="Helvetica,sans-Serif" font-size="14.00">process.census_data.fetch</text>
+</g>
+<!-- api_client.py&#45;&gt;fetch_census -->
+
+<!-- fetch_cta -->
+<g id="node8" class="node" pointer-events="visible" data-name="fetch_cta">
+
+<polygon fill="none" stroke="black" points="197.61,-593.4 40.88,-593.4 40.88,-557.4 197.61,-557.4 197.61,-593.4"/>
+<text text-anchor="middle" x="119.24" y="-571.2" font-family="Helvetica,sans-Serif" font-size="14.00">process.cta_data.fetch</text>
+</g>
+<!-- api_client.py&#45;&gt;fetch_cta -->
+<g id="edge3" class="edge" data-name="api_client.py-&gt;fetch_cta">
+
+<path fill="none" stroke="black" d="M253.78,-657.7C227.67,-652.05 196.53,-642.86 171.34,-628.2 159.69,-621.42 148.78,-611.42 139.99,-602"/>
+<polygon fill="black" stroke="black" points="142.81,-599.91 133.55,-594.76 137.58,-604.56 142.81,-599.91"/>
+<text text-anchor="middle" x="250.2" y="-615.6" font-family="Times,serif" font-size="14.00" style="">   pulled via function calls   </text>
+</g>
+<!-- fetch_rideshare -->
+
+<!-- api_client.py&#45;&gt;fetch_rideshare -->
+<g id="node10" class="node" pointer-events="visible" data-name="compile_rideshare" data-comment="api_client.py-&gt;fetch_rideshare">
+
+<polygon fill="none" stroke="black" points="498.34,-539.4 218.15,-539.4 218.15,-503.4 498.34,-503.4 498.34,-539.4" style=""/>
+<text text-anchor="middle" x="358.24" y="-517.2" font-family="Helvetica,sans-Serif" font-size="14.00" style="">process.rideshare_data.compile_rideshare</text>
+</g>
+<!-- agg_census -->
+<g id="node7" class="node" pointer-events="visible" data-name="agg_census">
+
+<polygon fill="none" stroke="black" points="684.99,-485.4 469.5,-485.4 469.5,-449.4 684.99,-449.4 684.99,-485.4"/>
+<text text-anchor="middle" x="577.24" y="-463.2" font-family="Helvetica,sans-Serif" font-size="14.00">process.census_data.aggregate</text>
+</g><g id="edge4" class="edge" data-name="api_client.py-&gt;compile_rideshare" data-comment="agg_census">
+
+<path fill="none" stroke="black" d="M318.81,-645.96C321.8,-640.32 324.84,-634.12 327.24,-628.2 337.64,-602.61 346.16,-572.26 351.62,-550.64"/>
+<polygon fill="black" stroke="black" points="354.98,-551.63 353.97,-541.09 348.19,-549.96 354.98,-551.63"/>
+<text text-anchor="middle" x="412.2" y="-615.6" font-family="Times,serif" font-size="14.00" style="">   pulled via function calls   </text>
+</g>
+<!-- fetch_census&#45;&gt;agg_census -->
+<g id="edge5" class="edge" data-name="fetch_census-&gt;agg_census">
+
+<path fill="none" stroke="black" d="M577.24,-557.37C577.24,-541.16 577.24,-516.46 577.24,-497.19"/>
+<polygon fill="black" stroke="black" points="580.74,-497.25 577.24,-487.25 573.74,-497.25 580.74,-497.25"/>
+<text text-anchor="middle" x="614.37" y="-517.2" font-family="Times,serif" font-size="14.00">   tract stats   </text>
+</g>
+<!-- agg_census&#45;&gt;Processed Datasets\n(CSV / JSON) -->
+<g id="edge7" class="edge" data-name="agg_census-&gt;Processed Datasets\n(CSV / JSON)">
+
+<path fill="none" stroke="black" d="M519.23,-448.99C480.76,-437.46 429.73,-422.14 387.14,-409.37"/>
+<polygon fill="black" stroke="black" points="388.26,-406.05 377.68,-406.53 386.25,-412.76 388.26,-406.05"/>
+</g>
+<!-- clean_cta -->
+<g id="node9" class="node" pointer-events="visible" data-name="clean_cta">
+
+<polygon fill="none" stroke="black" points="228.73,-485.4 -0.24,-485.4 -0.24,-449.4 228.73,-449.4 228.73,-485.4"/>
+<text text-anchor="middle" x="114.24" y="-463.2" font-family="Helvetica,sans-Serif" font-size="14.00">process.cta_data.clean_and_build</text>
+</g>
+<!-- fetch_cta&#45;&gt;clean_cta -->
+<g id="edge6" class="edge" data-name="fetch_cta-&gt;clean_cta">
+
+<path fill="none" stroke="black" d="M111.83,-556.9C109.85,-551.4 107.99,-545.24 107,-539.4 104.63,-525.46 105.81,-509.85 107.85,-496.82"/>
+<polygon fill="black" stroke="black" points="111.25,-497.66 109.61,-487.19 104.37,-496.4 111.25,-497.66"/>
+<text text-anchor="middle" x="158.37" y="-517.2" font-family="Times,serif" font-size="14.00">   raw timeseries   </text>
+</g>
+<!-- clean_cta&#45;&gt;Processed Datasets\n(CSV / JSON) -->
+<g id="edge8" class="edge" data-name="clean_cta-&gt;Processed Datasets\n(CSV / JSON)">
+
+<path fill="none" stroke="black" d="M154.75,-449.09C180.5,-438.09 214.33,-423.64 243.4,-411.22"/>
+<polygon fill="black" stroke="black" points="244.66,-414.49 252.48,-407.34 241.91,-408.05 244.66,-414.49"/>
+</g>
+<!-- fetch_rideshare&#45;&gt;Processed Datasets\n(CSV / JSON) -->
+
+<!-- dash_creation -->
+<g id="node12" class="node" pointer-events="visible" data-name="dash_creation">
+
+<polygon fill="none" stroke="black" points="397.64,-213.6 212.85,-213.6 212.85,-177.6 397.64,-177.6 397.64,-213.6"/>
+<text text-anchor="middle" x="305.24" y="-191.4" font-family="Helvetica,sans-Serif" font-size="14.00">src.dash_app.app_creation</text>
+</g><g id="edge9" class="edge" data-name="compile_rideshare-&gt;Processed Datasets\n(CSV / JSON)" data-comment="dash_creation">
+
+<path fill="none" stroke="black" d="M329.11,-502.91C323.19,-497.99 317.68,-492.12 314.06,-485.4 304.1,-466.91 301.53,-443.69 301.61,-424.22" style=""/>
+<polygon fill="black" stroke="black" points="305.11,-424.57 301.91,-414.47 298.11,-424.36 305.11,-424.57" style=""/>
+<text text-anchor="middle" x="387.34" y="-463.2" font-family="Times,serif" font-size="14.00" style="">   merged with centroids   </text>
+</g>
+<!-- dash_io&#45;&gt;dash_creation -->
+<g id="edge11" class="edge" data-name="dash_io-&gt;dash_creation">
+
+<path fill="none" stroke="black" d="M305.24,-266.25C305.24,-254.56 305.24,-238.79 305.24,-225.22"/>
+<polygon fill="black" stroke="black" points="308.74,-225.52 305.24,-215.52 301.74,-225.52 308.74,-225.52"/>
+<text text-anchor="middle" x="360.25" y="-235.8" font-family="Times,serif" font-size="14.00">   loads dataframe   </text>
+</g>
+<!-- dash_figures -->
+<g id="node13" class="node" pointer-events="visible" data-name="dash_figures">
+
+<polygon fill="none" stroke="black" points="378.21,-124.8 232.28,-124.8 232.28,-88.8 378.21,-88.8 378.21,-124.8"/>
+<text text-anchor="middle" x="305.24" y="-102.6" font-family="Helvetica,sans-Serif" font-size="14.00">src.dash_app.figures</text>
+</g>
+<!-- dash_creation&#45;&gt;dash_figures -->
+<g id="edge12" class="edge" data-name="dash_creation-&gt;dash_figures">
+
+<path fill="none" stroke="black" d="M305.24,-177.45C305.24,-165.76 305.24,-149.99 305.24,-136.42"/>
+<polygon fill="black" stroke="black" points="308.74,-136.72 305.24,-126.72 301.74,-136.72 308.74,-136.72"/>
+<text text-anchor="middle" x="358.7" y="-147" font-family="Times,serif" font-size="14.00">   generates maps   </text>
+</g>
+<!-- dash_figures&#45;&gt;Dash Web UI -->
+<!-- dash_figures&#45;&gt;Dash Web UI -->
+<g id="edge13" class="edge" data-name="dash_figures-&gt;Dash Web UI">
+
+<path fill="none" stroke="black" d="M305.24,-88.65C305.24,-76.96 305.24,-61.19 305.24,-47.62"/>
+<polygon fill="black" stroke="black" points="308.74,-47.92 305.24,-37.92 301.74,-47.92 308.74,-47.92"/>
+<text text-anchor="middle" x="381.25" y="-58.2" font-family="Times,serif" font-size="14.00">   renders layout/overlays   </text>
+</g>
+
+</g>
+</svg>

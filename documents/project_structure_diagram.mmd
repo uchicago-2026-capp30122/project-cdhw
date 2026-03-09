@@ -1,0 +1,49 @@
+graph TB
+    ACS[("American Community Survey")]:::lightblue
+    CTA[("Chicago Transit Authority")]:::lightblue
+    TUNP[("Transportation Urban Network Providers")]:::lightblue
+    Dataset[("Unified Community Area Dataset (CSV)")]:::lightyellow
+    DashUI(["Dash Web UI"]):::lightgreen
+    PyvisUI(["Pyvis HTML Graph Output"]):::lightgreen
+
+    subgraph cluster_processing ["Data Processing and Aggregation"]
+        direction TB
+        DataExt["Data Extraction"]
+        DataClean["Data Cleaning"]
+        GeoAgg["Geographic Aggregation"]
+    end
+    style cluster_processing fill:lightgray
+    
+    subgraph cluster_dash ["Interactive Web Application"]
+        direction TB
+        DashLoad["Dash Data Load"]
+        Choropleth["Choropleth Map Rendering"]
+    end
+    style cluster_dash fill:lightgray
+    
+    subgraph cluster_viz ["Visualizations and Network Maps"]
+        direction TB
+        NetConst["Network Construction"]
+    end
+    style cluster_viz fill:lightgray
+    
+    %% Processing Flow
+    ACS --> DataExt
+    CTA --> DataExt
+    TUNP --> DataExt
+    DataExt --> DataClean
+    DataClean --> GeoAgg
+    GeoAgg --> Dataset
+    
+    %% Dashboard Flow
+    Dataset --> DashLoad
+    DashLoad --> Choropleth
+    Choropleth --> DashUI
+    
+    %% Visualization Flow
+    Dataset --> NetConst
+    NetConst --> PyvisUI
+
+    classDef lightblue fill:lightblue,stroke:#333,stroke-width:1px
+    classDef lightyellow fill:lightyellow,stroke:#333,stroke-width:1px
+    classDef lightgreen fill:lightgreen,stroke:#333,stroke-width:1px

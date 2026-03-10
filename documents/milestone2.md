@@ -4,9 +4,9 @@
 
 Transportation and urban mobility play a central role in how people access social, economic, and civic life. Prior research and policy discussions have linked limited mobility to increased risks of loneliness, social isolation, and estrangement, particularly for populations constrained by income, age, disability, or neighborhood-level infrastructure. When individuals are unable to move easily through their city, opportunities for work, social connection, and community participation can narrow in ways that are unevenly distributed across space and demographics. Understanding how mobility patterns vary by geographic location and population characteristics is therefore a critical step toward identifying which communities may be most vulnerable to the social consequences of low mobility.
 
-Within this context, this project examines changes in urban mobility in Chicago over the last seven years, with particular attention to differences across neighborhoods and demographic groups. Using public transit ridership data, rideshare data, and demographic information from the American Community Survey (ACS), the analysis is guided by three interrelated questions: **(1)** how urban mobility patterns in Chicago evolved from 2019 to 2025, particularly before and after the COVID-19 pandemic; **(2)** whether public transit and rideshare usage exhibit persistent geographic disparities, with certain neighborhoods consistently over- or under-represented in observed mobility; and **(3)** how these spatial patterns of mobility align with neighborhood-level demographic characteristics. The analysis is descriptive and exploratory rather than causal, and does not directly measure loneliness or social isolation, but instead treats mobility as a structural condition that may shape access to social and economic life.
+Within this context, this project examines changes in urban mobility in Chicago over the last seven years, with particular attention to differences across neighborhoods and demographic groups. Using public transit ridership data, rideshare data, and demographic information from the American Community Survey (ACS), the analysis is guided by three interrelated questions: **(1)** how urban mobility patterns in Chicago evolved from 2019 to 2024, particularly before and after the COVID-19 pandemic; **(2)** whether public transit and rideshare usage exhibit persistent geographic disparities, with certain neighborhoods consistently over- or under-represented in observed mobility; and **(3)** how these spatial patterns of mobility align with neighborhood-level demographic characteristics. The analysis is descriptive and exploratory rather than causal, and does not directly measure loneliness or social isolation, but instead treats mobility as a structural condition that may shape access to social and economic life.
 
-We analyze how public and private transportation usage varies geographically and over time, and assess the extent to which observed mobility patterns differ across neighborhoods and demographic contexts. The project integrates multiple large public datasets and produces visual tools—including maps and network graphs—that allow users to explore trends across space and time. The long-term goal is to provide a clear, data-driven account of how urban mobility in Chicago changed between 2019 and 2025, and to support future research and policy discussions concerning social isolation, mobility inequality, and urban accessibility.
+We analyze how public and private transportation usage varies geographically and over time, and assess the extent to which observed mobility patterns differ across neighborhoods and demographic contexts. The project integrates multiple large public datasets and produces visual tools—including maps and network graphs—that allow users to explore trends across space and time. The long-term goal is to provide a clear, data-driven account of how urban mobility in Chicago changed between 2019 and 2024, and to support future research and policy discussions concerning social isolation, mobility inequality, and urban accessibility.
 
 ---
 
@@ -24,7 +24,7 @@ Our planned steps are:
 - Group CTA ridership data by time period
 - Group rideshare pickup and dropoff locations into the same geographic unit
 - Join the transportation data to ACS demographic data using matching geographic identifiers
-- Limit all datasets to the same time range, focusing mainly on 2019–2025 where data is available (with ACS data extending through 2024 due to reporting lag)
+- Limit all datasets to the same time range, focusing mainly on 2019–2024 where data is available (with ACS data extending through 2024 due to reporting lag)
 
 The final geographic unit will be chosen based on data availability, privacy-related suppression, and interpretability of results. This choice is analytically important, as it affects how mobility patterns are observed, compared, and contextualized across neighborhoods.
 
@@ -56,7 +56,7 @@ Systemwide ridership data does not include geographic detail beyond the transit 
 
 The systemwide dataset contains approximately 3,600 daily records across the selected analysis window, with fields for date, day type, bus boardings, rail boardings, and total rides.
 
-The station-level dataset contains approximately 1.3 million rows and five main columns: station ID, station name, date, day type, and daily rides. For analysis, the data will be filtered to the years 2019–2025 and aggregated as needed to reduce size.
+The station-level dataset contains approximately 1.3 million rows and five main columns: station ID, station name, date, day type, and daily rides. For analysis, the data will be filtered to the years 2019–2024 and aggregated as needed to reduce size.
 
 #### Exploration notes
 
@@ -70,12 +70,12 @@ The station-level dataset can be aggregated to neighborhood-level geographic uni
 
 - **Source type:** API  
 - **URLs:**  
-  - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2025-/6dvr-xwnh/about_data  
+  - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2024-/6dvr-xwnh/about_data  
   - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2023-2024-/n26f-ihde/about_data  
   - https://data.cityofchicago.org/Transportation/Transportation-Network-Providers-Trips-2018-2022-/m6dm-c72p/about_data  
 
 - **Description:**  
-  All trips, from November 2018 to December 2025, reported by Transportation Network Providers (rideshare companies) to the City of Chicago as part of routine reporting required by ordinance.
+  All trips, from November 2018 to December 2024, reported by Transportation Network Providers (rideshare companies) to the City of Chicago as part of routine reporting required by ordinance.
 
 - **Challenges and uncertainty:**  
   The dataset is very large and requires filtering and aggregation. Census tract identifiers are suppressed for some records, and timestamps are rounded. Not all trips are reported, though coverage is believed to be high.
@@ -84,7 +84,7 @@ The station-level dataset can be aggregated to neighborhood-level geographic uni
   The full dataset contains tens of millions of rows. For analysis, we will limit the data to selected years and aggregate trips to reduce size. Each record includes time, location, and trip-related fields.
 
 - **Exploration notes:**  
-  Initial exploration shows that pickup and dropoff locations can be grouped into neighborhood-level units. Rideshare flows will also be used to construct network visualizations, treating geographic areas as nodes and trips between them as edges. We will begin by prototyping with a snapshot of 2025 data before expanding to additional years.
+  Initial exploration shows that pickup and dropoff locations can be grouped into neighborhood-level units. Rideshare flows will also be used to construct network visualizations, treating geographic areas as nodes and trips between them as edges. We will begin by prototyping with a snapshot of 2024 data before expanding to additional years.
 
 ---
 

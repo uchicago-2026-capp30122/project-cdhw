@@ -1,10 +1,11 @@
 """
-This script builds the csv "data/processed/ca_trip_totals.csv" 
+This script builds the csv "data/processed/ca_trip_totals.csv"
 which contains community-area level rideshare trip totals.
 """
 
 from pathlib import Path
 import pandas as pd
+
 
 def main():
     root = Path(__file__).resolve().parents[2]
@@ -27,7 +28,9 @@ def main():
     )
 
     ca_totals = pd.concat([pickup_totals, dropoff_totals], ignore_index=True)
-    ca_totals["community_area"] = pd.to_numeric(ca_totals["community_area"], errors="coerce")
+    ca_totals["community_area"] = pd.to_numeric(
+        ca_totals["community_area"], errors="coerce"
+    )
     ca_totals = (
         ca_totals.groupby("community_area", as_index=False)["trips"]
         .sum()
@@ -37,6 +40,7 @@ def main():
 
     ca_totals.to_csv(out_path, index=False)
     print(f"Wrote {len(ca_totals)} rows -> {out_path}")
+
 
 if __name__ == "__main__":
     main()

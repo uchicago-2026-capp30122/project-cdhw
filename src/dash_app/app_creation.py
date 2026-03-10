@@ -11,6 +11,7 @@ Design:
 - Keep this file focused on wiring (app creation + callbacks).
 - Keep layout generation in `layout.py`, plotting in `figures.py`, and data loading in `io.py`.
 """
+
 from pathlib import Path
 from dash import Dash, Input, Output
 from .config import TRACT_CSV, TRACT_GEOJSON, CA_CSV, CA_GEOJSON, CTA_CSV, DROPDOWN_VARS
@@ -21,6 +22,7 @@ from .figures import make_choropleth, add_selected_overlays, NEED_COLOR_COLS
 ROOT_DIR = Path(__file__).resolve().parents[2]
 ASSETS_DIR = ROOT_DIR / "assets"
 
+
 def create_app():
     # Load both datasets once
     tract_df = load_df(TRACT_CSV, id_col="GEOID")
@@ -28,13 +30,12 @@ def create_app():
 
     ca_df = load_df(CA_CSV, id_col="community_area")
     ca_geo = load_geojson(CA_GEOJSON)
-    
+
     cta_df = load_df(CTA_CSV, id_col="station_id")
 
     # de-duplicating rows in CTA data, to use only 1 row (total annual rides) per station, instead of 12 monthly rows.
-    cta_df = (
-        cta_df.sort_values(["station_id", "year", "month"])
-            .drop_duplicates(subset=["station_id"], keep="last")
+    cta_df = cta_df.sort_values(["station_id", "year", "month"]).drop_duplicates(
+        subset=["station_id"], keep="last"
     )
 
     # What variables exist in both (so the dropdown works no matter the toggle)
@@ -45,7 +46,7 @@ def create_app():
         color_col = NEED_COLOR_COLS.get(v, v)
         if color_col in tract_cols and color_col in ca_cols:
             map_vars.append(v)
-            
+
     app = Dash(
         __name__,
         assets_folder=str(ASSETS_DIR),
@@ -87,5 +88,5 @@ def create_app():
             cta_name_col="station_name",
         )
         return fig
-    
+
     return app

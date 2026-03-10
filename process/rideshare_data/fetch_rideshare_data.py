@@ -2,7 +2,7 @@ import json
 from src.api_client import get_edges_grouped_by_ca, get_community_areas
 
 
-def compile_rideshare(start_date="2025-01-01T00:00:00", end_date="2025-12-31T00:00:00"):
+def compile_rideshare(start_date="2024-01-01T00:00:00", end_date="2024-12-31T00:00:00"):
     """
     Compile rideshare data from the City of Chicago's transportation portal with
     community area geographic points
@@ -36,4 +36,5 @@ def compile_rideshare(start_date="2025-01-01T00:00:00", end_date="2025-12-31T00:
         json.dump(merged, f)
 
 
-compile_rideshare()
+if __name__ == "__main__":
+    compile_rideshare()

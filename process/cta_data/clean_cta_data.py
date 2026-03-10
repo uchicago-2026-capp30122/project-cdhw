@@ -1,7 +1,7 @@
 """
 clean_cta_data.py
 
-Reads raw CTA files produced by NEW_fetch_cta_raw.py.
+Reads raw CTA files produced by fetch_cta_raw.py.
 Writes two clean files to data/processed/.
 
 the_geom column in geo points contains real lat long coordinates.

@@ -205,9 +205,7 @@ def main() -> None:
         out_rows.append(row)
 
     final = pd.DataFrame(out_rows)
-    annual = (final.groupby("station_id")["month_total"]
-        .sum()
-        .rename("annual_total"))
+    annual = final.groupby("station_id")["month_total"].sum().rename("annual_total")
     final = final.merge(annual, on="station_id")
 
     final.to_csv(OUT_PATH, index=False)

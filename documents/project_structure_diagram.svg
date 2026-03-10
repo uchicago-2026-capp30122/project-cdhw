@@ -1,0 +1,164 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="681pt" height="558pt" viewBox="0.00 0.00 680.91 557.60">
+<g id="graph0" class="graph" transform="translate(60.99143001981952,524.3197676770162) scale(0.8705505632961241)" data-name="ChicagoMobilityArchitecture">
+
+<polygon fill="white" stroke="none" points="-4,4 -4,-553.6 676.91,-553.6 676.91,4 -4,4" style=""/>
+<g id="clust1" class="cluster" data-name="cluster_processing">
+
+<polygon fill="none" stroke="black" points="205.64,-284.8 205.64,-505.6 430.64,-505.6 430.64,-284.8 205.64,-284.8" style=""/>
+<text text-anchor="middle" x="318.14" y="-489" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Data Processing and Aggregation</text>
+</g>
+<g id="clust2" class="cluster" data-name="cluster_dash">
+
+<polygon fill="none" stroke="black" points="74.64,-64 74.64,-212.8 274.64,-212.8 274.64,-64 74.64,-64" style=""/>
+<text text-anchor="middle" x="174.64" y="-196.2" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Interactive Web Application</text>
+</g>
+<g id="clust3" class="cluster" data-name="cluster_viz">
+
+<polygon fill="none" stroke="black" points="303.64,-136 303.64,-212.8 525.64,-212.8 525.64,-136 303.64,-136" style=""/>
+<text text-anchor="middle" x="414.64" y="-196.2" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Visualizations and Network Maps</text>
+</g>
+<!-- American Community Survey -->
+<g id="node1" class="node" pointer-events="visible" data-name="American Community Survey">
+
+<path fill="lightblue" stroke="black" d="M197.41,-546.33C197.41,-548.13 153.14,-549.6 98.64,-549.6 44.13,-549.6 -0.14,-548.13 -0.14,-546.33 -0.14,-546.33 -0.14,-516.87 -0.14,-516.87 -0.14,-515.07 44.13,-513.6 98.64,-513.6 153.14,-513.6 197.41,-515.07 197.41,-516.87 197.41,-516.87 197.41,-546.33 197.41,-546.33" style=""/>
+<path fill="none" stroke="black" d="M197.41,-546.33C197.41,-544.52 153.14,-543.05 98.64,-543.05 44.13,-543.05 -0.14,-544.52 -0.14,-546.33" style=""/>
+<text text-anchor="middle" x="98.64" y="-527.4" font-family="Helvetica,sans-Serif" font-size="14.00" style="">American Community Survey</text>
+</g>
+<!-- Data Extraction -->
+<g id="node7" class="node" pointer-events="visible" data-name="Data Extraction">
+
+<polygon fill="none" stroke="black" points="357.35,-472.8 245.93,-472.8 245.93,-436.8 357.35,-436.8 357.35,-472.8" style=""/>
+<text text-anchor="middle" x="301.64" y="-450.6" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Data Extraction</text>
+</g>
+<!-- American Community Survey&#45;&gt;Data Extraction -->
+<g id="edge1" class="edge" data-name="American Community Survey-&gt;Data Extraction">
+
+<path fill="none" stroke="black" d="M145.98,-513.16C175.11,-502.42 212.67,-488.58 243.59,-477.19" style=""/>
+<polygon fill="black" stroke="black" points="244.63,-480.54 252.8,-473.79 242.21,-473.97 244.63,-480.54" style=""/>
+</g>
+<!-- Chicago Transit Authority -->
+<g id="node2" class="node" pointer-events="visible" data-name="Chicago Transit Authority">
+
+<path fill="lightblue" stroke="black" d="M388.32,-546.33C388.32,-548.13 349.47,-549.6 301.64,-549.6 253.81,-549.6 214.96,-548.13 214.96,-546.33 214.96,-546.33 214.96,-516.87 214.96,-516.87 214.96,-515.07 253.81,-513.6 301.64,-513.6 349.47,-513.6 388.32,-515.07 388.32,-516.87 388.32,-516.87 388.32,-546.33 388.32,-546.33" style=""/>
+<path fill="none" stroke="black" d="M388.32,-546.33C388.32,-544.52 349.47,-543.05 301.64,-543.05 253.81,-543.05 214.96,-544.52 214.96,-546.33" style=""/>
+<text text-anchor="middle" x="301.64" y="-527.4" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Chicago Transit Authority</text>
+</g>
+<!-- Chicago Transit Authority&#45;&gt;Data Extraction -->
+<g id="edge2" class="edge" data-name="Chicago Transit Authority-&gt;Data Extraction">
+
+<path fill="none" stroke="black" d="M301.64,-513.25C301.64,-504.66 301.64,-494.07 301.64,-484.32" style=""/>
+<polygon fill="black" stroke="black" points="305.14,-484.57 301.64,-474.57 298.14,-484.57 305.14,-484.57" style=""/>
+</g>
+<!-- Transportation Urban Network Providers -->
+<g id="node3" class="node" pointer-events="visible" data-name="Transportation Urban Network Providers">
+
+<path fill="lightblue" stroke="black" d="M672.68,-546.33C672.68,-548.13 613.05,-549.6 539.64,-549.6 466.23,-549.6 406.59,-548.13 406.59,-546.33 406.59,-546.33 406.59,-516.87 406.59,-516.87 406.59,-515.07 466.23,-513.6 539.64,-513.6 613.05,-513.6 672.68,-515.07 672.68,-516.87 672.68,-516.87 672.68,-546.33 672.68,-546.33" style=""/>
+<path fill="none" stroke="black" d="M672.68,-546.33C672.68,-544.52 613.05,-543.05 539.64,-543.05 466.23,-543.05 406.59,-544.52 406.59,-546.33" style=""/>
+<text text-anchor="middle" x="539.64" y="-527.4" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Transportation Urban Network Providers</text>
+</g>
+<!-- Transportation Urban Network Providers&#45;&gt;Data Extraction -->
+<g id="edge3" class="edge" data-name="Transportation Urban Network Providers-&gt;Data Extraction">
+
+<path fill="none" stroke="black" d="M484.14,-513.16C449.38,-502.23 404.41,-488.1 367.8,-476.59" style=""/>
+<polygon fill="black" stroke="black" points="369.26,-473.38 358.67,-473.72 367.16,-480.06 369.26,-473.38" style=""/>
+</g>
+<!-- Unified Community Area Dataset (CSV) -->
+<g id="node4" class="node" pointer-events="visible" data-name="Unified Community Area Dataset (CSV)">
+
+<path fill="lightyellow" stroke="black" d="M432.5,-253.53C432.5,-255.33 373.84,-256.8 301.64,-256.8 229.43,-256.8 170.78,-255.33 170.78,-253.53 170.78,-253.53 170.78,-224.07 170.78,-224.07 170.78,-222.27 229.43,-220.8 301.64,-220.8 373.84,-220.8 432.5,-222.27 432.5,-224.07 432.5,-224.07 432.5,-253.53 432.5,-253.53" style=""/>
+<path fill="none" stroke="black" d="M432.5,-253.53C432.5,-251.72 373.84,-250.25 301.64,-250.25 229.43,-250.25 170.78,-251.72 170.78,-253.53" style=""/>
+<text text-anchor="middle" x="301.64" y="-234.6" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Unified Community Area Dataset (CSV)</text>
+</g>
+<!-- Dash Data Load -->
+<g id="node10" class="node" pointer-events="visible" data-name="Dash Data Load">
+
+<polygon fill="none" stroke="black" points="249.32,-180 131.96,-180 131.96,-144 249.32,-144 249.32,-180" style=""/>
+<text text-anchor="middle" x="190.64" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Dash Data Load</text>
+</g>
+<!-- Unified Community Area Dataset (CSV)&#45;&gt;Dash Data Load -->
+<g id="edge7" class="edge" data-name="Unified Community Area Dataset (CSV)-&gt;Dash Data Load">
+
+<path fill="none" stroke="black" d="M275.89,-220.45C260.9,-210.35 241.8,-197.48 225.48,-186.48" style=""/>
+<polygon fill="black" stroke="black" points="227.75,-183.79 217.5,-181.1 223.83,-189.59 227.75,-183.79" style=""/>
+</g>
+<!-- Network Construction -->
+<g id="node12" class="node" pointer-events="visible" data-name="Network Construction">
+
+<polygon fill="none" stroke="black" points="472.46,-180 322.81,-180 322.81,-144 472.46,-144 472.46,-180" style=""/>
+<text text-anchor="middle" x="397.64" y="-157.8" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Network Construction</text>
+</g>
+<!-- Unified Community Area Dataset (CSV)&#45;&gt;Network Construction -->
+<g id="edge10" class="edge" data-name="Unified Community Area Dataset (CSV)-&gt;Network Construction">
+
+<path fill="none" stroke="black" d="M323.9,-220.45C336.63,-210.54 352.77,-197.96 366.71,-187.1" style=""/>
+<polygon fill="black" stroke="black" points="368.56,-190.09 374.3,-181.18 364.26,-184.57 368.56,-190.09" style=""/>
+</g>
+<!-- Dash Web UI -->
+<g id="node5" class="node" pointer-events="visible" data-name="Dash Web UI">
+
+<ellipse fill="lightgreen" stroke="black" cx="174.64" cy="-18" rx="68.42" ry="18" style=""/>
+<text text-anchor="middle" x="174.64" y="-13.8" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Dash Web UI</text>
+</g>
+<!-- Pyvis HTML Graph Output -->
+<g id="node6" class="node" pointer-events="visible" data-name="Pyvis HTML Graph Output">
+
+<ellipse fill="lightgreen" stroke="black" cx="408.64" cy="-90" rx="124.05" ry="18" style=""/>
+<text text-anchor="middle" x="408.64" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Pyvis HTML Graph Output</text>
+</g>
+<!-- Data Cleaning -->
+<g id="node8" class="node" pointer-events="visible" data-name="Data Cleaning">
+
+<polygon fill="none" stroke="black" points="353.86,-400.8 249.41,-400.8 249.41,-364.8 353.86,-364.8 353.86,-400.8" style=""/>
+<text text-anchor="middle" x="301.64" y="-378.6" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Data Cleaning</text>
+</g>
+<!-- Data Extraction&#45;&gt;Data Cleaning -->
+<g id="edge4" class="edge" data-name="Data Extraction-&gt;Data Cleaning">
+
+<path fill="none" stroke="black" d="M301.64,-436.5C301.64,-429.21 301.64,-420.53 301.64,-412.34" style=""/>
+<polygon fill="black" stroke="black" points="305.14,-412.42 301.64,-402.42 298.14,-412.42 305.14,-412.42" style=""/>
+</g>
+<!-- Geographic Aggregation -->
+<g id="node9" class="node" pointer-events="visible" data-name="Geographic Aggregation">
+
+<polygon fill="none" stroke="black" points="385.41,-328.8 217.87,-328.8 217.87,-292.8 385.41,-292.8 385.41,-328.8" style=""/>
+<text text-anchor="middle" x="301.64" y="-306.6" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Geographic Aggregation</text>
+</g>
+<!-- Data Cleaning&#45;&gt;Geographic Aggregation -->
+<g id="edge5" class="edge" data-name="Data Cleaning-&gt;Geographic Aggregation">
+
+<path fill="none" stroke="black" d="M301.64,-364.5C301.64,-357.21 301.64,-348.53 301.64,-340.34" style=""/>
+<polygon fill="black" stroke="black" points="305.14,-340.42 301.64,-330.42 298.14,-340.42 305.14,-340.42" style=""/>
+</g>
+<!-- Geographic Aggregation&#45;&gt;Unified Community Area Dataset (CSV) -->
+<g id="edge6" class="edge" data-name="Geographic Aggregation-&gt;Unified Community Area Dataset (CSV)">
+
+<path fill="none" stroke="black" d="M301.64,-292.5C301.64,-285.21 301.64,-276.53 301.64,-268.34" style=""/>
+<polygon fill="black" stroke="black" points="305.14,-268.42 301.64,-258.42 298.14,-268.42 305.14,-268.42" style=""/>
+</g>
+<!-- Choropleth Map Rendering -->
+<g id="node11" class="node" pointer-events="visible" data-name="Choropleth Map Rendering">
+
+<polygon fill="none" stroke="black" points="266.74,-108 82.54,-108 82.54,-72 266.74,-72 266.74,-108" style=""/>
+<text text-anchor="middle" x="174.64" y="-85.8" font-family="Helvetica,sans-Serif" font-size="14.00" style="">Choropleth Map Rendering</text>
+</g>
+<!-- Dash Data Load&#45;&gt;Choropleth Map Rendering -->
+<g id="edge8" class="edge" data-name="Dash Data Load-&gt;Choropleth Map Rendering">
+
+<path fill="none" stroke="black" d="M186.68,-143.7C185,-136.32 182.99,-127.52 181.09,-119.25" style=""/>
+<polygon fill="black" stroke="black" points="184.52,-118.55 178.88,-109.58 177.7,-120.11 184.52,-118.55" style=""/>
+</g>
+<!-- Choropleth Map Rendering&#45;&gt;Dash Web UI -->
+<g id="edge9" class="edge" data-name="Choropleth Map Rendering-&gt;Dash Web UI">
+
+<path fill="none" stroke="black" d="M174.64,-71.7C174.64,-64.41 174.64,-55.73 174.64,-47.54" style=""/>
+<polygon fill="black" stroke="black" points="178.14,-47.62 174.64,-37.62 171.14,-47.62 178.14,-47.62" style=""/>
+</g>
+<!-- Network Construction&#45;&gt;Pyvis HTML Graph Output -->
+<g id="edge11" class="edge" data-name="Network Construction-&gt;Pyvis HTML Graph Output">
+
+<path fill="none" stroke="black" d="M400.36,-143.7C401.52,-136.32 402.9,-127.52 404.2,-119.25" style=""/>
+<polygon fill="black" stroke="black" points="407.62,-120.02 405.71,-109.6 400.7,-118.93 407.62,-120.02" style=""/>
+</g>
+</g>
+</svg>

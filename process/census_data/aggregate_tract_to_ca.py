@@ -15,23 +15,32 @@ Output
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from process.census_data.make_tract_features import DEFAULT_WEIGHTS, NEED_HIGH_VARS, NEED_LOW_VARS, add_need_component_scores
+from process.census_data.make_tract_features import (
+    DEFAULT_WEIGHTS,
+    NEED_HIGH_VARS,
+    NEED_LOW_VARS,
+    add_need_component_scores,
+)
 from src.api_client import get_community_areas
 import json
+
 
 def add_community_area_names(ca_df: pd.DataFrame, names_path: Path) -> pd.DataFrame:
     with open(names_path, "r") as f:
         ca_lookup = json.load(f)
 
-    name_df = pd.DataFrame([
-        {
-            "community_area": int(k),
-            "community_area_name": v["name"].title(),
-        }
-        for k, v in ca_lookup.items()
-    ])
+    name_df = pd.DataFrame(
+        [
+            {
+                "community_area": int(k),
+                "community_area_name": v["name"].title(),
+            }
+            for k, v in ca_lookup.items()
+        ]
+    )
 
     return ca_df.merge(name_df, on="community_area", how="left")
+
 
 def add_total_trips(out: pd.DataFrame, trips_path: Path) -> pd.DataFrame:
     if not trips_path.exists():
@@ -39,7 +48,9 @@ def add_total_trips(out: pd.DataFrame, trips_path: Path) -> pd.DataFrame:
         return out
 
     trips_df = pd.read_csv(trips_path)
-    trips_df["community_area"] = pd.to_numeric(trips_df["community_area"], errors="coerce").astype("Int64")
+    trips_df["community_area"] = pd.to_numeric(
+        trips_df["community_area"], errors="coerce"
+    ).astype("Int64")
 
     out = out.merge(
         trips_df[["community_area", "total_trips"]],
@@ -48,6 +59,7 @@ def add_total_trips(out: pd.DataFrame, trips_path: Path) -> pd.DataFrame:
     )
     out["total_trips"] = out["total_trips"].fillna(0)
     return out
+
 
 def add_need_component_scores(
     df: pd.DataFrame,
@@ -81,10 +93,13 @@ def add_need_component_scores(
 
     return dff
 
-def add_need_index_percentile(df: pd.DataFrame,
-                              weights: dict = None,
-                              index_col: str = "transportation_need_index_0_100",
-                              suffix: str = "_need_0_100",) -> pd.DataFrame:
+
+def add_need_index_percentile(
+    df: pd.DataFrame,
+    weights: dict = None,
+    index_col: str = "transportation_need_index_0_100",
+    suffix: str = "_need_0_100",
+) -> pd.DataFrame:
     if weights is None:
         weights = DEFAULT_WEIGHTS
 
@@ -124,16 +139,36 @@ def _infer_crosswalk_cols(xwalk: pd.DataFrame):
         raise ValueError("Crosswalk must have a GEOID column.")
 
     # Community area id column (common candidates)
-    ca_candidates = [c for c in xwalk.columns if c.lower() in {"community_area", "ca", "ca_id", "area_numbe", "area_number", "communityarea"}]
+    ca_candidates = [
+        c
+        for c in xwalk.columns
+        if c.lower()
+        in {
+            "community_area",
+            "ca",
+            "ca_id",
+            "area_numbe",
+            "area_number",
+            "communityarea",
+        }
+    ]
     if not ca_candidates:
         # fallback: anything with "community" or "area" in name
-        ca_candidates = [c for c in xwalk.columns if ("community" in c.lower()) or ("area" in c.lower())]
+        ca_candidates = [
+            c
+            for c in xwalk.columns
+            if ("community" in c.lower()) or ("area" in c.lower())
+        ]
     if not ca_candidates:
         raise ValueError("Could not infer community area id column in crosswalk.")
     ca_col = ca_candidates[0]
 
     # Weight column
-    w_candidates = [c for c in xwalk.columns if any(k in c.lower() for k in ["weight", "share", "pct", "proportion", "frac"])]
+    w_candidates = [
+        c
+        for c in xwalk.columns
+        if any(k in c.lower() for k in ["weight", "share", "pct", "proportion", "frac"])
+    ]
     w_col = w_candidates[0] if w_candidates else None
 
     return geoid_col, ca_col, w_col
@@ -154,10 +189,19 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
     else:
         xw[w_col] = pd.to_numeric(xw[w_col], errors="coerce").fillna(0.0)
 
-    merged = df.merge(xw[[geoid_col, ca_col, w_col]], left_on="GEOID", right_on=geoid_col, how="inner")
+    merged = df.merge(
+        xw[[geoid_col, ca_col, w_col]], left_on="GEOID", right_on=geoid_col, how="inner"
+    )
 
     # Weighted counts
-    for c in ["pop_total", "hh_total", "hh_no_vehicle", "disability_total", "disability_with", "age_65_plus"]:
+    for c in [
+        "pop_total",
+        "hh_total",
+        "hh_no_vehicle",
+        "disability_total",
+        "disability_with",
+        "age_65_plus",
+    ]:
         if c in merged.columns:
             merged[c] = pd.to_numeric(merged[c], errors="coerce")
             merged[f"{c}_w"] = merged[c] * merged[w_col]
@@ -172,12 +216,18 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
 
     # median_hh_income (weighted average; prefer hh_total if present, else pop_total)
     if "median_hh_income" in merged.columns:
-        merged["median_hh_income"] = pd.to_numeric(merged["median_hh_income"], errors="coerce")
+        merged["median_hh_income"] = pd.to_numeric(
+            merged["median_hh_income"], errors="coerce"
+        )
         if "hh_total_w" in merged.columns:
-            num = group.apply(lambda g: (g["median_hh_income"] * g["hh_total_w"]).sum(skipna=True))
+            num = group.apply(
+                lambda g: (g["median_hh_income"] * g["hh_total_w"]).sum(skipna=True)
+            )
             den = group["hh_total_w"].sum()
         elif "pop_total_w" in merged.columns:
-            num = group.apply(lambda g: (g["median_hh_income"] * g["pop_total_w"]).sum(skipna=True))
+            num = group.apply(
+                lambda g: (g["median_hh_income"] * g["pop_total_w"]).sum(skipna=True)
+            )
             den = group["pop_total_w"].sum()
         else:
             num = group["median_hh_income"].mean()
@@ -186,18 +236,26 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
 
     # Rates computed from summed numerators/denominators
     if "hh_no_vehicle_w" in merged.columns and "hh_total_w" in merged.columns:
-        out["pct_no_vehicle_hh"] = (group["hh_no_vehicle_w"].sum() / group["hh_total_w"].sum()).values
+        out["pct_no_vehicle_hh"] = (
+            group["hh_no_vehicle_w"].sum() / group["hh_total_w"].sum()
+        ).values
 
     if "disability_with_w" in merged.columns and "disability_total_w" in merged.columns:
-        out["pct_disabled"] = (group["disability_with_w"].sum() / group["disability_total_w"].sum()).values
+        out["pct_disabled"] = (
+            group["disability_with_w"].sum() / group["disability_total_w"].sum()
+        ).values
 
     if "age_65_plus_w" in merged.columns and "pop_total_w" in merged.columns:
-        out["pct_65_plus"] = (group["age_65_plus_w"].sum() / group["pop_total_w"].sum()).values
+        out["pct_65_plus"] = (
+            group["age_65_plus_w"].sum() / group["pop_total_w"].sum()
+        ).values
 
     # Rename CA id column to a consistent name for Dash
     out = out.rename(columns={ca_col: "community_area"})
-    out["community_area"] = pd.to_numeric(out["community_area"], errors="coerce").astype("Int64")
-    
+    out["community_area"] = pd.to_numeric(
+        out["community_area"], errors="coerce"
+    ).astype("Int64")
+
     # ADDED: append centroid coordinates from David's API client lookup
     community_areas = get_community_areas()
 
@@ -218,9 +276,9 @@ def aggregate_to_ca(tract_df: pd.DataFrame, xwalk: pd.DataFrame) -> pd.DataFrame
     # optional: quintiles
     out["need_quintile"] = pd.qcut(
         out["transportation_need_index_0_100"],
-        q = 5,
-        labels = ["Very Low", "Low", "Moderate", "High", "Very High"],
-        duplicates = "drop",
+        q=5,
+        labels=["Very Low", "Low", "Moderate", "High", "Very High"],
+        duplicates="drop",
     )
 
     return out
@@ -234,14 +292,13 @@ def main():
     out_path = ROOT / "data" / "processed" / "community_area_census.csv"
     names_path = ROOT / "data" / "processed" / "community_areas.json"
 
-
     tract_df = pd.read_csv(tract_path, dtype={"GEOID": str})
     xwalk = pd.read_csv(xwalk_path)
-    
+
     ca_df = aggregate_to_ca(tract_df, xwalk)
     ca_df = add_total_trips(ca_df, trips_path)
     ca_df = add_community_area_names(ca_df, names_path)
-    
+
     # reorder columns
     cols = ca_df.columns.tolist()
     cols.insert(1, cols.pop(cols.index("community_area_name")))

@@ -2,6 +2,7 @@ import networkx as nx
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
 
+
 def update_ca_data_colors_size(ride_nx, ca_csv):
     """
     This function serves two purposes:
@@ -14,29 +15,30 @@ def update_ca_data_colors_size(ride_nx, ca_csv):
                 ca_csv: csv file with census data by community area, including
                 transportation need index variable created by the team
 
-        Outputs: tuple(dicts) tuple of dictionaries for node color and size 
+        Outputs: tuple(dicts) tuple of dictionaries for node color and size
     """
 
-    #Create lookup from census data for transportation need index
-    t_index_lookup = dict(zip(ca_csv['community_area'],
-                              ca_csv['transportation_need_index_0_100']))
+    # Create lookup from census data for transportation need index
+    t_index_lookup = dict(
+        zip(ca_csv["community_area"], ca_csv["transportation_need_index_0_100"])
+    )
 
-    #Since Pyvis does not automatically color scale, need to assign colors to 
-    #transportation_needindex
+    # Since Pyvis does not automatically color scale, need to assign colors to
+    # transportation_needindex
     color_values = list(t_index_lookup.values())
 
-    #Normalize index values and get map for color scale
-    norm = mcolors.Normalize(vmin = min(color_values), vmax = max(color_values))
-    cmap = cm.get_cmap('viridis_r')
+    # Normalize index values and get map for color scale
+    norm = mcolors.Normalize(vmin=min(color_values), vmax=max(color_values))
+    cmap = cm.get_cmap("viridis_r")
 
     color_lookup = {}
 
-    #Assign color to node based on transportation need
+    # Assign color to node based on transportation need
     for node, val in t_index_lookup.items():
         rgba = cmap(norm(val))
         color_lookup[node] = mcolors.to_hex(rgba)
 
-    #Get population from census data to use as size in PyVis graph
-    pop_lookup = dict(zip(ca_csv['community_area'],ca_csv['pop_total']))
+    # Get population from census data to use as size in PyVis graph
+    pop_lookup = dict(zip(ca_csv["community_area"], ca_csv["pop_total"]))
 
     return color_lookup, pop_lookup

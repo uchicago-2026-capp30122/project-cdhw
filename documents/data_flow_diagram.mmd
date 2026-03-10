@@ -1,0 +1,34 @@
+graph TB
+    ExtAPI(["External API<br/>(Socrata)"]):::lightblue
+    CensusAPI(["US Census Bureau API"]):::lightblue
+    Processed[("Processed Datasets<br/>(CSV / JSON)")]:::lightyellow
+    DashUI(["Dash Web UI"]):::lightgreen
+    
+    api_client["src.api_client<br/>(Utility Library)"]
+    fetch_census["process.census_data.fetch"]
+    agg_census["process.census_data.aggregate"]
+    fetch_cta["process.cta_data.fetch"]
+    clean_cta["process.cta_data.clean_and_build"]
+    compile_rideshare["process.rideshare_data.compile_rideshare"]
+    dash_io["src.dash_app.io"]
+    dash_creation["src.dash_app.app_creation"]
+    dash_figures["src.dash_app.figures"]
+    
+    ExtAPI --> api_client
+    CensusAPI --> fetch_census
+    api_client -->|"pulled via function calls"| fetch_cta
+    api_client -->|"pulled via function calls"| compile_rideshare
+    fetch_census -->|"tract stats"| agg_census
+    fetch_cta -->|"raw timeseries"| clean_cta
+    agg_census --> Processed
+    clean_cta --> Processed
+    compile_rideshare -->|"merged with centroids"| Processed
+    Processed -->|"reads"| dash_io
+    dash_io -->|"loads dataframe"| dash_creation
+    dash_creation -->|"generates maps"| dash_figures
+    dash_figures -->|"renders layout/overlays"| DashUI
+
+    classDef default fill:#ffffff,color:#000000,stroke:#333333,stroke-width:1px
+    classDef lightblue fill:lightblue,color:#000000,stroke:#333,stroke-width:1px
+    classDef lightyellow fill:lightyellow,color:#000000,stroke:#333,stroke-width:1px
+    classDef lightgreen fill:lightgreen,color:#000000,stroke:#333,stroke-width:1px

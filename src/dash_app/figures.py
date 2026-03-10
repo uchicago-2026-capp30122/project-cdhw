@@ -26,6 +26,7 @@ DISPLAY_NAMES = {
     "pct_65_plus": "Older Adult Need Score",
 }
 
+
 def make_choropleth(
     df: pd.DataFrame, geojson: dict, id_col: str, id_prop: str, var_name: str
 ):
@@ -69,20 +70,20 @@ def make_choropleth(
         dff["_hover_name"] = dff["community_area_name"].astype(str)
     else:
         dff["_hover_name"] = dff[id_col].astype(str)
-    
+
     fig = px.choropleth_mapbox(
         dff,
-        geojson = geojson,
-        locations = id_col,
-        featureidkey = f"properties.{id_prop}",
-        color = color_col,
-        color_continuous_scale = "Viridis_r",
-        mapbox_style = "open-street-map",
-        zoom = 9,
-        center = {"lat": 41.88, "lon": -87.63},
-        opacity = 0.65,
+        geojson=geojson,
+        locations=id_col,
+        featureidkey=f"properties.{id_prop}",
+        color=color_col,
+        color_continuous_scale="Viridis_r",
+        mapbox_style="open-street-map",
+        zoom=9,
+        center={"lat": 41.88, "lon": -87.63},
+        opacity=0.65,
         custom_data=["_hover_name"],
-        labels = DISPLAY_NAMES,
+        labels=DISPLAY_NAMES,
     )
 
     fig.update_traces(
@@ -94,7 +95,7 @@ def make_choropleth(
             + "<extra></extra>"
         )
     )
-    
+
     fig.update_coloraxes(
         colorbar_title=colorbar_title,
         colorbar=dict(
@@ -127,6 +128,7 @@ def make_choropleth(
     )
     return fig
 
+
 def _prep_point_df(df, lat_col, lon_col, size_col):
     if df is None or df.empty:
         return pd.DataFrame()
@@ -146,7 +148,7 @@ def _sizeref(values, desired_max_px=30):
     max_val = values.max() if len(values) else 0
     if not max_val or pd.isna(max_val):
         return 1
-    return 2.0 * max_val / (desired_max_px ** 2)
+    return 2.0 * max_val / (desired_max_px**2)
 
 
 def add_point_overlay(
@@ -157,10 +159,10 @@ def add_point_overlay(
     lon_col,
     size_col,
     name,
-    hover_name_col = None,
-    extra_hover_cols = None,
-    max_marker_px = 30,
-    color = None,
+    hover_name_col=None,
+    extra_hover_cols=None,
+    max_marker_px=30,
+    color=None,
 ):
     dff = _prep_point_df(df, lat_col, lon_col, size_col)
     if dff.empty:
@@ -180,34 +182,33 @@ def add_point_overlay(
         "annual_total": "CTA rides",
     }
     label = LABELS.get(size_col, size_col)
-    
+
     hovertemplate_parts = []
     if hover_name_col and hover_name_col in dff.columns:
         hovertemplate_parts.append(f"<b style='color:{color}'>%{{text}}</b>")
-    
 
     hovertemplate_parts.append(
-            f"<span style='color:{color}'>{label}: %{{marker.size:,}}</span>"
+        f"<span style='color:{color}'>{label}: %{{marker.size:,}}</span>"
     )
 
     hovertemplate = "<br>".join(hovertemplate_parts) + "<extra></extra>"
 
     fig.add_trace(
         go.Scattermapbox(
-            lat = dff[lat_col],
-            lon = dff[lon_col],
-            mode = "markers",
-            name = name,
-            text = hover_text,
-            customdata = customdata,
-            hovertemplate = hovertemplate,
-            marker = dict(
-                size = dff[size_col],
-                sizemode = "area",
-                sizeref = _sizeref(dff[size_col], desired_max_px = max_marker_px),
-                sizemin = 4,
-                opacity = 0.75,
-                color = color,
+            lat=dff[lat_col],
+            lon=dff[lon_col],
+            mode="markers",
+            name=name,
+            text=hover_text,
+            customdata=customdata,
+            hovertemplate=hovertemplate,
+            marker=dict(
+                size=dff[size_col],
+                sizemode="area",
+                sizeref=_sizeref(dff[size_col], desired_max_px=max_marker_px),
+                sizemin=4,
+                opacity=0.75,
+                color=color,
             ),
         )
     )
@@ -218,18 +219,18 @@ def add_selected_overlays(
     fig,
     overlays,
     *,
-    cta_df = None,
-    rideshare_df = None,
-    cta_lat_col = "lat",
-    cta_lon_col = "lon",
-    cta_size_col = "annual_total",
-    cta_name_col = "station_name",
-    rideshare_lat_col = "centroid_lat",
-    rideshare_lon_col = "centroid_lon",
-    rideshare_size_col = "total_trips",
-    rideshare_name_col = "community_area_name",
-    cta_max_marker_px = 26,
-    rideshare_max_marker_px = 34,
+    cta_df=None,
+    rideshare_df=None,
+    cta_lat_col="lat",
+    cta_lon_col="lon",
+    cta_size_col="annual_total",
+    cta_name_col="station_name",
+    rideshare_lat_col="centroid_lat",
+    rideshare_lon_col="centroid_lon",
+    rideshare_size_col="total_trips",
+    rideshare_name_col="community_area_name",
+    cta_max_marker_px=26,
+    rideshare_max_marker_px=34,
 ):
     overlays = set(overlays or [])
 
@@ -237,28 +238,28 @@ def add_selected_overlays(
         fig = add_point_overlay(
             fig,
             cta_df,
-            lat_col = cta_lat_col,
-            lon_col = cta_lon_col,
-            size_col = cta_size_col,
-            name = "CTA stations",
-            hover_name_col = cta_name_col,
-            extra_hover_cols = [cta_size_col],
-            max_marker_px = cta_max_marker_px,
-            color = "#F5A30A",
+            lat_col=cta_lat_col,
+            lon_col=cta_lon_col,
+            size_col=cta_size_col,
+            name="CTA stations",
+            hover_name_col=cta_name_col,
+            extra_hover_cols=[cta_size_col],
+            max_marker_px=cta_max_marker_px,
+            color="#F5A30A",
         )
 
     if "rideshare" in overlays and rideshare_df is not None and not rideshare_df.empty:
         fig = add_point_overlay(
             fig,
             rideshare_df,
-            lat_col = rideshare_lat_col,
-            lon_col = rideshare_lon_col,
-            size_col = rideshare_size_col,
-            name = "Rideshare totals",
-            hover_name_col = rideshare_name_col,
-            extra_hover_cols = [rideshare_size_col],
-            max_marker_px = rideshare_max_marker_px,
-            color = "#111111",
+            lat_col=rideshare_lat_col,
+            lon_col=rideshare_lon_col,
+            size_col=rideshare_size_col,
+            name="Rideshare totals",
+            hover_name_col=rideshare_name_col,
+            extra_hover_cols=[rideshare_size_col],
+            max_marker_px=rideshare_max_marker_px,
+            color="#111111",
         )
 
     return fig

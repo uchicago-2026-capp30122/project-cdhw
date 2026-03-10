@@ -7,9 +7,9 @@ import pandas as pd
 # Load environment variables from .env file
 load_dotenv()
 
-# ----------------------------
+
 # Config
-# ----------------------------
+
 SOCRATA_APP_TOKEN = os.environ.get("SOCRATA_APP_TOKEN")
 if not SOCRATA_APP_TOKEN:
     raise RuntimeError(
@@ -21,9 +21,11 @@ HEADERS = {
     "X-App-Token": SOCRATA_APP_TOKEN,
 }
 
+
 # SODA 3.0 view IDs
+
 COMMUNITY_AREAS = "igwz-8jzy"  # Community area boundaries (GeoJSON geometry)
-TNP_TRIPS_2025 = "6dvr-xwnh"  # Rideshare trips dataset
+TNP_TRIPS = "n26f-ihde"  # Rideshare trips dataset
 ACS_CA = "t68z-cikk"  # American Community Survey data by community area
 CTA_STATIONS = "vmyy-m9qj"  # CTA Stations
 CTA_RIDERSHIP = "t2rn-p8d7"  # CTA Monthly L entries
@@ -33,9 +35,9 @@ CTA_STATIONS_ZIP_URL = (
 )
 
 
-# ----------------------------
 # SODA3 query + row extraction
-# ----------------------------
+
+
 def soda3_post(
     view_id: str,
     soql: str,
@@ -55,9 +57,9 @@ def soda3_post(
     return resp.json()
 
 
-# ----------------------------
 # Community Areas -> centroids (GeoJSON dict geometry)
-# ----------------------------
+
+
 def get_community_areas():
     """
     Returns a dict keyed by community area id (as int), with:
@@ -96,9 +98,9 @@ def get_community_areas():
     return areas
 
 
-# ----------------------------
 # Rideshare edges (grouped OD counts) via SODA3
-# ----------------------------
+
+
 def get_edges_grouped_by_ca(date_start=None, date_end=None):
     where = [
         "pickup_community_area IS NOT NULL",
@@ -120,12 +122,12 @@ def get_edges_grouped_by_ca(date_start=None, date_end=None):
       dropoff_community_area
     """
 
-    return soda3_post(TNP_TRIPS_2025, soql, page_size=10000, timeout=(10, 600))
+    return soda3_post(TNP_TRIPS, soql, page_size=10000, timeout=(10, 600))
 
 
-# ----------------------------
 # ACS Population -> dict {Area Name: Population}
-# ----------------------------
+
+
 def get_population_by_ca():
     """
     Returns a dict mapping community area NAME (str) -> Total Population (int).
@@ -153,9 +155,7 @@ def get_population_by_ca():
     return pop_map
 
 
-# ----------------------------
 # CTA Information, Reading files
-# ----------------------------
 
 
 def fetch_csv(view_id: str, limit: int = 50000) -> pd.DataFrame:

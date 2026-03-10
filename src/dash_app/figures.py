@@ -175,17 +175,20 @@ def add_point_overlay(
     customdata_cols = [c for c in extra_hover_cols if c in dff.columns]
     customdata = dff[customdata_cols].to_numpy() if customdata_cols else None
 
-    hovertemplate_parts = []
-    if hover_name_col and hover_name_col in dff.columns:
-        hovertemplate_parts.append("<b>%{text}</b>")
     LABELS = {
         "total_trips": "Rideshare trips",
         "annual_total": "CTA rides",
     }
-
     label = LABELS.get(size_col, size_col)
+    
+    hovertemplate_parts = []
+    if hover_name_col and hover_name_col in dff.columns:
+        hovertemplate_parts.append(f"<b style='color:{color}'>%{{text}}</b>")
+    
 
-    hovertemplate_parts.append(f"{label}: %{{marker.size:,}}")
+    hovertemplate_parts.append(
+            f"<span style='color:{color}'>{label}: %{{marker.size:,}}</span>"
+    )
 
     hovertemplate = "<br>".join(hovertemplate_parts) + "<extra></extra>"
 
@@ -241,7 +244,7 @@ def add_selected_overlays(
             hover_name_col = cta_name_col,
             extra_hover_cols = [cta_size_col],
             max_marker_px = cta_max_marker_px,
-            color = "#d62728",
+            color = "#F5A30A",
         )
 
     if "rideshare" in overlays and rideshare_df is not None and not rideshare_df.empty:

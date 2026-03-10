@@ -107,6 +107,11 @@ def make_choropleth(
     )
 
     fig.update_layout(
+        hoverlabel=dict(
+            font_size=20,
+            font_family="Arial",
+            bgcolor="white",
+        ),
         margin={"r": 80, "t": 40, "l": 0, "b": 0},
         legend=dict(
             title=None,

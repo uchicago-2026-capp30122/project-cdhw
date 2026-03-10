@@ -1,5 +1,4 @@
-# project-cdhw
- CDHW
+# Project CDHW
 
 ## Abstract
 
@@ -23,10 +22,10 @@ The goal is to document, describe and explore how movement varies across Chicago
 
 ## Team Members
 
-- Wendy  
-- David  
-- Ciara  
-- Hannah  
+- Ciara Staveley-O'Carroll
+- David Houghton
+- Hannah Barton
+- Wendy Wang
 
 ---
 

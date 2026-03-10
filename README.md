@@ -4,11 +4,18 @@
 
 This project examines mobility patterns in Chicago for 2024, exploring how public transit usage, rideshare activity, and neighborhood-level characteristics vary across the city. The analysis integrates CTA rail ridership, rideshare trip data, American Community Survey demographics, and walkability measures, all aligned to Chicago community areas. The project produces a geospatial dashboard built in Dash for exploring neighborhood-level mobility patterns and a network visualization built with PyVis showing movement between community areas.
 
+
+
 The analysis integrates:
 
 - CTA ridership rail data
 - Rideshare trip data
 - American Community Survey ACS data
+
+Data flow
+![](assets/data_flow_diagram.png) 
+![](assets/project_structure_diagram.png)
+
 
 
 All data are aligned to census tracts and community areas for spatial comparison. The project produces:

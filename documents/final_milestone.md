@@ -211,6 +211,35 @@ graph TB
 
 # Team Responsibilities
 
+- **Wendy**  
+  - Fetched and cleaned demographic data from the Census ACS API, which was used to generate a transportation-need index (both by individual indicator and as an aggregated measure).  
+  - Generated spatial boundary datasets (GeoJSON) used in the geospatial visualization and choropleth map.  
+  - Developed a tract-to–community area spatial crosswalk to align Census tract data with Chicago community areas using geographic intersections and area-based weighting.  
+  - Integrated the cleaned datasets (Census ACS, rideshare, CTA) into the Dash-generated choropleth and overlays.
+
+- **David**  
+  - Built the `api_client.py` module, which provides utility functions that authenticate with the Chicago Data Portal’s Socrata API, retrieve transportation, geographic, and demographic datasets, perform basic preprocessing such as converting community area geometries to centroids and aggregating rideshare trip flows, and supply helper methods for downloading CSV data and external files for use in the project’s data pipelines.
+  - Designed inital framwork for project structure and data flow and created associated diagrams.
+  - Wrote tests for core functionality of the modules, including API calls, data cleaning, and visualizations.
+
+- **Ciara**  
+  - Built the full CTA rail data pipeline by fetching raw ridership and station location data from the Chicago Data Portal API.  
+  - Cleaned both datasets, identifying and discarding broken state plane coordinate columns in favor of WGS-84 latitude and longitude values parsed from the geo points API.  
+  - Investigated and resolved the station ID mismatch between datasets—after attempting fuzzy string matching and name normalization—by identifying a direct arithmetic relationship between the two ID systems (`ridership station_id − 40000 = geo station_id`).  
+  - Built the master CTA dataset by joining ridership to station locations, spatially assigning each station to a Chicago community area using `shapely` point-in-polygon logic, removing 240 suburban stations outside city limits, and attaching ACS census demographics.  
+  - Added an `annual_total` metric per station aggregated across all 12 months.  
+  - Wrote pipeline validation tests.  
+  - Contributed the CTA station scatter layer to the Dash choropleth, where station points are sized by annual ridership and overlaid on the transportation-need map.
+
+- **Hannah**  
+  - Used API calls to merge rideshare data with community area points.  
+  - Built a `NetworkX` graph using rideshare data and performed graph analysis (total rides, most and least neighbors, rides per capita).  
+  - Merged census data with the rideshare network graph.  
+  - Visualized the rideshare network using `PyVis`.  
+  - Integrated the PyVis HTML visualization into the Dash application.  
+  - Wrote tests for the rideshare graph.
+
+<br><br>
 
 # Final Thoughts
 

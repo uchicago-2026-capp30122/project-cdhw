@@ -1,5 +1,5 @@
 """
-Defines single-page, scrollable Dash layout. 
+Defines single-page, scrollable Dash layout.
 """
 
 from dash import dcc, html
@@ -98,7 +98,6 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             # ---------- Context ----------
             html.Div(
                 style={
@@ -121,7 +120,10 @@ def make_layout(map_vars):
                     ),
                     html.Div(
                         children=[
-                            html.H3("What the dashboard shows", style=SUBSECTION_HEADER_STYLE),
+                            html.H3(
+                                "What the dashboard shows",
+                                style=SUBSECTION_HEADER_STYLE,
+                            ),
                             html.P(
                                 "The dashboard combines a choropleth map of transportation need with optional overlays for "
                                 "CTA station ridership and community-area rideshare totals. It also includes a network graph "
@@ -132,12 +134,13 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             # ---------- Inputs / sources ----------
             html.Div(
                 style=CARD_STYLE,
                 children=[
-                    html.H3("Data integrated in this project", style=SUBSECTION_HEADER_STYLE),
+                    html.H3(
+                        "Data integrated in this project", style=SUBSECTION_HEADER_STYLE
+                    ),
                     html.Div(
                         style={
                             "display": "grid",
@@ -153,7 +156,10 @@ def make_layout(map_vars):
                                     "padding": "16px",
                                 },
                                 children=[
-                                    html.H4("CTA ridership", style={"marginTop": "0", "color": "#24324a"}),
+                                    html.H4(
+                                        "CTA ridership",
+                                        style={"marginTop": "0", "color": "#24324a"},
+                                    ),
                                     html.P(
                                         "Station-level ridership used to show public transit usage across the city.",
                                         style=BODY_TEXT_STYLE,
@@ -168,7 +174,10 @@ def make_layout(map_vars):
                                     "padding": "16px",
                                 },
                                 children=[
-                                    html.H4("Rideshare trips", style={"marginTop": "0", "color": "#24324a"}),
+                                    html.H4(
+                                        "Rideshare trips",
+                                        style={"marginTop": "0", "color": "#24324a"},
+                                    ),
                                     html.P(
                                         "Community-area rideshare trip totals and connections used for overlays and the network view.",
                                         style=BODY_TEXT_STYLE,
@@ -183,7 +192,10 @@ def make_layout(map_vars):
                                     "padding": "16px",
                                 },
                                 children=[
-                                    html.H4("ACS indicators", style={"marginTop": "0", "color": "#24324a"}),
+                                    html.H4(
+                                        "ACS indicators",
+                                        style={"marginTop": "0", "color": "#24324a"},
+                                    ),
                                     html.P(
                                         "Neighborhood characteristics aligned to census tracts and community areas for comparison.",
                                         style=BODY_TEXT_STYLE,
@@ -194,7 +206,6 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             # ---------- How to use ----------
             html.Div(
                 style=CARD_STYLE,
@@ -202,17 +213,30 @@ def make_layout(map_vars):
                     html.H3("How to use the dashboard", style=SUBSECTION_HEADER_STYLE),
                     html.Ul(
                         [
-                            html.Li("Switch between census tracts and community areas to compare patterns at different geographic levels."),
-                            html.Li("Choose a need variable to view relative transportation need across Chicago."),
-                            html.Li("Turn on CTA stations and rideshare totals to compare the need surface with mobility activity."),
-                            html.Li("Scroll down to the rideshare network to inspect movement connections between community areas."),
-                            html.Li("Use the methodology section at the end for data sources, workflow, and caveats."),
+                            html.Li(
+                                "Switch between census tracts and community areas to compare patterns at different geographic levels."
+                            ),
+                            html.Li(
+                                "Choose a need variable to view relative transportation need across Chicago."
+                            ),
+                            html.Li(
+                                "Turn on CTA stations and rideshare totals to compare the need surface with mobility activity."
+                            ),
+                            html.Li(
+                                "Scroll down to the rideshare network to inspect movement connections between community areas."
+                            ),
+                            html.Li(
+                                "Use the methodology section at the end for data sources, workflow, and caveats."
+                            ),
                         ],
-                        style={"lineHeight": "1.9", "color": "#42506a", "marginBottom": "0"},
+                        style={
+                            "lineHeight": "1.9",
+                            "color": "#42506a",
+                            "marginBottom": "0",
+                        },
                     ),
                 ],
             ),
-
             # ---------- Map section ----------
             html.Div(
                 style=CARD_STYLE,
@@ -226,7 +250,6 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             html.Div(
                 style=CARD_STYLE,
                 children=[
@@ -243,13 +266,22 @@ def make_layout(map_vars):
                                     dcc.RadioItems(
                                         id="geo-toggle",
                                         options=[
-                                            {"label": " Census Tracts", "value": "tract"},
-                                            {"label": " Community Areas", "value": "ca"},
+                                            {
+                                                "label": " Census Tracts",
+                                                "value": "tract",
+                                            },
+                                            {
+                                                "label": " Community Areas",
+                                                "value": "ca",
+                                            },
                                         ],
                                         value="tract",
                                         inline=True,
                                         style={"color": "#24324a"},
-                                        inputStyle={"marginRight": "6px", "marginLeft": "8px"},
+                                        inputStyle={
+                                            "marginRight": "6px",
+                                            "marginLeft": "8px",
+                                        },
                                     ),
                                 ]
                             ),
@@ -260,12 +292,18 @@ def make_layout(map_vars):
                                         id="overlay-toggle",
                                         options=[
                                             {"label": " CTA stations", "value": "cta"},
-                                            {"label": " Rideshare totals", "value": "rideshare"},
+                                            {
+                                                "label": " Rideshare totals",
+                                                "value": "rideshare",
+                                            },
                                         ],
                                         value=[],
                                         inline=True,
                                         style={"color": "#24324a"},
-                                        inputStyle={"marginRight": "6px", "marginLeft": "8px"},
+                                        inputStyle={
+                                            "marginRight": "6px",
+                                            "marginLeft": "8px",
+                                        },
                                     ),
                                 ]
                             ),
@@ -277,7 +315,10 @@ def make_layout(map_vars):
                             html.Label("Need variable", style=LABEL_STYLE),
                             dcc.Dropdown(
                                 id="var-dropdown",
-                                options=[{"label": DISPLAY_NAMES.get(v, v), "value": v} for v in map_vars],
+                                options=[
+                                    {"label": DISPLAY_NAMES.get(v, v), "value": v}
+                                    for v in map_vars
+                                ],
                                 value=map_vars[0] if map_vars else None,
                                 clearable=False,
                                 style={"borderRadius": "8px"},
@@ -291,7 +332,6 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             html.Div(
                 style=CARD_STYLE,
                 children=[
@@ -299,13 +339,12 @@ def make_layout(map_vars):
                         id="choropleth",
                         style={"height": "60vh"},
                         config={
-                        "displaylogo": False,
-                        "scrollZoom": True,
-                        }
+                            "displaylogo": False,
+                            "scrollZoom": True,
+                        },
                     )
                 ],
             ),
-
             html.Div(
                 style=CARD_STYLE,
                 children=[
@@ -319,7 +358,6 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             # ---------- Network section ----------
             html.Div(
                 style=CARD_STYLE,
@@ -333,7 +371,6 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             html.Div(
                 style=CARD_STYLE,
                 children=[
@@ -348,11 +385,12 @@ def make_layout(map_vars):
                     )
                 ],
             ),
-
             html.Div(
                 style=CARD_STYLE,
                 children=[
-                    html.H3("How to interpret the network", style=SUBSECTION_HEADER_STYLE),
+                    html.H3(
+                        "How to interpret the network", style=SUBSECTION_HEADER_STYLE
+                    ),
                     html.P(
                         "The network provides a complementary view of Chicago mobility. "
                         "While the map emphasizes spatial distribution, the network emphasizes connection patterns "
@@ -361,50 +399,69 @@ def make_layout(map_vars):
                     ),
                 ],
             ),
-
             # ---------- Methods ----------
             html.Div(
                 style=CARD_STYLE,
                 children=[
                     html.Div("Methods and context", style=SMALL_SECTION_KICKER),
                     html.H2("Data and Methodology", style=SECTION_HEADER_STYLE),
-
                     html.H3("Data sources", style=SUBSECTION_HEADER_STYLE),
                     html.Ul(
                         [
                             html.Li("CTA rail ridership data and station locations"),
                             html.Li("Chicago rideshare trip data"),
                             html.Li("American Community Survey demographic indicators"),
-                            html.Li("Census tract and community-area spatial boundaries"),
+                            html.Li(
+                                "Census tract and community-area spatial boundaries"
+                            ),
                         ],
                         style={"lineHeight": "1.9", "color": "#42506a"},
                     ),
-
                     html.H3("Method notes", style=SUBSECTION_HEADER_STYLE),
                     html.Ul(
                         [
-                            html.Li("All data are aligned to census tracts and community areas for spatial comparison."),
-                            html.Li("Component indicators are transformed into relative need scores."),
-                            html.Li("The transportation need index combines multiple transportation-relevant measures."),
-                            html.Li("CTA overlays are shown at station coordinates; rideshare overlays are shown at community-area centroids."),
-                            html.Li("The rideshare graph summarizes movement between community areas using a PyVis network visualization."),
+                            html.Li(
+                                "All data are aligned to census tracts and community areas for spatial comparison."
+                            ),
+                            html.Li(
+                                "Component indicators are transformed into relative need scores."
+                            ),
+                            html.Li(
+                                "The transportation need index combines multiple transportation-relevant measures."
+                            ),
+                            html.Li(
+                                "CTA overlays are shown at station coordinates; rideshare overlays are shown at community-area centroids."
+                            ),
+                            html.Li(
+                                "The rideshare graph summarizes movement between community areas using a PyVis network visualization."
+                            ),
                         ],
                         style={"lineHeight": "1.9", "color": "#42506a"},
                     ),
-
                     html.H3("Caveats", style=SUBSECTION_HEADER_STYLE),
                     html.Ul(
                         [
-                            html.Li("Percentile-based scores are comparative, not direct percentages."),
-                            html.Li("CTA ridership and rideshare totals reflect different mobility systems and are not directly interchangeable."),
-                            html.Li("Centroid-based overlays simplify within-area spatial variation."),
-                            html.Li("The network graph highlights connection structure rather than geographic precision."),
+                            html.Li(
+                                "Percentile-based scores are comparative, not direct percentages."
+                            ),
+                            html.Li(
+                                "CTA ridership and rideshare totals reflect different mobility systems and are not directly interchangeable."
+                            ),
+                            html.Li(
+                                "Centroid-based overlays simplify within-area spatial variation."
+                            ),
+                            html.Li(
+                                "The network graph highlights connection structure rather than geographic precision."
+                            ),
                         ],
-                        style={"lineHeight": "1.9", "color": "#42506a", "marginBottom": "0"},
+                        style={
+                            "lineHeight": "1.9",
+                            "color": "#42506a",
+                            "marginBottom": "0",
+                        },
                     ),
                 ],
             ),
-
             # ---------- Workflow / diagrams ----------
             html.Div(
                 style=CARD_STYLE,
@@ -416,7 +473,6 @@ def make_layout(map_vars):
                         "then into the Dash dashboard and PyVis network graph.",
                         style=BODY_TEXT_STYLE,
                     ),
-
                     html.Div(
                         style={
                             "display": "grid",
@@ -427,7 +483,10 @@ def make_layout(map_vars):
                         children=[
                             html.Div(
                                 children=[
-                                    html.H3("Project structure diagram", style=SUBSECTION_HEADER_STYLE),
+                                    html.H3(
+                                        "Project structure diagram",
+                                        style=SUBSECTION_HEADER_STYLE,
+                                    ),
                                     html.Img(
                                         src="/assets/project_structure_diagram.png",
                                         style={
@@ -440,7 +499,10 @@ def make_layout(map_vars):
                             ),
                             html.Div(
                                 children=[
-                                    html.H3("Data flow diagram", style=SUBSECTION_HEADER_STYLE),
+                                    html.H3(
+                                        "Data flow diagram",
+                                        style=SUBSECTION_HEADER_STYLE,
+                                    ),
                                     html.Img(
                                         src="/assets/data_flow_diagram.png",
                                         style={

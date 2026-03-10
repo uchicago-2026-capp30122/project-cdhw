@@ -37,6 +37,7 @@ CTA_STATIONS_ZIP_URL = (
 
 # SODA3 query + row extraction
 
+
 def soda3_post(
     view_id: str,
     soql: str,
@@ -57,6 +58,7 @@ def soda3_post(
 
 
 # Community Areas -> centroids (GeoJSON dict geometry)
+
 
 def get_community_areas():
     """
@@ -98,6 +100,7 @@ def get_community_areas():
 
 # Rideshare edges (grouped OD counts) via SODA3
 
+
 def get_edges_grouped_by_ca(date_start=None, date_end=None):
     where = [
         "pickup_community_area IS NOT NULL",
@@ -123,6 +126,7 @@ def get_edges_grouped_by_ca(date_start=None, date_end=None):
 
 
 # ACS Population -> dict {Area Name: Population}
+
 
 def get_population_by_ca():
     """
@@ -152,6 +156,7 @@ def get_population_by_ca():
 
 
 # CTA Information, Reading files
+
 
 def fetch_csv(view_id: str, limit: int = 50000) -> pd.DataFrame:
     url = f"https://data.cityofchicago.org/resource/{view_id}.csv?$limit={limit}"

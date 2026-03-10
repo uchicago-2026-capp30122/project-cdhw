@@ -297,7 +297,7 @@ def make_layout(map_vars):
                 children=[
                     dcc.Graph(
                         id="choropleth",
-                        style={"height": "78vh"},
+                        style={"height": "60vh"},
                         config={
                         "displaylogo": False,
                         "scrollZoom": True,

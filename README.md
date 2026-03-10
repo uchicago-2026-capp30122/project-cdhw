@@ -4,24 +4,18 @@
 
 This project examines mobility patterns in Chicago for 2024, exploring how public transit usage, rideshare activity, and neighborhood-level characteristics vary across the city. The analysis integrates CTA rail ridership, rideshare trip data, American Community Survey demographics, and walkability measures, all aligned to Chicago community areas. The project produces a geospatial dashboard built in Dash for exploring neighborhood-level mobility patterns and a network visualization built with PyVis showing movement between community areas.
 
-
-
 The analysis integrates:
 
 - CTA ridership rail data
 - Rideshare trip data
 - American Community Survey ACS data
 
-Data flow
-![](assets/data_flow_diagram.png) 
-![](assets/project_structure_diagram.png)
-
-
 
 All data are aligned to census tracts and community areas for spatial comparison. The project produces:
 
 - A geospatial dashboard built in Dash to explore neighborhood-level mobility patterns
 - A network visualization built with PyVis showing movement between community areas
+
 The goal is to document, describe and explore how movement varies across Chicago in 2024 and how it aligns with neighborhood-level characteristics.
 
 #### Project Demo
@@ -39,19 +33,23 @@ https://youtu.be/EO2vdreIc48
 
 ---
 
-## Mapping relative transportation need and mobility in Chicago
-
-Interactive geospatial visualization
-![](assets/choropleth_demo.gif)
-
-Interactive network analysis graph
-![](assets/network_analysis_demo.gif)
+## Screenshots
 
 
+### Choropleth Visualization
+
+
+![Choropleth demo](assets/choropleth_demo.gif)
+
+<br>
+
+### Network Visualization
+
+![Network demo](assets/network_analysis_demo.gif)
 
 ---
 
-## Citations
+## Citation
 
 ### CTA Ridership Data
 
@@ -88,6 +86,7 @@ https://pyvis.readthedocs.io/
 ---
 
 ## How to Run
+
 1. [Install UV](https://docs.astral.sh/uv/getting-started/installation/)
 
 2. Clone the repo for the project using the url on GitHub.

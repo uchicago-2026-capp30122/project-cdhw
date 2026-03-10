@@ -6,7 +6,7 @@ The foundation of this Chicago mobility project relies on integrating diverse, g
 
 ### 1. Chicago Rideshare Data (Transportation Network Providers Trips)
 * **Description:** Rideshare trip data used to measure movement between areas.
-* **Source:** Chicago Data Portal (Socrata View ID: `6dvr-xwnh`).
+* **Source:** Chicago Data Portal (Socrata View ID: `n26f-ihde`).
 * **Access Method:** Accessed dynamically via the **Socrata SODA 3.0 API**. The project uses python's `requests` library to send POST requests containing SoQL (Socrata Query Language) to group trips by pickup and drop-off community areas (get_edges_grouped_by_ca in src/api_client.py). This requires a Socrata App Token (`SOCRATA_APP_TOKEN`).
 
 ### 2. Chicago Community Area Boundaries
@@ -163,7 +163,7 @@ graph TB
     DashUI(["Dash Web UI"]):::lightgreen
     PyvisUI(["Pyvis HTML Graph Output"]):::lightgreen
 
-    subgraph cluster_processing ["Data Processing and Aggregation"]
+    subgraph cluster_processing ["Data Processing"]
         direction TB
         DataExt["Data Extraction"]
         DataClean["Data Cleaning"]

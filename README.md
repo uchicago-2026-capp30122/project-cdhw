@@ -15,7 +15,6 @@ All data are aligned to census tracts and community areas for spatial comparison
 
 - A geospatial dashboard built in Dash to explore neighborhood-level mobility patterns
 - A network visualization built with PyVis showing movement between community areas
-
 The goal is to document, describe and explore how movement varies across Chicago in 2024 and how it aligns with neighborhood-level characteristics.
 
 ---
@@ -29,13 +28,19 @@ The goal is to document, describe and explore how movement varies across Chicago
 
 ---
 
-## Screenshot
+## Mapping relative transportation need and mobility in Chicago
 
-Insert project screenshot here.
+Interactive geospatial visualization
+![](assets/choropleth_demo.gif)
+
+Interactive network analysis graph
+![](assets/network_analysis_demo.gif)
+
+
 
 ---
 
-## Citation
+## Citations
 
 CTA Ridership Data
 
@@ -72,12 +77,27 @@ https://pyvis.readthedocs.io/
 ---
 
 ## How to Run
+1. [Install UV](https://docs.astral.sh/uv/getting-started/installation/)
 
-After cloning the repository:
+2. Clone the repo for the project using the url on GitHub.
 
-```bash
+```
+git clone git@github.com:uchicago-2026-capp30122/project-cdhw.git
+```
+
+3. Synchronize the virtual environment & install the necessary dependencies to run the project.
+
+```
 uv sync
-python main.py
-python app.py
+```
+
+4. In the root directory, run the following command in the terminal. Initialize the dashboard by running the following command in the terminal, of the root directory. 
+
+```
+uv run python -m app
+```
+
+5. The terminal will show: "Dash is running on http://...". Copy-paste this url from the terminal and into your web browser. This will take you to the interactive dashboard.
 
 
+6. To exit the program, run "Ctrl + C" in the terminal.

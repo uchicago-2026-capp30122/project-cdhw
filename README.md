@@ -1,4 +1,4 @@
-# Project CDHW
+# Chicago Transportation Need and Mobility Patterns
 
 ## Abstract
 

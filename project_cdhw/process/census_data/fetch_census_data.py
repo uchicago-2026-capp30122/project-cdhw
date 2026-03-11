@@ -110,7 +110,7 @@ def build_census_csv(year: int, output_filename: Path) -> pd.DataFrame:
 
 
 def main():
-    # Repo root is two levels up from process/census_data/
+    # Repo root is two levels up from project_cdhw.process/census_data/
     ROOT = Path(__file__).resolve().parents[2]
     out_path = ROOT / "data" / "raw" / f"acs5_{YEAR}_il_tract_raw.csv"
     build_census_csv(YEAR, out_path)

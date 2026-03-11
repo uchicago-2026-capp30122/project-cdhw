@@ -30,7 +30,10 @@ def test_join_data_for_dash(tmp_path):
 
     # check the contents of join_data_for_dash.py
     script_path = (
-        Path(__file__).resolve().parents[1] / "process" / "join_data_for_dash.py"
+        Path(__file__).resolve().parents[1]
+        / "project_cdhw"
+        / "process"
+        / "join_data_for_dash.py"
     )
     content = script_path.read_text()
 

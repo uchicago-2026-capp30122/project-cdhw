@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 from pathlib import Path
-from process.census_data.aggregate_tract_to_ca import (
+from project_cdhw.process.census_data.aggregate_tract_to_ca import (
     aggregate_to_ca,
     _infer_crosswalk_cols,
 )
@@ -17,7 +17,8 @@ def test_infer_crosswalk_cols():
 
 def test_aggregate_to_ca(monkeypatch):
     monkeypatch.setattr(
-        "process.census_data.aggregate_tract_to_ca.get_community_areas", lambda: {}
+        "project_cdhw.process.census_data.aggregate_tract_to_ca.get_community_areas",
+        lambda: {},
     )
 
     tract_df = pd.DataFrame(

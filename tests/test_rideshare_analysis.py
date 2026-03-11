@@ -1,8 +1,10 @@
 import pytest
-from src.dash_app.config import RIDESHARE_COMMUNITY_JSON
-from src.dash_app.graph_builder import build_rideshare_graph
-from process.rideshare_data.rideshare_data_loading import load_rideshare_json
-from visuals.network_analysis import (
+from project_cdhw.dash_app.config import RIDESHARE_COMMUNITY_JSON
+from project_cdhw.dash_app.graph_builder import build_rideshare_graph
+from project_cdhw.process.rideshare_data.rideshare_data_loading import (
+    load_rideshare_json,
+)
+from project_cdhw.visuals.network_analysis import (
     comm_area_totals,
     top_least_neighbors,
     get_top_incoming,

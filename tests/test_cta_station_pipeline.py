@@ -7,7 +7,7 @@ PROCESSED = Path("data/processed")
 
 RIDERSHIP = PROCESSED / "cta_station_monthly_2024_clean.csv"
 LOCATIONS = PROCESSED / "cta_station_locations_clean.csv"
-GEO_CA = PROCESSED / "cta_station_monthly_2024_geo_commarea.csv"
+GEO_CA = PROCESSED / "cta_station_monthly_yearly_2024_geo_commarea.csv"
 
 
 @pytest.mark.skipif(not RIDERSHIP.exists(), reason="ridership file not built yet")

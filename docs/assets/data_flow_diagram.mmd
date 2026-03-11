@@ -4,15 +4,15 @@ graph TB
     Processed[("Processed Datasets<br/>(CSV / JSON)")]:::lightyellow
     DashUI(["Dash Web UI"]):::lightgreen
     
-    api_client["src.api_client<br/>(Utility Library)"]
+    api_client["project_cdhw.api_client<br/>(Utility Library)"]
     fetch_census["process.census_data.fetch"]
     agg_census["process.census_data.aggregate"]
     fetch_cta["process.cta_data.fetch"]
     clean_cta["process.cta_data.clean_and_build"]
     compile_rideshare["process.rideshare_data.compile_rideshare"]
-    dash_io["src.dash_app.io"]
-    dash_creation["src.dash_app.app_creation"]
-    dash_figures["src.dash_app.figures"]
+    dash_io["project_cdhw.dash_app.io"]
+    dash_creation["project_cdhw.dash_app.app_creation"]
+    dash_figures["project_cdhw.dash_app.figures"]
     
     ExtAPI --> api_client
     CensusAPI --> fetch_census

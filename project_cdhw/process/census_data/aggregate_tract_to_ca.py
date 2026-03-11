@@ -15,13 +15,13 @@ Output
 from pathlib import Path
 import numpy as np
 import pandas as pd
-from process.census_data.make_tract_features import (
+from project_cdhw.process.census_data.make_tract_features import (
     DEFAULT_WEIGHTS,
     NEED_HIGH_VARS,
     NEED_LOW_VARS,
     add_need_component_scores,
 )
-from src.api_client import get_community_areas
+from project_cdhw.api_client import get_community_areas
 import json
 
 

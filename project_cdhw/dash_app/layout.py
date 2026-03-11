@@ -3,7 +3,7 @@ Defines single-page, scrollable Dash layout.
 """
 
 from dash import dcc, html
-from src.dash_app.generate_rideshare_html import generate_html
+from project_cdhw.dash_app.generate_rideshare_html import generate_html
 from .figures import DISPLAY_NAMES
 
 

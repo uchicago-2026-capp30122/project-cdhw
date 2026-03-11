@@ -1,4 +1,4 @@
-from src.dash_app.app_creation import create_app
+from project_cdhw.dash_app.app_creation import create_app
 
 
 def main():

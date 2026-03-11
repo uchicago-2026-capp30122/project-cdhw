@@ -1,5 +1,5 @@
 import json
-from src.api_client import get_edges_grouped_by_ca, get_community_areas
+from project_cdhw.api_client import get_edges_grouped_by_ca, get_community_areas
 
 
 def compile_rideshare(start_date="2024-01-01T00:00:00", end_date="2024-12-31T00:00:00"):

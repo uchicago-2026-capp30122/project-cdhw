@@ -7,15 +7,15 @@ digraph CoreDataFlow {
     "Processed Datasets\n(CSV / JSON)" [shape = cylinder;style = filled;fillcolor = lightyellow;];
     "Dash Web UI" [shape = ellipse;style = filled;fillcolor = lightgreen;];
     
-    "api_client.py" [label = "src.api_client\n(Utility Library)";];
+    "api_client.py" [label = "project_cdhw.api_client\n(Utility Library)";];
     "fetch_census" [label = "process.census_data.fetch";];
     "agg_census" [label = "process.census_data.aggregate";];
     "fetch_cta" [label = "process.cta_data.fetch";];
     "clean_cta" [label = "process.cta_data.clean_and_build";];
     "compile_rideshare" [label = "process.rideshare_data.compile_rideshare";];
-    "dash_io" [label = "src.dash_app.io";];
-    "dash_creation" [label = "src.dash_app.app_creation";];
-    "dash_figures" [label = "src.dash_app.figures";];
+    "dash_io" [label = "project_cdhw.dash_app.io";];
+    "dash_creation" [label = "project_cdhw.dash_app.app_creation";];
+    "dash_figures" [label = "project_cdhw.dash_app.figures";];
     
     "External API\n(Socrata)" -> "api_client.py";
     

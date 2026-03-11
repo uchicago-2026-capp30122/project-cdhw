@@ -1,7 +1,7 @@
 from pyvis.network import Network
-from src.dash_app.config import CA_CSV
-from process.rideshare_data.rideshare_data_loading import load_census_csv
-from src.dash_app.graph_attributes import update_ca_data_colors_size
+from project_cdhw.dash_app.config import CA_CSV
+from project_cdhw.process.rideshare_data.rideshare_data_loading import load_census_csv
+from project_cdhw.dash_app.graph_attributes import update_ca_data_colors_size
 
 
 def make_pyvis(ride_nx):

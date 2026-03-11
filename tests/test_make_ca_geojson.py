@@ -1,7 +1,7 @@
 import pytest
 import json
 from pathlib import Path
-from process.census_data.make_ca_geojson import standardize_join_key
+from project_cdhw.process.census_data.make_ca_geojson import standardize_join_key
 
 
 def test_standardize_join_key():

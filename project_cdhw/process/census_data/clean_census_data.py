@@ -99,7 +99,7 @@ def clean_acs(in_path: Path) -> pd.DataFrame:
 
 
 def main():
-    # Repo root is two levels up from process/census_data/
+    # Repo root is two levels up from project_cdhw.process/census_data/
     ROOT = Path(__file__).resolve().parents[2]
     raw_path = ROOT / "data" / "raw" / f"acs5_{YEAR}_il_tract_raw.csv"
     out_path = ROOT / "data" / "processed" / f"acs5_{YEAR}_il_tract_clean.csv"

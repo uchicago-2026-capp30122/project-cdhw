@@ -1,5 +1,5 @@
 import networkx as nx
-from visuals.network_analysis import comm_area_totals, top_least_neighbors
+from project_cdhw.visuals.network_analysis import comm_area_totals, top_least_neighbors
 
 
 def build_rideshare_graph(rideshare_data):

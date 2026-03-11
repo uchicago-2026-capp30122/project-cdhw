@@ -1,7 +1,9 @@
-from src.dash_app.config import RIDESHARE_COMMUNITY_JSON
-from process.rideshare_data.rideshare_data_loading import load_rideshare_json
-from src.dash_app.graph_builder import build_rideshare_graph
-from visuals.graph_vis import make_pyvis
+from project_cdhw.dash_app.config import RIDESHARE_COMMUNITY_JSON
+from project_cdhw.process.rideshare_data.rideshare_data_loading import (
+    load_rideshare_json,
+)
+from project_cdhw.dash_app.graph_builder import build_rideshare_graph
+from project_cdhw.visuals.graph_vis import make_pyvis
 import webbrowser
 import os
 

@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from process.census_data.make_tract_features import (
+from project_cdhw.process.census_data.make_tract_features import (
     add_need_component_scores,
     add_need_index_percentile,
 )

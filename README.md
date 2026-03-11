@@ -39,13 +39,13 @@ https://youtu.be/EO2vdreIc48
 ### Choropleth Visualization
 
 
-![Choropleth demo](assets/choropleth_demo.gif)
+![Choropleth demo](docs/assets/choropleth_demo.gif)
 
 <br>
 
 ### Network Visualization
 
-![Network demo](assets/network_analysis_demo.gif)
+![Network demo](docs/assets/network_analysis_demo.gif)
 
 ---
 
@@ -104,7 +104,7 @@ uv sync
 4. In the root directory, run the following command in the terminal. Initialize the dashboard by running the following command in the terminal, of the root directory. 
 
 ```
-uv run python -m app
+uv run python -m project_cdhw.app
 ```
 
 5. The terminal will show: "Dash is running on http://...". Copy-paste this url from the terminal and into your web browser. This will take you to the interactive dashboard.

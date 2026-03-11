@@ -20,7 +20,7 @@ from .layout import make_layout
 from .figures import make_choropleth, add_selected_overlays, NEED_COLOR_COLS
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-ASSETS_DIR = ROOT_DIR / "assets"
+ASSETS_DIR = ROOT_DIR / "docs" / "assets"
 
 
 def create_app():

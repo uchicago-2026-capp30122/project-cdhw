@@ -7,7 +7,7 @@ import os
 # Set environment variable before importing api_client
 os.environ["SOCRATA_APP_TOKEN"] = "test_token"
 
-from src.api_client import (
+from project_cdhw.api_client import (
     soda3_post,
     get_community_areas,
     get_edges_grouped_by_ca,
@@ -17,7 +17,7 @@ from src.api_client import (
 )
 
 
-@patch("src.api_client.requests.post")
+@patch("project_cdhw.api_client.requests.post")
 def test_soda3_post_success(mock_post):
     mock_response = MagicMock()
     mock_response.status_code = 200
@@ -33,7 +33,7 @@ def test_soda3_post_success(mock_post):
     assert kwargs["json"]["query"] == "SELECT *"
 
 
-@patch("src.api_client.requests.post")
+@patch("project_cdhw.api_client.requests.post")
 def test_soda3_post_failure(mock_post):
     mock_response = MagicMock()
     mock_response.status_code = 400
@@ -46,7 +46,7 @@ def test_soda3_post_failure(mock_post):
     assert "SODA3 error 400" in str(exc_info.value)
 
 
-@patch("src.api_client.soda3_post")
+@patch("project_cdhw.api_client.soda3_post")
 def test_get_community_areas(mock_soda3_post):
     mock_soda3_post.return_value = [
         {
@@ -73,7 +73,7 @@ def test_get_community_areas(mock_soda3_post):
     assert result[1]["lat"] == 0.5
 
 
-@patch("src.api_client.soda3_post")
+@patch("project_cdhw.api_client.soda3_post")
 def test_get_edges_grouped_by_ca(mock_soda3_post):
     mock_soda3_post.return_value = [
         {"pickup_community_area": "1", "dropoff_community_area": "2", "trips": "15"}
@@ -92,7 +92,7 @@ def test_get_edges_grouped_by_ca(mock_soda3_post):
     assert "2024-01-31" in args[1]
 
 
-@patch("src.api_client.soda3_post")
+@patch("project_cdhw.api_client.soda3_post")
 def test_get_population_by_ca(mock_soda3_post):
     mock_soda3_post.return_value = [
         {"community_area": "Rogers Park", "total_population": "55000"},
@@ -107,7 +107,7 @@ def test_get_population_by_ca(mock_soda3_post):
     assert result["Lake View"] == 100000
 
 
-@patch("src.api_client.pd.read_csv")
+@patch("project_cdhw.api_client.pd.read_csv")
 def test_fetch_csv(mock_read_csv):
     df_mock = pd.DataFrame({"colA": [1, 2]})
     mock_read_csv.return_value = df_mock
@@ -120,7 +120,7 @@ def test_fetch_csv(mock_read_csv):
     )
 
 
-@patch("src.api_client.requests.get")
+@patch("project_cdhw.api_client.requests.get")
 def test_download_file(mock_get):
     mock_response = MagicMock()
     mock_response.status_code = 200
